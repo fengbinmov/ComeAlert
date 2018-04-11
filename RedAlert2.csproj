@@ -93,6 +93,9 @@
     <Reference Include="DOTweenPro">
       <HintPath>Assets/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
     </Reference>
+    <Reference Include="GameAttrType">
+      <HintPath>Assets/Scripts/ExtendedLibrary/GameAttrType.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>E:/Unity3d/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
@@ -105,6 +108,7 @@
     <Compile Include="Assets\Scripts\Control\MouseControl\MouseControl.cs" />
     <Compile Include="Assets\Scripts\Control\MouseControl\MouseSelectCuboid.cs" />
     <Compile Include="Assets\Scripts\Control\UIControl.cs" />
+    <Compile Include="Assets\Scripts\Control\UIPanel\SelectItem.cs" />
     <Compile Include="Assets\Scripts\Control\UIPanel\SelectItemPanel.cs" />
     <Compile Include="Assets\Scripts\Control\UIPanel\SoldierTypePanel.cs" />
     <Compile Include="Assets\Scripts\GameServant\GameControl.cs" />
@@ -113,9 +117,8 @@
     <Compile Include="Assets\Scripts\Operation\BaseOperation.cs" />
     <Compile Include="Assets\Scripts\Operation\Cube\CubeMoveAI.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation\DataOperation.cs" />
-    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\BaseAtrrData.cs" />
-    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\BuildAtrr.cs" />
-    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\PlaneSoldierAttr.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\ObjectDataValue.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Solider1100.cs" />
     <Compile Include="Assets\UIFramework\Base\BasePanel.cs" />
     <Compile Include="Assets\UIFramework\Extension\Extension.cs" />
     <Compile Include="Assets\UIFramework\UIPanelInfo\UIPanelType.cs" />

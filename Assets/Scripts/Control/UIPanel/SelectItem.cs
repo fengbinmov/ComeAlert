@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class SelectItem : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
     private bool isPress = false;
+    private bool isBuild = false;
 
+    private Transform m_parentPanel = null;
     private GameObject cubeSoliderObject;
     private GameObject cubeBuild = null;
     private Vector3 currentScreenPoint;
@@ -17,41 +19,48 @@ public class SelectItem : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     private ObjectDataValue objectDataValue = new ObjectDataValue();
 
     private Text selectName;
-    private Image selectHeadP;
+    private RawImage selectHeadP;
 
     public void SetSelectInfo(ObjectDataValue value){
 
-            Debug.Log(value.m_data.m_u8ID);
-            objectDataValue = value;
-            cubeSoliderObject = Resources.Load(objectDataValue.m_data.self) as GameObject;
-            //selectName.text = objectDataValue.m_data.selfName;
-            //selectHeadP = Resources.Load(objectDataValue.m_data.selfHeadP, typeof(Image)) as Image;
-        
+        Init();
+        //Debug.Log("ObjectDataValue[" + value.m_data.m_u8ID+"]");
+        objectDataValue = value;
+        cubeSoliderObject = Resources.Load(objectDataValue.m_data.self) as GameObject;
+        selectName.text = objectDataValue.m_data.selfName;
+        selectHeadP.texture = Resources.Load(objectDataValue.m_data.selfHeadP) as Texture;
     }
     private void Start(){
-
-        selectName = transform.GetComponentInChildren<Text>();
-        selectHeadP = transform.GetComponent<Image>();
-        Debug.Log(selectName.name+"1");
+        m_parentPanel = transform.GetComponentInParent<Transform>();
     }
     private void Update()
     {
         currentScreenPoint = Input.mousePosition;
+        if (Input.GetMouseButtonUp(0)) {
+            if (isBuild)
+            {
+                Debug.Log("OnPointerUp");
+                isPress = false;
+                if (cubeBuild != null && cubeBuild.activeSelf == false)
+                {
+
+                    Destroy(cubeBuild.gameObject);
+                    cubeBuild = null;
+                }
+                isBuild = false;
+                CancelInvoke("OnPress");
+            }
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        isPress = false;
-        if (cubeBuild != null && cubeBuild.activeSelf == false)
-        {
-
-            Destroy(cubeBuild.gameObject);
-            cubeBuild = null;
-        }
-        CancelInvoke("OnPress");
+        
+        
     }
     public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log("OnPointerDown");
         isPress = true;
         Ray ray = Camera.main.ScreenPointToRay(currentScreenPoint);
         RaycastHit hit;
@@ -68,6 +77,7 @@ public class SelectItem : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     }
     private void OnPress()
     {
+        Debug.Log("OnPress");
         MyFunction();
     }
     public void MyFunction()
@@ -80,9 +90,14 @@ public class SelectItem : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
             {
                 if (hit.collider.tag == "Plane" && !EventSystem.current.IsPointerOverGameObject())
                 {
-                    if (cubeBuild.activeSelf == false)
-                        cubeBuild.SetActive(true);
-                    cubeBuild.transform.position = hit.point;
+                    isBuild = true;
+                    if (isBuild)
+                    {
+                        Debug.Log("Cube...");
+                        if (cubeBuild.activeSelf == false)
+                            cubeBuild.SetActive(true);
+                        cubeBuild.transform.position = hit.point;
+                    }
                 }
 
             }
@@ -91,5 +106,9 @@ public class SelectItem : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     public void DestroySelf()
     {
         Destroy(this.gameObject);
+    }
+    private void Init() {
+        selectName = transform.GetComponentInChildren<Text>();
+        selectHeadP = transform.GetComponent<RawImage>();
     }
 }

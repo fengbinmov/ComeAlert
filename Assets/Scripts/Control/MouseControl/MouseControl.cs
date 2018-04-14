@@ -168,7 +168,7 @@ public class MouseControl : BaseControl {
 
                     selectCuboidScript.SetSelectPaintRect(selectRectStartPoint.x, Screen.height - selectRectStartPoint.y, rectW, rectH);
                     selectCuboidScript.SetTwoPoint(screenPointStart, screenPointEnd);
-                    Debug.Log(hit.transform.tag);
+                    //Debug.Log(hit.transform.tag);
                 }
             }
         }

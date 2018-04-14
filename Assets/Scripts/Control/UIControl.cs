@@ -88,7 +88,7 @@ public class UIControl :BaseControl
         if (panel == null)
         {
             string path = RESOURCE_HEAD + panelType.ToString() + RESOURCE_TAIL;
-            Debug.Log(path);
+            //Debug.Log(path);
             GameObject instPanel = GameObject.Instantiate(Resources.Load(path)) as GameObject;
             instPanel.transform.SetParent(CanvasTransfrom, false);
             if (!panelDict.TryGetValue(panelType, out panel))

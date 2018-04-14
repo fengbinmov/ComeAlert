@@ -119,6 +119,7 @@
     <Compile Include="Assets\Scripts\Operation\DataOperation\DataOperation.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\ObjectDataValue.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Solider1100.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Solider1101.cs" />
     <Compile Include="Assets\UIFramework\Base\BasePanel.cs" />
     <Compile Include="Assets\UIFramework\Extension\Extension.cs" />
     <Compile Include="Assets\UIFramework\UIPanelInfo\UIPanelType.cs" />

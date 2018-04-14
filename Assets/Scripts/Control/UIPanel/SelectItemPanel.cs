@@ -49,7 +49,7 @@ public class SelectItemPanel : BasePanel{
             item.DestroySelf();
         }
         int count = selectList.Count;
-        Debug.Log(count);
+
         for (int i = 0; i < count; i++) {
             GameObject selectObject = GameObject.Instantiate(selectItemPrefab);
             selectObject.transform.SetParent(selectListLayout.transform);
@@ -66,21 +66,22 @@ public class SelectItemPanel : BasePanel{
         {
             List<ObjectDataValue> objectItems = new List<ObjectDataValue>();
             objectItems.Add(new Solider1100());
+            objectItems.Add(new Solider1101());
             LoadSelectList(objectItems);
         }
         if (GUI.Button(new Rect(135, 25, 100, 30), "Cube_2"))
         {
             List<ObjectDataValue> objectItems = new List<ObjectDataValue>();
             objectItems.Add(new Solider1100());
+            objectItems.Add(new Solider1101());
             objectItems.Add(new Solider1100());
+            objectItems.Add(new Solider1101());
             objectItems.Add(new Solider1100());
+            objectItems.Add(new Solider1101());
             objectItems.Add(new Solider1100());
+            objectItems.Add(new Solider1101());
             objectItems.Add(new Solider1100());
-            objectItems.Add(new Solider1100());
-            objectItems.Add(new Solider1100());
-            objectItems.Add(new Solider1100());
-            objectItems.Add(new Solider1100());
-            objectItems.Add(new Solider1100());
+            objectItems.Add(new Solider1101());
             LoadSelectList(objectItems);
         }
     }

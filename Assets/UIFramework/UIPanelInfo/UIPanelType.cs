@@ -15,5 +15,6 @@ using UnityEngine;
 public enum UIPanelType{
     None,
     SoldierType,
-    SelectItem
+    SelectItem,
+    ItemInfos
 }

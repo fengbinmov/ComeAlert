@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SelectItem : MonoBehaviour, IPointerDownHandler
+public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
 {
     private bool isPress = false;
+    private bool isInit = false;
 
     private SelectItemPanel m_parentPanel = null;
     private GameObject cubeSoliderObject;
@@ -20,6 +21,8 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler
     private Text selectName;
     private RawImage selectHeadP;
 
+    private UIDirftInfo uiDirftInfo;
+
     public void SetSelectInfo(ObjectDataValue value) {
 
         Init();
@@ -27,8 +30,6 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler
         cubeSoliderObject = Resources.Load(objectDataValue.m_data.self) as GameObject;
         selectName.text = objectDataValue.m_data.selfName;
         selectHeadP.texture = Resources.Load(objectDataValue.m_data.selfHeadP) as Texture;
-    }
-    private void Start() {
     }
     private void Update()
     {
@@ -45,6 +46,11 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler
             {
                 cubeBuild = Instantiate(cubeSoliderObject, hit.point, Quaternion.identity);
                 cubeBuild.SetActive(false);
+                m_parentPanel.CurrentSelectObjectData = objectDataValue;
+
+                //浮动面板运营处理
+                DirftOPeration(transform.position);
+
                 GameControl.gameControl.InitBuildSelectItem(cubeBuild, this);
             }
         }
@@ -66,11 +72,14 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler
         selectName = transform.GetComponentInChildren<Text>();
         selectHeadP = transform.GetComponent<RawImage>();
         m_parentPanel = transform.GetComponentInParent<SelectItemPanel>();
+        uiDirftInfo = GameOperation.gameOperation.GetInfoOPeration.uIDirftInfo;
+        isInit = true;
     }
     public void CancelSelfInvoke(bool isbulding)
     {
-        Init();
-        if (isbulding)
+        if (isInit == false)Init();
+
+        if (isbulding == true)
         {
             m_parentPanel.NotHideSelfAllSelectItem();
         }
@@ -81,5 +90,16 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler
     }
     public void HideSelfAllSelectItem_FP(){
         m_parentPanel.HideSelfAllSelectItem();
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        GameOperation.gameOperation.GetInfoOPeration.uIDirftInfo.CleanDirftPanelInfo();
+        GameControl.gameControl.PopPanel();
+    }
+    private void DirftOPeration(Vector3 postion) {
+
+        uiDirftInfo.SetDirftPanelInfo(postion, objectDataValue.m_data.selfName, objectDataValue.m_data.selfOutlay, objectDataValue.m_data.selfIntroduce);
+        GameControl.gameControl.PushPanel(UIPanelType.ItemInfos);
     }
 }

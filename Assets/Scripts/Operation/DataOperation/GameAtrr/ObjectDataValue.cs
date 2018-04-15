@@ -11,6 +11,8 @@ public class ObjectDataValue
         public string self;
         public string selfHeadP;
         public string selfName;
+        public string selfOutlay;
+        public string selfIntroduce;
     }
     public struct selfAtrrValue
     {

@@ -11,6 +11,8 @@ public class Solider1100:ObjectDataValue
         m_data.self = "Prefabs/CubeBuild";
         m_data.selfHeadP = "Images/ObjectHeadP/CubePhoto";
         m_data.selfName = "召唤兵";
+        m_data.selfOutlay = "1111|2323|32423|233";
+        m_data.selfIntroduce = "就是普通战士";
 
         m_atrr.m_u4AttackPlaneR = 20;
         m_atrr.m_u4Blood = 200;

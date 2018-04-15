@@ -6,21 +6,23 @@ using UnityEngine.UI;
 
 public class SelectItemPanel : BasePanel{
 
-    private GameObject selectItemPrefab;
-    private GameObject instansCubeBuild;
+    private GameObject selectItemsPanel;
 
     private RectTransform mRectTransform;
     private HorizontalLayoutGroup selectListLayout;
 
     private SelectItem[] currentSelectItems;
+    private GameObject currentSelectItemInfo;
+    private ObjectDataValue currentSelectObjectData;
 
 
     public override void OnEnter()
     {
         base.OnEnter();
         mRectTransform = GetComponent<RectTransform>();
-        selectItemPrefab = Resources.Load("UIPanel/ItemPanel") as GameObject;
+        selectItemsPanel = Resources.Load("UIPanel/ItemPanel") as GameObject;
         transform.Find("SelectItem/CloseButton").GetComponent<Button>().onClick.AddListener(OnClickCloseButton);
+        currentSelectItemInfo = transform.Find("SelectItem/SelectInfo").gameObject;
         selectListLayout = transform.Find("SelectItem/SelectItemBar/HorizontalLayout").GetComponent<HorizontalLayoutGroup>();
         
         ShowAnim();
@@ -39,13 +41,13 @@ public class SelectItemPanel : BasePanel{
 
     private void ShowAnim()
     {
+        transform.position = new Vector3(transform.position.x, transform.position.y - 100, transform.position.z);
         gameObject.SetActive(true);
-        mRectTransform.localPosition = new Vector3(0, -100f,0);
-        transform.DOMoveY(mRectTransform.position.y + 100f, 0.5f);
+        transform.DOMoveY(transform.position.y + 100f, 0.2f);
     }
     public void OnClickCloseButton()
     {
-        mRectTransform.DOLocalMoveY(-100f, 0.1f).OnComplete(() => GameControl.gameControl.PopPanel());
+        transform.DOMoveY(transform.position.y- 100f, 0.1f).OnComplete(() => GameControl.gameControl.PopPanel());
     }
     private void LoadSelectList(List<ObjectDataValue> selectList) {
 
@@ -56,39 +58,45 @@ public class SelectItemPanel : BasePanel{
         int count = selectList.Count;
 
         for (int i = 0; i < count; i++) {
-            GameObject selectObject = GameObject.Instantiate(selectItemPrefab);
+            GameObject selectObject = GameObject.Instantiate(selectItemsPanel);
             selectObject.transform.SetParent(selectListLayout.transform);
             selectObject.GetComponent<SelectItem>().SetSelectInfo(selectList[i]);
         }
         Vector2 size = selectListLayout.GetComponent<RectTransform>().sizeDelta;
-        float sizeWidth = count * (selectItemPrefab.GetComponent<RectTransform>().sizeDelta.x + selectListLayout.spacing);
+        float sizeWidth = count * (selectItemsPanel.GetComponent<RectTransform>().sizeDelta.x + selectListLayout.spacing);
         selectListLayout.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeWidth, size.y);
         selectListLayout.GetComponent<RectTransform>().localPosition = new Vector3(sizeWidth/2, 0); //TODO可以更简单的恢复到顶部
 
         currentSelectItems = selectListLayout.GetComponentsInChildren<SelectItem>();
-        Debug.Log("nums" + currentSelectItems.Length);
     }
     public void HideSelfAllSelectItem()
     {
-        Debug.Log("隐藏"+currentSelectItems.Length);
+        currentSelectItemInfo.GetComponent<Text>().text  = currentSelectObjectData.m_data.selfName;
+        currentSelectItemInfo.SetActive(true);
+
         foreach (SelectItem item in currentSelectItems)
         {
-            Debug.Log("隐藏2");
             item.HideSelf();
         }
     }
     public void NotHideSelfAllSelectItem()
     {
-        //SelectItem[] selectItems = selectListLayout.GetComponentsInChildren<SelectItem>();
+        if (currentSelectItemInfo.activeSelf == true)
+        {
+            currentSelectItemInfo.SetActive(false);
+        }
         foreach (SelectItem item in currentSelectItems)
         {
             item.NotHideSelf();
             Debug.Log("NotHideSelfAllSelectItem");
         }
     }
-    public void BuildSelectItem(GameObject selectBuild,Vector3 postion) {
-        selectBuild.transform.position = postion;
+    public ObjectDataValue CurrentSelectObjectData{
+        set {
+            currentSelectObjectData = value;
+        }
     }
+
     private void OnGUI()
     {
         if (GUI.Button(new Rect(25, 25, 100, 30), "Cube_1"))

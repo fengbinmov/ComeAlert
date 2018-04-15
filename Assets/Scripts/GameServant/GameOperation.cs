@@ -6,7 +6,7 @@ public class GameOperation :MonoBehaviour
 {
     #region SingletonPattern
     private static GameOperation _instance;
-    public static GameOperation masterCube
+    public static GameOperation gameOperation
     {
         get
         {
@@ -17,6 +17,7 @@ public class GameOperation :MonoBehaviour
             return _instance;
         }
     }
+
     private void Awake()
     {
         if (_instance != null)
@@ -27,16 +28,32 @@ public class GameOperation :MonoBehaviour
     }
     #endregion
 
+    private InfoOperation mInfoOperation;
     private void Start()
     {
         InitOperation();
     }
     private void Update()
     {
-        
+        mInfoOperation.Update();
     }
     private void InitOperation() {
+        mInfoOperation = new InfoOperation(this);
+
+
+        mInfoOperation.Init();
     }
 
-    
+    #region InfoOPeration集合
+
+    public InfoOperation GetInfoOPeration
+    {
+        get{
+            return mInfoOperation;
+        }
+    }
+    #endregion
+
+
+
 }

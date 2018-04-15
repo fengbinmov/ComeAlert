@@ -108,6 +108,7 @@
     <Compile Include="Assets\Scripts\Control\MouseControl\MouseControl.cs" />
     <Compile Include="Assets\Scripts\Control\MouseControl\MouseSelectCuboid.cs" />
     <Compile Include="Assets\Scripts\Control\UIControl.cs" />
+    <Compile Include="Assets\Scripts\Control\UIPanel\ItemInfosPanel.cs" />
     <Compile Include="Assets\Scripts\Control\UIPanel\SelectItem.cs" />
     <Compile Include="Assets\Scripts\Control\UIPanel\SelectItemPanel.cs" />
     <Compile Include="Assets\Scripts\Control\UIPanel\SoldierTypePanel.cs" />
@@ -120,6 +121,8 @@
     <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\ObjectDataValue.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Solider1100.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Solider1101.cs" />
+    <Compile Include="Assets\Scripts\Operation\InfoOperation.cs" />
+    <Compile Include="Assets\Scripts\Operation\InfoStorage\UIDirftInfo.cs" />
     <Compile Include="Assets\UIFramework\Base\BasePanel.cs" />
     <Compile Include="Assets\UIFramework\Extension\Extension.cs" />
     <Compile Include="Assets\UIFramework\UIPanelInfo\UIPanelType.cs" />
@@ -138,6 +141,7 @@
     <None Include="Assets\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
     <None Include="Assets\Demigiant\readme_DOTweenPro.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>

@@ -7,11 +7,10 @@ public class MouseControl : BaseControl {
 
     public Vector3 screenPointStart;
     public Vector3 screenPointEnd;
-
     private Vector3 currentScreenPoint;
     private Vector3 currentScreenPointSith;
 
-    private Vector3 cameraRotateStartPoint;
+    //private Vector3 cameraRotateStartPoint;
     private Vector3 selectRectStartPoint;
 
     private GameObject mouseEffectObject;
@@ -19,12 +18,14 @@ public class MouseControl : BaseControl {
     private GameObject selectRect;
     private BoxCollider selectRectRange;
     private MouseSelectCuboid selectCuboidScript;
-
+    
     private LayerMask layerMask = 1<<8;
 
     private float cubeHeight = 0.05f;
     private bool getRecrtStartChart = true;
     private bool getRecrtStayChart = false;
+    private bool isBuildSelectStart = false;
+    private bool isBuildingSelect = false;
 
     private const float cameraHeight = 1.5f;
     private float cameraRatateDetail = 0.5f;
@@ -32,7 +33,9 @@ public class MouseControl : BaseControl {
     private float cameraSenceDistanceRota = 0.1f;
     private float cameraSenceRotateXRota = 4f;
     private float cameraSenceDistanceRange = 0.5f;
-
+    
+    private SelectItem selectItem = null;
+    private GameObject selectItemBuild = null;
 
     public MouseControl(GameControl gameControl) : base(gameControl){ }
     public override void OnInit()
@@ -50,6 +53,9 @@ public class MouseControl : BaseControl {
         SenceRotateCheck();
         SenceTranslation();
         SenceDistance();
+
+        BuildingSelectItem();
+        EventMouseLU();
 
         currentScreenPointSith = currentScreenPoint;
     }
@@ -212,6 +218,50 @@ public class MouseControl : BaseControl {
         }
     }
 
+    #endregion
+
+    #region 生成选择的建筑对象
+
+    public void InitBuildSelectItem(GameObject selectBuild,SelectItem selectItem)
+    {
+        this.selectItem = selectItem;
+        this.selectItemBuild = selectBuild;
+        this.isBuildSelectStart = true; 
+    }
+    private void BuildingSelectItem() {
+
+        if (isBuildSelectStart) {
+
+            Ray ray = Camera.main.ScreenPointToRay(currentScreenPoint);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 500, layerMask))
+            {
+                if (hit.collider.tag == "Plane" && !EventSystem.current.IsPointerOverGameObject())
+                {
+                    if (isBuildingSelect == false) {
+                        selectItem.HideSelfAllSelectItem_FP();
+                    }
+                    isBuildingSelect = true;
+
+
+                    if (selectItemBuild.activeSelf == false)
+                        selectItemBuild.SetActive(true);
+                    selectItemBuild.transform.position = hit.point;
+                }
+            }
+        }
+    }
+    private void EventMouseLU() {
+        if (Input.GetMouseButtonUp(0) && isBuildSelectStart)
+        {
+            selectItem.CancelSelfInvoke(isBuildingSelect);
+            
+            selectItem = null;
+            selectItemBuild = null;
+            isBuildSelectStart = false;
+            isBuildingSelect = false;
+        }
+    }
     #endregion
 
     #region DebugShowLine

@@ -11,7 +11,10 @@ public class SelectItemPanel : BasePanel{
 
     private RectTransform mRectTransform;
     private HorizontalLayoutGroup selectListLayout;
-    
+
+    private SelectItem[] currentSelectItems;
+
+
     public override void OnEnter()
     {
         base.OnEnter();
@@ -19,6 +22,7 @@ public class SelectItemPanel : BasePanel{
         selectItemPrefab = Resources.Load("UIPanel/ItemPanel") as GameObject;
         transform.Find("SelectItem/CloseButton").GetComponent<Button>().onClick.AddListener(OnClickCloseButton);
         selectListLayout = transform.Find("SelectItem/SelectItemBar/HorizontalLayout").GetComponent<HorizontalLayoutGroup>();
+        
         ShowAnim();
     }
     public override void OnPause()
@@ -44,8 +48,9 @@ public class SelectItemPanel : BasePanel{
         mRectTransform.DOLocalMoveY(-100f, 0.1f).OnComplete(() => GameControl.gameControl.PopPanel());
     }
     private void LoadSelectList(List<ObjectDataValue> selectList) {
-        SelectItem[] selectItems = selectListLayout.GetComponentsInChildren<SelectItem>();
-        foreach (SelectItem item in selectItems) {
+
+        currentSelectItems = selectListLayout.GetComponentsInChildren<SelectItem>();
+        foreach (SelectItem item in currentSelectItems) {
             item.DestroySelf();
         }
         int count = selectList.Count;
@@ -59,11 +64,36 @@ public class SelectItemPanel : BasePanel{
         float sizeWidth = count * (selectItemPrefab.GetComponent<RectTransform>().sizeDelta.x + selectListLayout.spacing);
         selectListLayout.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeWidth, size.y);
         selectListLayout.GetComponent<RectTransform>().localPosition = new Vector3(sizeWidth/2, 0); //TODO可以更简单的恢复到顶部
+
+        currentSelectItems = selectListLayout.GetComponentsInChildren<SelectItem>();
+        Debug.Log("nums" + currentSelectItems.Length);
+    }
+    public void HideSelfAllSelectItem()
+    {
+        Debug.Log("隐藏"+currentSelectItems.Length);
+        foreach (SelectItem item in currentSelectItems)
+        {
+            Debug.Log("隐藏2");
+            item.HideSelf();
+        }
+    }
+    public void NotHideSelfAllSelectItem()
+    {
+        //SelectItem[] selectItems = selectListLayout.GetComponentsInChildren<SelectItem>();
+        foreach (SelectItem item in currentSelectItems)
+        {
+            item.NotHideSelf();
+            Debug.Log("NotHideSelfAllSelectItem");
+        }
+    }
+    public void BuildSelectItem(GameObject selectBuild,Vector3 postion) {
+        selectBuild.transform.position = postion;
     }
     private void OnGUI()
     {
         if (GUI.Button(new Rect(25, 25, 100, 30), "Cube_1"))
         {
+            currentSelectItems = null;
             List<ObjectDataValue> objectItems = new List<ObjectDataValue>();
             objectItems.Add(new Solider1100());
             objectItems.Add(new Solider1101());
@@ -71,6 +101,7 @@ public class SelectItemPanel : BasePanel{
         }
         if (GUI.Button(new Rect(135, 25, 100, 30), "Cube_2"))
         {
+            currentSelectItems = null;
             List<ObjectDataValue> objectItems = new List<ObjectDataValue>();
             objectItems.Add(new Solider1100());
             objectItems.Add(new Solider1101());

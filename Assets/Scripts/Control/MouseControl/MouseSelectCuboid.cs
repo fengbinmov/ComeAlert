@@ -58,49 +58,6 @@ public class MouseSelectCuboid : MonoBehaviour {
         isPaint = true;
     }
     //设置选择体的宽和高
-    public void SetTwoPointS(Vector3 start,Vector3 end) {
-        InitFourVector();
-        Vector3 width;
-        Vector3 height;
-        float angleWithCol = Vector3.Angle((forward - backward), (end - start));
-        float angleWithRow = Vector3.Angle((right - left), (end - start));
-        //Debug.Log(angleWithCol + " " + angleWithRow);
-        if (angleWithRow < 90f)           //右
-        {
-            if (angleWithCol < 90f)
-            {
-                width = Vector3.Project(end - start, right - transform.position);
-                height = Vector3.Project(end - start, forward - transform.position);
-                MakeSelectRectT(width.magnitude, height.magnitude);
-            }   //右上
-            else
-            {
-                width = Vector3.Project(end - start, right - transform.position);
-                height = Vector3.Project(end - start, backward - transform.position);
-                MakeSelectRectT(width.magnitude, -height.magnitude);
-            }                   //右下
-        }
-        else if (angleWithRow > 90f)
-        {                        //左
-            if (angleWithCol < 90f)
-            {
-                width = Vector3.Project(end - start, right - transform.position);
-                height = Vector3.Project(end - start, forward - transform.position);
-                MakeSelectRectT(-width.magnitude, height.magnitude);
-            }   //左上
-            else
-            {
-                width = Vector3.Project(end - start, right - transform.position);
-                height = Vector3.Project(end - start, backward - transform.position);
-                MakeSelectRectT(-width.magnitude, -height.magnitude);
-            }                   //左下
-        }
-        else {
-            width = Vector3.Project(end - start, right - transform.position);
-            height = Vector3.Project(end - start, backward - transform.position);
-            MakeSelectRectT(-width.magnitude, -height.magnitude);
-        }       //横纵重合
-    }
     public void SetTwoPoint(Vector3 start, Vector3 end)
     {
         InitFourVector();

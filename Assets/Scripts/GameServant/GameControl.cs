@@ -50,28 +50,49 @@ public class GameControl : MonoBehaviour{
         mMouseControl.OnInit();
         mCommandControl.OnInit();
     }
-    public GameObject InstantiateObj(GameObject obj,Vector3 postion,Quaternion quaternion) {
+
+
+    #region 公共方法集
+    public GameObject InstantiateObj(GameObject obj, Vector3 postion, Quaternion quaternion)
+    {
         return Instantiate(obj, postion, quaternion);
     }
     public void DestroyObj(Object obj)
     {
         Destroy(obj);
     }
-    public void DestroyObj(Object obj,float time)
+    public void DestroyObj(Object obj, float time)
     {
-        Destroy(obj,time);
+        Destroy(obj, time);
     }
-    public CommandControl SetNewCommand {
-        get {
+    #endregion
+    #region Mouse方法集
+    public void InitBuildSelectItem(GameObject game, SelectItem selectItem) {
+
+        mMouseControl.InitBuildSelectItem(game, selectItem);
+    }
+    #endregion
+
+    #region Comm方法集
+    public CommandControl SetNewCommand
+    {
+        get
+        {
             return mCommandControl;
         }
     }
-    public void PushPanel(UIPanelType uIPanelType) {
+    #endregion
+
+    #region UI方法集
+
+    public void PushPanel(UIPanelType uIPanelType)
+    {
         mUIControl.PushPanel(uIPanelType);
     }
     public void PopPanel()
     {
         mUIControl.PopPanel();
     }
+    #endregion
 
 }

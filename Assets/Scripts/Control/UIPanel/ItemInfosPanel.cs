@@ -13,11 +13,11 @@ public class ItemInfosPanel : BasePanel
     public override void OnEnter()
     {
         Init();
-
-        transform.position = new Vector3(uiDirftInfo.PanelPostion.x, uiDirftInfo.PanelPostion.y + transform.GetComponent<RectTransform>().sizeDelta.y*0.8f, uiDirftInfo.PanelPostion.z);
-        nameIP.text = uiDirftInfo.Name;
-        outlayIP.text = " 花费：" + uiDirftInfo.Outlay;
-        introduceIP.text = " 介绍：" + uiDirftInfo.Introduce;
+        Vector3 dirftP = uiDirftInfo.GetDirftInfo.panelPostion;
+        transform.position = new Vector3(dirftP.x, dirftP.y + transform.GetComponent<RectTransform>().sizeDelta.y*0.8f, dirftP.z);
+        nameIP.text = uiDirftInfo.GetDirftInfo.name;
+        outlayIP.text = " 花费：" + uiDirftInfo.GetDirftInfo.outlay;
+        introduceIP.text = " 介绍：" + uiDirftInfo.GetDirftInfo.introduce;
     }
 
     public override void OnExit()

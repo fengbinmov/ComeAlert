@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using GameAttrType;
+﻿using GameAttrType;
 
 public class Solider1101 : ObjectDataValue
 {

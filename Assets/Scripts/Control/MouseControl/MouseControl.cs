@@ -240,6 +240,7 @@ public class MouseControl : BaseControl {
                 {
                     if (isBuildingSelect == false) {
                         selectItem.HideSelfAllSelectItem_FP();
+                        //selectItemBuild.GetComponent<BoxCollider>().enabled = false;
                     }
                     isBuildingSelect = true;
 

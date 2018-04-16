@@ -10,6 +10,7 @@ public class SoldierTypePanel : BasePanel
     public override void OnEnter()
     {
         base.OnEnter();
+        StartShowAnim();
         mRectTransform = transform.Find("SoldierType").GetComponent<RectTransform>();
         transform.Find("SoldierType/BuildVolume").GetComponent<Button>().onClick.AddListener(OnClickBuildVolume);
     }
@@ -31,13 +32,19 @@ public class SoldierTypePanel : BasePanel
     private void OnClickBuildVolume() {
         GameControl.gameControl.PushPanel(UIPanelType.SelectItem);
     }
+    private void StartShowAnim() {
+        gameObject.SetActive(true);
+        transform.position = new Vector3(transform.position.x + 100f, transform.position.y, transform.position.z);
+        transform.DOMoveX(transform.position.x - 100f, 0.4f);
+    }
     private void ShowAnim() {
         gameObject.SetActive(true);
-        mRectTransform.localPosition = new Vector3(60f, 0);
-        mRectTransform.DOLocalMove(new Vector3(0, 0), 0.1f);
+        transform.DOMoveX(transform.position.x - 100f, 0.1f);
+        //mRectTransform.DOLocalMove(new Vector3(0, 0), 0.1f);
     }
     private void HiteAnim()
     {
-        mRectTransform.DOLocalMove(new Vector3(70f, 0), 0.2f).OnComplete(() => gameObject.SetActive(false));
+        transform.DOMoveX(transform.position.x + 100f, 0.2f).OnComplete(() => gameObject.SetActive(false));
+        //mRectTransform.DOLocalMove(new Vector3(70f, 0), 0.2f).OnComplete(() => gameObject.SetActive(false));
     }
 }

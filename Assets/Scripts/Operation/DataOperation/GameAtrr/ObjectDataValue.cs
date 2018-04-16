@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using GameAttrType;
 
 public class ObjectDataValue
@@ -34,6 +35,13 @@ public class ObjectDataValue
         public UInt32 m_u4RadiationY;
         public UInt32 m_u4Soul;        //心灵创伤
         public UInt32 m_u4SoulY;
+    }
+    public struct selfGameiData {
+
+        public Vector3 m_v3Postion;
+        public Vector3 m_v3Rotation;
+        public ENUM_OBJECT_STATE m_emObjectState;
+        public UInt32 m_u4Blood;
     }
 
     public selfDataValue m_data;

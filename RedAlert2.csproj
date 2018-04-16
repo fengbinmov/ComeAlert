@@ -116,8 +116,11 @@
     <Compile Include="Assets\Scripts\GameServant\GameOperation.cs" />
     <Compile Include="Assets\Scripts\GameServant\GameServant.cs" />
     <Compile Include="Assets\Scripts\Operation\BaseOperation.cs" />
+    <Compile Include="Assets\Scripts\Operation\CountryLists\CountryInfo.cs" />
+    <Compile Include="Assets\Scripts\Operation\CountryOperation.cs" />
     <Compile Include="Assets\Scripts\Operation\Cube\CubeMoveAI.cs" />
-    <Compile Include="Assets\Scripts\Operation\DataOperation\DataOperation.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Build1400.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\ObjectDataValue.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Solider1100.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Solider1101.cs" />

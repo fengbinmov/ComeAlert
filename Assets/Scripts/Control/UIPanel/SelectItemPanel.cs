@@ -103,7 +103,7 @@ public class SelectItemPanel : BasePanel{
         {
             currentSelectItems = null;
             List<ObjectDataValue> objectItems = new List<ObjectDataValue>();
-            objectItems.Add(new Solider1100());
+            objectItems.Add(new Build1400());
             objectItems.Add(new Solider1101());
             LoadSelectList(objectItems);
         }

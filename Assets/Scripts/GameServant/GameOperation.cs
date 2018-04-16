@@ -40,7 +40,6 @@ public class GameOperation :MonoBehaviour
     private void InitOperation() {
         mInfoOperation = new InfoOperation(this);
 
-
         mInfoOperation.Init();
     }
 

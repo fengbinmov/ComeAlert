@@ -82,6 +82,7 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
         if (isbulding == true)
         {
             m_parentPanel.NotHideSelfAllSelectItem();
+            //cubeBuild.GetComponent<BoxCollider>().enabled = true;
         }
         else {
             Destroy(cubeBuild.gameObject);

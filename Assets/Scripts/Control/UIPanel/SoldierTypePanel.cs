@@ -8,6 +8,12 @@ using UnityEngine.SceneManagement;
 public class SoldierTypePanel : BasePanel
 {
     private RectTransform mRectTransform;
+
+    public SoldierTypePanel():base()
+    {
+        uIPanelType = UIPanelType.SoldierType;
+    }
+
     public override void OnEnter()
     {
         base.OnEnter();

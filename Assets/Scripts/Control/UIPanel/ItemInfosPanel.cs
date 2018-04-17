@@ -10,6 +10,11 @@ public class ItemInfosPanel : BasePanel
     private Text introduceIP;
     private UIDirftInfo uiDirftInfo;
 
+    public ItemInfosPanel():base()
+    {
+        uIPanelType = UIPanelType.ItemInfos;
+    }
+
     public override void OnEnter()
     {
         Init();

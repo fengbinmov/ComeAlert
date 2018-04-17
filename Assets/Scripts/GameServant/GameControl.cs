@@ -101,6 +101,18 @@ public class GameControl : MonoBehaviour{
     {
         mUIControl.PopPanel();
     }
+    public void AddPanel(UIPanelType uIPanelType)
+    {
+        mUIControl.AddPanelList(uIPanelType);
+    }
+    public void RemovePanel(UIPanelType uIPanelType)
+    {
+        mUIControl.RemovePanelList(uIPanelType);
+    }
+    public void AddPanelDict(UIPanelType panelType, GameObject instPanel) {
+
+        mUIControl.AddPanelDict(panelType,instPanel);
+    }
     #endregion
 
 }

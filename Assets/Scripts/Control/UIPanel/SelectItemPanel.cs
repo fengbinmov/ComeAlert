@@ -15,6 +15,10 @@ public class SelectItemPanel : BasePanel{
     private GameObject currentSelectItemInfo;
     private ObjectDataValue currentSelectObjectData;
 
+    public SelectItemPanel():base()
+    {
+        uIPanelType = UIPanelType.SelectItem;
+    }
 
     public override void OnEnter()
     {

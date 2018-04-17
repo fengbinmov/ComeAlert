@@ -1,0 +1,23 @@
+{
+    "infoList": [
+        {
+            "panelTypeString": "MainMenu",
+            "path": "UIPanel/MainMenu/MainMenuPanel"
+        },
+
+        {
+            "panelTypeString": "ItemInfos",
+            "path": "UIPanel/ItemInfosPanel"
+        },
+
+        {
+            "panelTypeString": "SelectItem",
+            "path": "UIPanel/SelectItemPanel"
+        },
+
+        {
+            "panelTypeString": "SoldierType",
+            "path": "UIPanel/SoldierTypePanel"
+        }
+    ]
+}

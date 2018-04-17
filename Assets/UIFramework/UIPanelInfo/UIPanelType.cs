@@ -15,6 +15,12 @@ using UnityEngine;
 public enum UIPanelType{
     None,
     MainMenu,
+    Menu,
+    Settings,
+    Gameplay,
+    Video,
+    Audio,
+
     SoldierType,
     SelectItem,
     ItemInfos

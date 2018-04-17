@@ -37,12 +37,14 @@ public class MouseControl : BaseControl {
     private SelectItem selectItem = null;
     private GameObject selectItemBuild = null;
 
+    private bool controlViewInstance = false;
+
     public MouseControl(GameControl gameControl) : base(gameControl){ }
     public override void OnInit()
     {
         base.OnInit();
-        mouseEffectObject = Resources.Load("Prefabs/MouseEffect") as GameObject;
-        selectRectObject = Resources.Load("Prefabs/MouseSelectRect") as GameObject;
+        mouseEffectObject = Resources.Load("Prefabs/MouseEffect/MouseEffect") as GameObject;
+        selectRectObject = Resources.Load("Prefabs/MouseEffect/MouseSelectRect") as GameObject;
     }
     public override void Updata()
     {
@@ -52,12 +54,20 @@ public class MouseControl : BaseControl {
         SelectSoldierControl();
         SenceRotateCheck();
         SenceTranslation();
-        SenceDistance();
+        if(controlViewInstance) SenceDistance();
 
         BuildingSelectItem();
         EventMouseLU();
 
         currentScreenPointSith = currentScreenPoint;
+    }
+    public bool ControlViewInstance {
+        get {
+            return controlViewInstance;
+        }
+        set {
+            controlViewInstance = value;
+        }
     }
     #region 右键点击的特效的显示
 

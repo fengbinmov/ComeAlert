@@ -14,6 +14,7 @@ using UnityEngine;
 **************************************************************/
 public enum UIPanelType{
     None,
+    MainMenu,
     SoldierType,
     SelectItem,
     ItemInfos

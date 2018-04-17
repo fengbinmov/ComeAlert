@@ -103,8 +103,11 @@ public class SelectItemPanel : BasePanel{
         {
             currentSelectItems = null;
             List<ObjectDataValue> objectItems = new List<ObjectDataValue>();
+            objectItems.Add(new Build1406());
             objectItems.Add(new Build1400());
-            objectItems.Add(new Solider1101());
+            objectItems.Add(new Build1401());
+            objectItems.Add(new Build1403());
+            objectItems.Add(new Build1402());
             LoadSelectList(objectItems);
         }
         if (GUI.Button(new Rect(135, 25, 100, 30), "Cube_2"))

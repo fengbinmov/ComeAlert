@@ -44,7 +44,8 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
         {
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                cubeBuild = Instantiate(cubeSoliderObject, hit.point, Quaternion.identity);
+                cubeBuild = Instantiate(cubeSoliderObject);
+                cubeBuild.transform.position = hit.point;
                 cubeBuild.SetActive(false);
                 m_parentPanel.CurrentSelectObjectData = objectDataValue;
 

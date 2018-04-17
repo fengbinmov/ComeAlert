@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class SoldierTypePanel : BasePanel
 {
@@ -46,5 +47,13 @@ public class SoldierTypePanel : BasePanel
     {
         transform.DOMoveX(transform.position.x + 100f, 0.2f).OnComplete(() => gameObject.SetActive(false));
         //mRectTransform.DOLocalMove(new Vector3(70f, 0), 0.2f).OnComplete(() => gameObject.SetActive(false));
+    }
+    private void OnGUI()
+    {
+        if (GUI.Button(new Rect(25, 25, 100, 30), "切换场景"))
+        {
+            Debug.Log("切换场景");
+            SceneManager.LoadScene(0);
+        }
     }
 }

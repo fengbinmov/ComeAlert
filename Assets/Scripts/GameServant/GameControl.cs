@@ -71,6 +71,14 @@ public class GameControl : MonoBehaviour{
 
         mMouseControl.InitBuildSelectItem(game, selectItem);
     }
+    public bool ControlViewInstance {
+        get {
+            return mMouseControl.ControlViewInstance;
+        }
+        set {
+            mMouseControl.ControlViewInstance = value;
+        }
+    }
     #endregion
 
     #region Comm方法集

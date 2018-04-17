@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -109,6 +107,7 @@
     <Compile Include="Assets\Scripts\Control\MouseControl\MouseSelectCuboid.cs" />
     <Compile Include="Assets\Scripts\Control\UIControl.cs" />
     <Compile Include="Assets\Scripts\Control\UIPanel\ItemInfosPanel.cs" />
+    <Compile Include="Assets\Scripts\Control\UIPanel\MainMenuPanel.cs" />
     <Compile Include="Assets\Scripts\Control\UIPanel\SelectItem.cs" />
     <Compile Include="Assets\Scripts\Control\UIPanel\SelectItemPanel.cs" />
     <Compile Include="Assets\Scripts\Control\UIPanel\SoldierTypePanel.cs" />
@@ -121,11 +120,25 @@
     <Compile Include="Assets\Scripts\Operation\Cube\CubeMoveAI.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Build1400.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Build1401.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Build1402.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Build1403.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Build1406.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\ObjectDataValue.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Solider1100.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Solider1101.cs" />
     <Compile Include="Assets\Scripts\Operation\InfoOperation.cs" />
     <Compile Include="Assets\Scripts\Operation\InfoStorage\UIDirftInfo.cs" />
+    <Compile Include="Assets\Scripts\UI\ActiveStateToggler.cs" />
+    <Compile Include="Assets\Scripts\UI\ApplicationManager.cs" />
+    <Compile Include="Assets\Scripts\UI\ChangeColor.cs" />
+    <Compile Include="Assets\Scripts\UI\DragMe.cs" />
+    <Compile Include="Assets\Scripts\UI\DragPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\DropMe.cs" />
+    <Compile Include="Assets\Scripts\UI\ResizePanel.cs" />
+    <Compile Include="Assets\Scripts\UI\ScrollDetailTexture.cs" />
+    <Compile Include="Assets\Scripts\UI\ShowSliderValue.cs" />
+    <Compile Include="Assets\Scripts\UI\TiltWindow.cs" />
     <Compile Include="Assets\UIFramework\Base\BasePanel.cs" />
     <Compile Include="Assets\UIFramework\Extension\Extension.cs" />
     <Compile Include="Assets\UIFramework\UIPanelInfo\UIPanelType.cs" />
@@ -143,8 +156,10 @@
     <None Include="Assets\Demigiant\DemiLib\Core\DemiLib.xml" />
     <None Include="Assets\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
     <None Include="Assets\Demigiant\readme_DOTweenPro.txt" />
+    <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />
+    <None Include="Assets\Materials\UI-Default-No-Alpha.shader" />
+    <None Include="Assets\Textures and Sprites\SF UI\Background\LICENSE.txt" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>

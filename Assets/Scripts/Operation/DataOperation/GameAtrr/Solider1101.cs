@@ -7,7 +7,7 @@ public class Solider1101 : ObjectDataValue
         m_data.m_u8ID = 1101;
         m_data.m_emObjectType = ENUM_OBJECT_TYPE.OBJECT_PANLE_SOLIDER;
         m_data.m_emObjectState = ENUM_OBJECT_STATE.OBJECT_DISPLAY_STATE;
-        m_data.self = "Prefabs/CubeBuild";
+        m_data.self = "Prefabs/Build/CubeBuild";
         m_data.selfHeadP = "Images/ObjectHeadP/CubePhoto1";
         m_data.selfName = "特种兵";
         m_data.selfOutlay = "2342|223|564|246";

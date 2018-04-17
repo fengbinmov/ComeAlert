@@ -18,7 +18,7 @@ public class UIControl :BaseControl
     public override void OnInit()
     {
         base.OnInit();
-        PushPanel(UIPanelType.SoldierType);
+        PushPanel(UIPanelType.MainMenu);
     }
     public override void Updata()
     {

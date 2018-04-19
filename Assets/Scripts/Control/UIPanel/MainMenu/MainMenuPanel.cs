@@ -10,6 +10,7 @@ public class MainMenuPanel : BasePanel {
 
     private GameObject MenuPanel;
     private GameObject SettingsPanel;
+    private bool isStartGame = false;
 
     public MainMenuPanel():base()
     {
@@ -18,7 +19,6 @@ public class MainMenuPanel : BasePanel {
 
     public override void OnEnter()
     {
-        Debug.Log("OnEnter");
         Init();
         MenuPanel.transform.localPosition= new Vector3(800f, transform.position.y);
         MenuPanel.SetActive(true);
@@ -27,7 +27,10 @@ public class MainMenuPanel : BasePanel {
 
     public override void OnPause()
     {
-        MenuPanel.transform.DOLocalMoveY(800f, 0.5f).OnComplete(()=>MenuPanel.SetActive(false));
+        if (isStartGame){
+            MenuPanel.SetActive(false);
+        }
+        MenuPanel.transform.DOLocalMoveY(800f, 0.5f).OnComplete(() => MenuPanel.SetActive(false));
     }
 
     public override void OnResume()
@@ -43,7 +46,8 @@ public class MainMenuPanel : BasePanel {
     }
     public void OnClickStartGame()
     {
-        SceneManager.LoadScene(1);
+        isStartGame = true;
+        GameControl.gameControl.PushPanel(UIPanelType.DragAndDrop);
     }
     public void OnClickQuit()
     {

@@ -25,8 +25,13 @@ public class GameServant : MonoBehaviour {
                 break;
             case 1:
                 Debug.Log("111");
-                if (!GameControl.gameControl.ControlViewInstance)
+                if (!GameControl.gameControl.ControlViewInstance){
+
                     GameControl.gameControl.ControlViewInstance = true;
+                    GameControl.gameControl.CleanAllDict();
+                    GameControl.gameControl.PushPanel(UIPanelType.SoldierType);
+                }
+
                 break;
             default:
                 break;

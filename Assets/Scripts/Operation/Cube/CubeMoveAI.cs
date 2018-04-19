@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class CubeMoveAI : MonoBehaviour {
 
-    public Vector3 targetPostion;                      //目标当前保存
-    private Vector3 targetSith = Vector3.zero;  //目标上一位置保存
+    private Vector3 targetPostion;                       //目标当前保存
+    private Vector3 targetSith = Vector3.zero;          //目标上一位置保存
     private LineRenderer mLineRenderer;
 
-    public Vector3 dirtionHead = Vector3.zero;  //领队Cube的相对位置
-    public Vector3 dirtionFace;                 //Cube望向的方向
+    private Vector3 dirtionHead = Vector3.zero;  //领队Cube的相对位置
+    private Vector3 dirtionFace;                 //Cube望向的方向
 
-    public float speed = 1f;                    //移动速度
-    public float rotateSpeed = 5f;              //转向速度
+    private float speed = 1f;                    //移动速度
+    private float rotateSpeed = 9f;              //转向速度
 
-    public int roundCudeNum = 0;                //周围可影响自身的Cube数量
-    public float cubeWatchRang = 0.5f;          //可影响自身的范围
+    private int roundCudeNum = 0;                //周围可影响自身的Cube数量
+    private float cubeWatchRang = 0.5f;          //可影响自身的范围
 
     void Start()
     {
@@ -29,7 +29,7 @@ public class CubeMoveAI : MonoBehaviour {
         if (GameControl.gameControl.SetNewCommand.GetSelectListCube().IndexOf(transform) > -1)
         {
             GetComponent<MeshRenderer>().material.color = Color.green;
-            //收集[在指挥官的命令中 & 在可见范围内]
+            //收集[在指挥官的命令中 & 在可见范围内]的士兵和其周围的士兵数
             Collider[] collider = Physics.OverlapSphere(transform.position, cubeWatchRang);
             foreach (Collider c in collider)
             {
@@ -78,6 +78,9 @@ public class CubeMoveAI : MonoBehaviour {
     private void CubeMove() {
         transform.position = Vector3.MoveTowards(transform.position, targetPostion + dirtionHead, Time.deltaTime * speed);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirtionFace), Time.deltaTime * rotateSpeed);
+    }
+    private void CollectSolider() {
+
     }
     private void OnDestroy()
     {

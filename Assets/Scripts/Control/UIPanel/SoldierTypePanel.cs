@@ -59,7 +59,7 @@ public class SoldierTypePanel : BasePanel
         if (GUI.Button(new Rect(25, 25, 100, 30), "切换场景"))
         {
             Debug.Log("切换场景");
-            SceneManager.LoadScene(0);
+            //SceneManager.LoadScene(0);
         }
     }
 }

@@ -4,6 +4,14 @@
             "panelTypeString": "MainMenu",
             "path": "UIPanel/MainMenu/MainMenuPanel"
         },
+        {
+            "panelTypeString": "DragAndDrop",
+            "path": "UIPanel/MainMenu/DragAndDropPanel"
+        },
+        {
+            "panelTypeString": "Sketch",
+            "path": "UIPanel/MainMenu/SketchPanel"
+        },
 
         {
             "panelTypeString": "ItemInfos",

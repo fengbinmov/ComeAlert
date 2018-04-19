@@ -15,6 +15,8 @@ using UnityEngine;
 public enum UIPanelType{
     None,
     MainMenu,
+    DragAndDrop,
+    Sketch,
     Menu,
     Settings,
     Gameplay,

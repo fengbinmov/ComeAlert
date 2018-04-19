@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class UIControl :BaseControl
+public class UIControl : BaseControl
 {
     private const string RESOURCE_HEAD = "UIPanel/";
     private const string RESOURCE_TAIL = "Panel";
     private Dictionary<UIPanelType, string> panelPathDict;  //存储面板的路径
     private Dictionary<UIPanelType, BasePanel> panelDict;   //存储实例化面板游戏物体上的BasePanel组件
-    private Stack<BasePanel> panelStack;                    //管理实例化的父子页面的状态
-    private List<BasePanel> panelList;                      //管理实例化的页面的状态
+    private Stack<BasePanel> panelStack = null;                    //管理实例化的父子页面的状态
+    private List<BasePanel> panelList = null;                      //管理实例化的页面的状态
     private Transform _canvasTransfrom;
     private UIPanelType _UIPanelType = UIPanelType.None;
 
@@ -46,20 +46,21 @@ public class UIControl :BaseControl
     {
         if (panelStack == null)
             panelStack = new Stack<BasePanel>();
-         
+
         if (panelStack.Count > 0)                       //判断栈里面是否有页面,有则暂停
-        {                 
+        {
             BasePanel topPanel = panelStack.Peek();
             topPanel.OnPause();
         }
-        
+
         BasePanel panel = GetPanel(panelType);          //子页面响应并入栈
+        //Debug.Log(panel.name + "入栈");
         panel.OnEnter();
         panelStack.Push(panel);
 
     }
 
-    public void PopPanel()        //页面弹出
+    public void PopPanel(bool isRemove = true)        //页面弹出
     {
         if (panelStack == null)
             panelStack = new Stack<BasePanel>();
@@ -67,8 +68,9 @@ public class UIControl :BaseControl
 
         BasePanel topPanel = panelStack.Pop();
 
-        panelDict.Remove(topPanel.GetUIPanelType());    //页面销毁后清除字典中的垃圾数据
+        if(isRemove) panelDict.Remove(topPanel.GetUIPanelType());    //页面销毁后清除字典中的垃圾数据
 
+        //Debug.Log(topPanel.name + "出栈");
         topPanel.OnExit();                              //调用栈顶页面退出事件
 
         
@@ -167,5 +169,12 @@ public class UIControl :BaseControl
             panelPathDict.Add(info.panelType, info.path);
             //Debug.Log(info.panelType + " " + info.path);
         }
+    }
+    public void CleanAllDict() {
+
+        if (panelList != null)
+            panelList.Clear();
+        if (panelStack != null)
+            panelStack.Clear();
     }
 }

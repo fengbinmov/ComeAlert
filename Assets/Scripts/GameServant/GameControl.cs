@@ -97,9 +97,9 @@ public class GameControl : MonoBehaviour{
     {
         mUIControl.PushPanel(uIPanelType);
     }
-    public void PopPanel()
+    public void PopPanel(bool isRemove = true)
     {
-        mUIControl.PopPanel();
+        mUIControl.PopPanel(isRemove);
     }
     public void AddPanel(UIPanelType uIPanelType)
     {
@@ -112,6 +112,9 @@ public class GameControl : MonoBehaviour{
     public void AddPanelDict(UIPanelType panelType, GameObject instPanel) {
 
         mUIControl.AddPanelDict(panelType,instPanel);
+    }
+    public void CleanAllDict() {
+        mUIControl.CleanAllDict();
     }
     #endregion
 

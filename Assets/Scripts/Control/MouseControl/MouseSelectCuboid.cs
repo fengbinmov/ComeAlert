@@ -38,8 +38,8 @@ public class MouseSelectCuboid : MonoBehaviour {
     }
     private void OnDestroy()
     {
-        GameControl.gameControl.SetNewCommand.AddSelectCube(readySelectList);
-        GameControl.gameControl.SetNewCommand.SetTargetPostion(Vector3.zero);
+        GameControl.gameControl.AddSelectCube(readySelectList);
+        GameControl.gameControl.SetTargetPostion(Vector3.zero);
     }
     private void OnGUI()
     {

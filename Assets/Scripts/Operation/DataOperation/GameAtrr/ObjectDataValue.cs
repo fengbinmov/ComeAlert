@@ -6,7 +6,8 @@ public class ObjectDataValue
 {
     public struct selfDataValue
     {
-        public UInt16 m_u8ID;
+        public UInt16 m_u2ID;
+        public UInt32 m_u4IDNum;
         public ENUM_OBJECT_TYPE m_emObjectType;
         public ENUM_OBJECT_STATE m_emObjectState;
         public string self;
@@ -17,6 +18,8 @@ public class ObjectDataValue
     }
     public struct selfAtrrValue
     {
+        public UInt16 m_u2MoveSpeed;    //移动速度
+        public UInt16 m_u2RotateSpeed;    //转向速度
         public UInt32 m_u4AttackPlaneR;//地面攻击范围
         public UInt32 m_u4AttackHeight;//攻击高度
         public UInt32 m_u4Blood;       //血量
@@ -36,19 +39,20 @@ public class ObjectDataValue
         public UInt32 m_u4Soul;        //心灵创伤
         public UInt32 m_u4SoulY;
     }
-    public struct selfGameiData {
+    public struct selfGameData {
 
         public Vector3 m_v3Postion;
         public Vector3 m_v3Rotation;
         public ENUM_OBJECT_STATE m_emObjectState;
         public UInt32 m_u4Blood;
+        public UInt16 m_u2Exp;
     }
 
     public selfDataValue m_data;
     public selfAtrrValue m_atrr;
 
     public ObjectDataValue() {
-        this.m_data.m_u8ID = 999;
+        this.m_data.m_u2ID = 999;
         this.m_data.m_emObjectType = ENUM_OBJECT_TYPE.OBJECT_UNKNOW;
         this.m_data.m_emObjectState = ENUM_OBJECT_STATE.OBJECT_UNKNOW_STATE;
 

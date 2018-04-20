@@ -141,7 +141,7 @@ public class MouseControl : BaseControl {
         if (Input.GetMouseButtonDown(0))
         {
 
-            GameControl.gameControl.SetNewCommand.CleanSelectList();
+            GameControl.gameControl.CleanSelectList();
 
             if (getRecrtStartChart)
             {
@@ -222,7 +222,7 @@ public class MouseControl : BaseControl {
                 if (hit.collider.tag == "Plane" && !EventSystem.current.IsPointerOverGameObject())
                 {
                     MouseEffectShow(hit.point);
-                    GameControl.gameControl.SetNewCommand.SetTargetPostion(new Vector3(hit.point.x, hit.point.y + cubeHeight, hit.point.z));
+                    GameControl.gameControl.SetTargetPostion(new Vector3(hit.point.x, hit.point.y + cubeHeight, hit.point.z));
                 }
             }
         }

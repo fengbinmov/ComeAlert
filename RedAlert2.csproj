@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -122,20 +124,30 @@
     <Compile Include="Assets\Scripts\GameServant\GameOperation.cs" />
     <Compile Include="Assets\Scripts\GameServant\GameServant.cs" />
     <Compile Include="Assets\Scripts\Operation\BaseOperation.cs" />
-    <Compile Include="Assets\Scripts\Operation\CountryLists\CountryInfo.cs" />
-    <Compile Include="Assets\Scripts\Operation\CountryOperation.cs" />
     <Compile Include="Assets\Scripts\Operation\Cube\CubeMoveAI.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation.cs" />
-    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Build1400.cs" />
-    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Build1401.cs" />
-    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Build1402.cs" />
-    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Build1403.cs" />
-    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Build1406.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\BuildData1400.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\BuildData1401.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\BuildData1402.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\BuildData1403.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\BuildData1406.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\ObjectDataValue.cs" />
-    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Solider1100.cs" />
-    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\Solider1101.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\SoldierData1100.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\SoldierData1101.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\ObjectMember\BaseMem\BaseMember.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\ObjectMember\BaseMem\BuildMem.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\ObjectMember\BaseMem\FootSoldierMem.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\ObjectMember\Build1400.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\ObjectMember\Build1401.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\ObjectMember\Build1402.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\ObjectMember\Build1403.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\ObjectMember\Build1406.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\ObjectMember\SoldierMem1100.cs" />
+    <Compile Include="Assets\Scripts\Operation\DataOperation\ObjectMember\SoldierMem1101.cs" />
     <Compile Include="Assets\Scripts\Operation\InfoOperation.cs" />
+    <Compile Include="Assets\Scripts\Operation\InfoStorage\CountryInfo.cs" />
     <Compile Include="Assets\Scripts\Operation\InfoStorage\UIDirftInfo.cs" />
+    <Compile Include="Assets\Scripts\Operation\ObjectOperation.cs" />
     <Compile Include="Assets\Scripts\UI\ActiveStateToggler.cs" />
     <Compile Include="Assets\Scripts\UI\ApplicationManager.cs" />
     <Compile Include="Assets\Scripts\UI\ChangeColor.cs" />

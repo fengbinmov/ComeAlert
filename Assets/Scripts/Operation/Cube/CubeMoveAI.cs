@@ -26,22 +26,22 @@ public class CubeMoveAI : MonoBehaviour {
     void Update()
     {
         //判断是否受到指挥官的命令      //TODO
-        if (GameControl.gameControl.SetNewCommand.GetSelectListCube().IndexOf(transform) > -1)
+        if (GameControl.gameControl.GetIndexOfCommand(transform) > -1)
         {
             GetComponent<MeshRenderer>().material.color = Color.green;
             //收集[在指挥官的命令中 & 在可见范围内]的士兵和其周围的士兵数
             Collider[] collider = Physics.OverlapSphere(transform.position, cubeWatchRang);
             foreach (Collider c in collider)
             {
-                if (GameControl.gameControl.SetNewCommand.GetSelectListCube().IndexOf(c.gameObject.transform) > -1)
+                if (GameControl.gameControl.GetIndexOfCommand(c.gameObject.transform) > -1)
                 {
                     roundCudeNum++;
                 }
             }
-            GameControl.gameControl.SetNewCommand.AddCube(transform, roundCudeNum);
+            GameControl.gameControl.AddObjectToComm(transform, roundCudeNum);
             roundCudeNum = 0;
 
-            targetPostion = GameControl.gameControl.SetNewCommand.GetTargetPostion(transform);
+            targetPostion = GameControl.gameControl.GetTargetPostion(transform);
             //目标位置正常   计算与周围Cube的相对位置，设置Cube望向的方向
             if (targetPostion != Vector3.zero)
             {
@@ -49,7 +49,7 @@ public class CubeMoveAI : MonoBehaviour {
                 {
                     targetSith = targetPostion;
                     dirtionFace = targetPostion - transform.position;
-                    dirtionHead = transform.position - GameControl.gameControl.SetNewCommand.GetCenterCubePos;
+                    dirtionHead = transform.position - GameControl.gameControl.GetCenterCubePos();
                     NavLineOpenShow();
                 }
                 float distance = Vector3.Distance(transform.position, targetPostion + dirtionHead);
@@ -86,7 +86,7 @@ public class CubeMoveAI : MonoBehaviour {
     {
         if (GameControl.gameControl != null)    //防止意外退出GameControl前与销毁
         {
-            GameControl.gameControl.SetNewCommand.RemoveCube(transform);
+            GameControl.gameControl.RemoveObjectFromComm(transform);
         }
     }
     private void NavLineOpenShow() {

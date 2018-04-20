@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameControl : MonoBehaviour{
+public class GameControl : MonoBehaviour {
 
     #region  SingletonPattern
     private static GameControl _instance;
@@ -20,7 +20,7 @@ public class GameControl : MonoBehaviour{
     private void Awake()
     {
         if (_instance != null) {
-            Destroy(this.gameObject);return;
+            Destroy(this.gameObject); return;
         }
         _instance = this;
     }
@@ -66,6 +66,7 @@ public class GameControl : MonoBehaviour{
         Destroy(obj, time);
     }
     #endregion
+
     #region Mouse方法集
     public void InitBuildSelectItem(GameObject game, SelectItem selectItem) {
 
@@ -81,13 +82,47 @@ public class GameControl : MonoBehaviour{
     }
     #endregion
 
-    #region Comm方法集
-    public CommandControl SetNewCommand
+    #region Command方法集
+
+    //检测自身的transform是否在命令系统中
+    public int GetIndexOfCommand(Transform transform){
+
+        return  mCommandControl.GetSelectListCube().IndexOf(transform);
+    }
+    //得到将要移动的目标位置
+    public Vector3 GetTargetPostion(Transform transform) {
+
+        return mCommandControl.GetTargetPostion(transform);
+    }
+    //设置将要移动的目标位置
+    public void SetTargetPostion(Vector3 vector3) {
+        mCommandControl.SetTargetPostion(vector3);
+    }
+    //得到命令队伍中的中心士兵的位置
+    public Vector3 GetCenterCubePos() {
+
+        return mCommandControl.GetCenterCubePos;
+    }
+    //添加士兵到控制系统中
+    public void AddObjectToComm(Transform transform,int rangeNum) {
+
+        mCommandControl.AddCube(transform, rangeNum);
+    }
+    //从控制系统移除士兵
+    public void RemoveObjectFromComm(Transform transform)
     {
-        get
-        {
-            return mCommandControl;
-        }
+        mCommandControl.RemoveCube(transform);
+    }
+    //从控制系统移除所有
+    public void CleanSelectList() {
+        mCommandControl.CleanSelectList();
+    }
+    public void AddSelectCube(List<Transform> transformList) {
+        mCommandControl.AddSelectCube(transformList);
+    }
+    public void AddSelectCube(Transform transform)
+    {
+        mCommandControl.AddSelectCube(transform);
     }
     #endregion
 

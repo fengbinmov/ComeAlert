@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using GameAttrType;
 
 public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
 {
@@ -16,43 +17,82 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
 
     private LayerMask layerMask = 1 << 8;
 
-    private ObjectDataValue objectDataValue = new ObjectDataValue();
+    private BaseMember mBaseMember = new BaseMember();
+    //private ObjectDataValue objectDataValue = new ObjectDataValue();
 
     private Text selectName;
+    private Text SelectNum;
     private RawImage selectHeadP;
+    private Image selectHeadMAsk;
+    private float maskProgress = 1;
+    private int selectCount = 0;
 
     private UIDirftInfo uiDirftInfo;
 
-    public void SetSelectInfo(ObjectDataValue value) {
+
+    //public void SetSelectInfo(ObjectDataValue value) {
+
+    //    Init();
+    //    objectDataValue = value;
+    //    cubeSoliderObject = Resources.Load(objectDataValue.m_data.self) as GameObject;
+    //    selectName.text = objectDataValue.m_data.selfName;
+    //    selectHeadP.texture = Resources.Load(objectDataValue.m_data.selfHeadP) as Texture;
+    //}
+    public void SetSelectInfo(BaseMember value)
+    {
 
         Init();
-        objectDataValue = value;
-        cubeSoliderObject = Resources.Load(objectDataValue.m_data.self) as GameObject;
-        selectName.text = objectDataValue.m_data.selfName;
-        selectHeadP.texture = Resources.Load(objectDataValue.m_data.selfHeadP) as Texture;
+        mBaseMember = value;
+        cubeSoliderObject = Resources.Load(mBaseMember.selfDataValue.m_data.self) as GameObject;
+        selectName.text = mBaseMember.selfDataValue.m_data.selfName;
+        selectHeadP.texture = Resources.Load(mBaseMember.selfDataValue.m_data.selfHeadP) as Texture;
     }
     private void Update()
     {
         currentScreenPoint = Input.mousePosition;
+        if (selectCount > 0) {
+            maskProgress -= Time.deltaTime;
+            selectHeadMAsk.fillAmount = maskProgress;
+            if (maskProgress <= 0) {
+                selectCount--;
+                SelectNum.text = selectCount.ToString();
+                if (selectCount == 0)
+                    SelectNum.text = "";
+                maskProgress = 1;
+                GameOperation.gameOperation.AddMem(0, mBaseMember);
+            }
+        }
+
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("OnPointerDown");
+        //Debug.Log("OnPointerDown");
         Ray ray = Camera.main.ScreenPointToRay(currentScreenPoint);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                cubeBuild = Instantiate(cubeSoliderObject);
-                cubeBuild.transform.position = hit.point;
-                cubeBuild.SetActive(false);
-                m_parentPanel.CurrentSelectObjectData = objectDataValue;
+                if (mBaseMember.selfDataValue.m_data.m_emObjectType == ENUM_OBJECT_TYPE.OBJECT_BUILD)
+                {
+                    cubeBuild = Instantiate(cubeSoliderObject);
+                    cubeBuild.transform.position = hit.point;
+                    cubeBuild.SetActive(false);
+                    m_parentPanel.CurrentSelectObjectData = mBaseMember.selfDataValue;
 
-                //浮动面板运营处理
-                DirftOPeration(transform.position);
+                    //浮动面板运营处理
+                    DirftOPeration(transform.position);
 
-                GameControl.gameControl.InitBuildSelectItem(cubeBuild, this);
+                    GameControl.gameControl.InitBuildSelectItem(cubeBuild, this);
+                }
+                else
+                {
+                    DirftOPeration(transform.position);
+                    selectCount++;
+                    SelectNum.text = selectCount.ToString();
+
+                }
+                
             }
         }
     }
@@ -66,12 +106,14 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
     public void NotHideSelf()
     {
         this.gameObject.SetActive(true);
-        Debug.Log("showSelf");
+        //Debug.Log("showSelf");
     }
 
     private void Init() {
-        selectName = transform.GetComponentInChildren<Text>();
+        selectName = transform.GetComponentsInChildren<Text>()[0];
+        SelectNum = transform.GetComponentsInChildren<Text>()[1];
         selectHeadP = transform.GetComponent<RawImage>();
+        selectHeadMAsk = transform.GetComponentInChildren<Image>();
         m_parentPanel = transform.GetComponentInParent<SelectItemPanel>();
         uiDirftInfo = GameOperation.gameOperation.GetInfoOPeration.uIDirftInfo;
         isInit = true;
@@ -83,12 +125,13 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
         if (isbulding == true)
         {
             m_parentPanel.NotHideSelfAllSelectItem();
-            //cubeBuild.GetComponent<BoxCollider>().enabled = true;
+            GameOperation.gameOperation.AddMem(0, mBaseMember);
+
         }
         else {
             Destroy(cubeBuild.gameObject);
         }
-        Debug.Log("OnUp");
+        //Debug.Log("OnUp");
     }
     public void HideSelfAllSelectItem_FP(){
         m_parentPanel.HideSelfAllSelectItem();
@@ -101,7 +144,7 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
     }
     private void DirftOPeration(Vector3 postion) {
 
-        uiDirftInfo.SetDirftPanelInfo(postion, objectDataValue.m_data.selfName, objectDataValue.m_data.selfOutlay, objectDataValue.m_data.selfIntroduce);
+        uiDirftInfo.SetDirftPanelInfo(postion, mBaseMember.selfDataValue.m_data.selfName, mBaseMember.selfDataValue.m_data.selfOutlay, mBaseMember.selfDataValue.m_data.selfIntroduce);
         GameControl.gameControl.PushPanel(UIPanelType.ItemInfos);
     }
 }

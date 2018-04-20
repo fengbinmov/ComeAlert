@@ -9,6 +9,12 @@ public class SoldierTypePanel : BasePanel
 {
     private RectTransform mRectTransform;
 
+    private Button DemosBuildBtn;
+    private Button SoldierBuildBtn;
+    private Button CarBuildBtn;
+    private Button WaterBuildBtn;
+    private Button AirBuildBtn;
+
     public SoldierTypePanel():base()
     {
         uIPanelType = UIPanelType.SoldierType;
@@ -18,8 +24,8 @@ public class SoldierTypePanel : BasePanel
     {
         base.OnEnter();
         StartShowAnim();
-        mRectTransform = transform.Find("SoldierType").GetComponent<RectTransform>();
-        transform.Find("SoldierType/BuildVolume").GetComponent<Button>().onClick.AddListener(OnClickBuildVolume);
+        Init();
+
     }
 
     public override void OnExit()
@@ -58,8 +64,19 @@ public class SoldierTypePanel : BasePanel
     {
         if (GUI.Button(new Rect(25, 25, 100, 30), "切换场景"))
         {
-            Debug.Log("切换场景");
+            //Debug.Log("切换场景");
+            //Debug.Log("ObjectCount:["+GameOperation.gameOperation.GetObjectCount().ToString()+"]");
             //SceneManager.LoadScene(0);
         }
+    }
+    private void Init() {
+        mRectTransform = transform.Find("SoldierType").GetComponent<RectTransform>();
+        transform.Find("SoldierType/BuildVolume").GetComponent<Button>().onClick.AddListener(OnClickBuildVolume);
+
+        DemosBuildBtn = transform.Find("SoldierType/DemosBuild").GetComponent<Button>();
+        SoldierBuildBtn = transform.Find("SoldierType/SoldierBuild").GetComponent<Button>();
+        CarBuildBtn = transform.Find("SoldierType/CarBuild").GetComponent<Button>();
+        WaterBuildBtn = transform.Find("SoldierType/WaterBuild").GetComponent<Button>();
+        AirBuildBtn = transform.Find("SoldierType/AirBuild").GetComponent<Button>();
     }
 }

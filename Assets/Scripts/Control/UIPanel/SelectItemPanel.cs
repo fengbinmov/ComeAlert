@@ -53,15 +53,38 @@ public class SelectItemPanel : BasePanel{
     {
         transform.DOMoveY(transform.position.y- 100f, 0.1f).OnComplete(() => GameControl.gameControl.PopPanel());
     }
-    private void LoadSelectList(List<ObjectDataValue> selectList) {
+    //private void LoadSelectList(List<ObjectDataValue> selectList) {
+
+    //    currentSelectItems = selectListLayout.GetComponentsInChildren<SelectItem>();
+    //    foreach (SelectItem item in currentSelectItems) {
+    //        item.DestroySelf();
+    //    }
+    //    int count = selectList.Count;
+
+    //    for (int i = 0; i < count; i++) {
+    //        GameObject selectObject = GameObject.Instantiate(selectItemsPanel);
+    //        selectObject.transform.SetParent(selectListLayout.transform);
+    //        selectObject.GetComponent<SelectItem>().SetSelectInfo(selectList[i]);
+    //    }
+    //    Vector2 size = selectListLayout.GetComponent<RectTransform>().sizeDelta;
+    //    float sizeWidth = count * (selectItemsPanel.GetComponent<RectTransform>().sizeDelta.x + selectListLayout.spacing);
+    //    selectListLayout.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeWidth, size.y);
+    //    selectListLayout.GetComponent<RectTransform>().localPosition = new Vector3(sizeWidth/2, 0); //TODO可以更简单的恢复到顶部
+
+    //    currentSelectItems = selectListLayout.GetComponentsInChildren<SelectItem>();
+    //}
+    private void LoadSelectList(List<BaseMember> selectList)
+    {
 
         currentSelectItems = selectListLayout.GetComponentsInChildren<SelectItem>();
-        foreach (SelectItem item in currentSelectItems) {
+        foreach (SelectItem item in currentSelectItems)
+        {
             item.DestroySelf();
         }
         int count = selectList.Count;
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++)
+        {
             GameObject selectObject = GameObject.Instantiate(selectItemsPanel);
             selectObject.transform.SetParent(selectListLayout.transform);
             selectObject.GetComponent<SelectItem>().SetSelectInfo(selectList[i]);
@@ -69,7 +92,7 @@ public class SelectItemPanel : BasePanel{
         Vector2 size = selectListLayout.GetComponent<RectTransform>().sizeDelta;
         float sizeWidth = count * (selectItemsPanel.GetComponent<RectTransform>().sizeDelta.x + selectListLayout.spacing);
         selectListLayout.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeWidth, size.y);
-        selectListLayout.GetComponent<RectTransform>().localPosition = new Vector3(sizeWidth/2, 0); //TODO可以更简单的恢复到顶部
+        selectListLayout.GetComponent<RectTransform>().localPosition = new Vector3(sizeWidth / 2, 0); //TODO可以更简单的恢复到顶部
 
         currentSelectItems = selectListLayout.GetComponentsInChildren<SelectItem>();
     }
@@ -92,7 +115,7 @@ public class SelectItemPanel : BasePanel{
         foreach (SelectItem item in currentSelectItems)
         {
             item.NotHideSelf();
-            Debug.Log("NotHideSelfAllSelectItem");
+            //Debug.Log("NotHideSelfAllSelectItem");
         }
     }
     public ObjectDataValue CurrentSelectObjectData{
@@ -106,28 +129,21 @@ public class SelectItemPanel : BasePanel{
         if (GUI.Button(new Rect(25, 25, 100, 30), "Cube_1"))
         {
             currentSelectItems = null;
-            List<ObjectDataValue> objectItems = new List<ObjectDataValue>();
-            objectItems.Add(new Build1406());
+            List<BaseMember> objectItems = new List<BaseMember>();
             objectItems.Add(new Build1400());
             objectItems.Add(new Build1401());
-            objectItems.Add(new Build1403());
             objectItems.Add(new Build1402());
+            objectItems.Add(new Build1403());
+            objectItems.Add(new Build1406());
             LoadSelectList(objectItems);
         }
-        if (GUI.Button(new Rect(135, 25, 100, 30), "Cube_2"))
+        
+        if (GUI.Button(new Rect(135, 25, 100, 30), "Cube_3"))
         {
             currentSelectItems = null;
-            List<ObjectDataValue> objectItems = new List<ObjectDataValue>();
-            objectItems.Add(new Solider1100());
-            objectItems.Add(new Solider1101());
-            objectItems.Add(new Solider1100());
-            objectItems.Add(new Solider1101());
-            objectItems.Add(new Solider1100());
-            objectItems.Add(new Solider1101());
-            objectItems.Add(new Solider1100());
-            objectItems.Add(new Solider1101());
-            objectItems.Add(new Solider1100());
-            objectItems.Add(new Solider1101());
+            List<BaseMember> objectItems = new List<BaseMember>();
+            objectItems.Add(new SoldierMem1100());
+            objectItems.Add(new SoldierMem1101());
             LoadSelectList(objectItems);
         }
     }

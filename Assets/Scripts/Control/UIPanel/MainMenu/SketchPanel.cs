@@ -12,7 +12,7 @@ public class SketchPanel : BasePanel
     private GameObject mSketchToolsObject;
     private Slider loaderSlider;
 
-    private int progress = 0;
+    private int nowProgress = 0;
 
     private AsyncOperation asyncOperation;
     public SketchPanel():base()
@@ -48,14 +48,26 @@ public class SketchPanel : BasePanel
     {
         
         if (asyncOperation != null) {
-            progress = (int)(asyncOperation.progress*100);
-            loaderSlider.value = progress;
-            //Debug.Log("progress[" + progress+"]");
+
+            ushort toProgress = 0;
+            if (asyncOperation.progress < 0.9f){
+                toProgress = (ushort)(asyncOperation.progress * 200);
+            }
+            else {
+                toProgress = 200;
+            }
+            if (nowProgress < toProgress) {
+                nowProgress++;
+            }
+            loaderSlider.value = nowProgress/200f;
+            if (nowProgress == 200)
+                asyncOperation.allowSceneActivation = true;
         }
     }
     private IEnumerator LoadScene()
     {
         asyncOperation = SceneManager.LoadSceneAsync(1);
+        asyncOperation.allowSceneActivation = false;
         yield return asyncOperation;
     }
 }

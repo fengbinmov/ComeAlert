@@ -39,17 +39,11 @@ public class ItemInfosPanel : BasePanel
     {
         base.OnResume();
     }
-    private void InitSelectInfoPanel(string name,string outlay,string duce)
-    {
-        nameIP.text = name;
-        outlayIP.text = outlay;
-        introduceIP.text = duce;
-    }
     private void Init() {
 
         nameIP = transform.Find("Context/Name").GetComponent<Text>();
         outlayIP = transform.Find("Context/Outlay").GetComponent<Text>();
         introduceIP = transform.Find("Context/Introduce").GetComponent<Text>();
-        uiDirftInfo = GameOperation.gameOperation.GetInfoOPeration.uIDirftInfo;
+        uiDirftInfo = GameOperation.gameOperation.GetInfoOperation.uIDirftInfo;
     }
 }

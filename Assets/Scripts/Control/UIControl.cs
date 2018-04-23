@@ -107,10 +107,24 @@ public class UIControl : BaseControl
         panelDict.Remove(removePanel.GetUIPanelType());
 
         removePanel.OnExit();                              //调用栈顶页面退出事件
+        if (panelStack != null) {                          //对栈内面板响应对应的时间系统
+            panelStack.Peek().ListPanelRemoveEvent(uIPanelType);
+        }
         
     }
     #endregion
 
+    // 查看栈顶面板类型
+    public UIPanelType LookPanelStackTop() {
+        return panelStack.Peek().GetUIPanelType();
+    }
+    // 查看堆顶面板类型
+    public UIPanelType LookPanelListTop()
+    {
+        if (panelList == null || panelList.Count == 0)
+            return UIPanelType.None;
+        return panelList[panelList.Count-1].GetUIPanelType();
+    }
     private BasePanel GetPanel(UIPanelType panelType)       //根据面板类型 得到实例化的面板
     {
         if (panelDict == null)

@@ -151,6 +151,14 @@ public class GameControl : MonoBehaviour {
     public void CleanAllDict() {
         mUIControl.CleanAllDict();
     }
+    public UIPanelType LookPanelStackTop()
+    {
+        return mUIControl.LookPanelStackTop();
+    }
+    public UIPanelType LookPanelListTop()
+    {
+        return mUIControl.LookPanelListTop();
+    }
     #endregion
 
 }

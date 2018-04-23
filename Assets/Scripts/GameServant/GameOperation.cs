@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using GameAttrType;
 
 public class GameOperation : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class GameOperation : MonoBehaviour
 
     private InfoOperation mInfoOperation;
     private ObjectOperation mObjectOperation;
+    private CommandOperation mCommandOperation;
+
     private void Start()
     {
         InitOperation();
@@ -38,36 +41,61 @@ public class GameOperation : MonoBehaviour
     private void Update()
     {
         mInfoOperation.Update();
-        mObjectOperation.Update();
+        //游戏对战开始后激活"对象系统"与"命令系统"
+        if (mInfoOperation.gameProgressInfo.IsGamePlaying()) {
+
+            mObjectOperation.Update();
+            mCommandOperation.Update();
+        }
     }
     private void InitOperation() {
         mInfoOperation = new InfoOperation(this);
         mObjectOperation = new ObjectOperation(this);
+        mCommandOperation = new CommandOperation(this);
 
         mInfoOperation.Init();
         mObjectOperation.Init();
+        mCommandOperation.Init();
     }
-    #region ObjectOperation集合
+    private void OnDestroy()
+    {
+        mInfoOperation.Destroy();
+        mObjectOperation.Destroy();
+        mCommandOperation.Destroy();
+    }
 
-    public void AddMenList() {
-        mObjectOperation.AddMenList(new Dictionary<uint, BaseMember>());
+    #region ObjectOperation集合
+    public void AddCountryList(ushort teamNum) {
+        mObjectOperation.AddCountryList(teamNum);
     }
-    public void AddMem(int listNum, BaseMember mem) {
-        mObjectOperation.AddMem(listNum, mem);
+    public void AddMemInCountry(ushort idCountryCount, BaseMember mem) {
+        mObjectOperation.AddMemInCountry(idCountryCount, mem);
     }
-    public void RemoveMenList(Dictionary<UInt32, BaseMember> memList) {
-        mObjectOperation.RemoveMenList(memList);
+    public void RemoveCountryList(ushort idCountryCount){
+
+        mObjectOperation.RemoveCountryList(idCountryCount);
     }
-    public void RemoveMem(int listNum, UInt32 id){
-        mObjectOperation.RemoveMem(listNum, id);
+    public void RemoveMemInCountry(ushort idCountryCount, UInt32 memID){
+
+        mObjectOperation.RemoveMemInCountry(idCountryCount, memID);
     }
-    public UInt32 GetObjectCount() {
-        return mObjectOperation.ObjectCount;
+    public UInt32 GetMemCount() {
+        return mObjectOperation.MemCount;
+    }
+    public void GetCountryInfo() {
+        mObjectOperation.GetCountryInfo();
+    }
+    public ushort GetBuildNumForACountry(ushort countryID, ENUM_BUILD_TYPE buildType) {
+        return mObjectOperation.GetBuildNumForACountry(countryID, buildType);
+    }
+    public ushort[] GetAllCountryID()
+    {
+        return mObjectOperation.GetAllCountryID();
     }
     #endregion
-    #region InfoOPeration集合
 
-    public InfoOperation GetInfoOPeration
+        #region InfoOPeration集合
+    public InfoOperation GetInfoOperation
     {
         get{
             return mInfoOperation;

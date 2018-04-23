@@ -30,14 +30,7 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
     private UIDirftInfo uiDirftInfo;
 
 
-    //public void SetSelectInfo(ObjectDataValue value) {
 
-    //    Init();
-    //    objectDataValue = value;
-    //    cubeSoliderObject = Resources.Load(objectDataValue.m_data.self) as GameObject;
-    //    selectName.text = objectDataValue.m_data.selfName;
-    //    selectHeadP.texture = Resources.Load(objectDataValue.m_data.selfHeadP) as Texture;
-    //}
     public void SetSelectInfo(BaseMember value)
     {
 
@@ -50,18 +43,10 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
     private void Update()
     {
         currentScreenPoint = Input.mousePosition;
-        if (selectCount > 0) {
-            maskProgress -= Time.deltaTime;
-            selectHeadMAsk.fillAmount = maskProgress;
-            if (maskProgress <= 0) {
-                selectCount--;
-                SelectNum.text = selectCount.ToString();
-                if (selectCount == 0)
-                    SelectNum.text = "";
-                maskProgress = 1;
-                GameOperation.gameOperation.AddMem(0, mBaseMember);
-            }
-        }
+
+        //控制对象选中后的图像剩余时间显示
+        ItemPitchOnEvent();
+        
 
     }
     public void OnPointerDown(PointerEventData eventData)
@@ -81,13 +66,13 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
                     m_parentPanel.CurrentSelectObjectData = mBaseMember.selfDataValue;
 
                     //浮动面板运营处理
-                    DirftOPeration(transform.position);
+                    DirftOperation(transform.position);
 
                     GameControl.gameControl.InitBuildSelectItem(cubeBuild, this);
                 }
                 else
                 {
-                    DirftOPeration(transform.position);
+                    DirftOperation(transform.position);
                     selectCount++;
                     SelectNum.text = selectCount.ToString();
 
@@ -106,7 +91,6 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
     public void NotHideSelf()
     {
         this.gameObject.SetActive(true);
-        //Debug.Log("showSelf");
     }
 
     private void Init() {
@@ -115,20 +99,20 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
         selectHeadP = transform.GetComponent<RawImage>();
         selectHeadMAsk = transform.GetComponentInChildren<Image>();
         m_parentPanel = transform.GetComponentInParent<SelectItemPanel>();
-        uiDirftInfo = GameOperation.gameOperation.GetInfoOPeration.uIDirftInfo;
+        uiDirftInfo = GameOperation.gameOperation.GetInfoOperation.uIDirftInfo;
         isInit = true;
     }
     public void CancelSelfInvoke(bool isbulding)
     {
         if (isInit == false)Init();
 
-        if (isbulding == true)
+        if (isbulding == true)      //对象选择成功,让父面板显示之前隐藏的Bar中的所有项目,并更新“对象系统”
         {
             m_parentPanel.NotHideSelfAllSelectItem();
-            GameOperation.gameOperation.AddMem(0, mBaseMember);
+            GameOperation.gameOperation.AddMemInCountry(1, mBaseMember);
 
         }
-        else {
+        else{                      //对象选择失败,销毁数遍按下时生成的未激活对象模型
             Destroy(cubeBuild.gameObject);
         }
         //Debug.Log("OnUp");
@@ -139,12 +123,29 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        GameOperation.gameOperation.GetInfoOPeration.uIDirftInfo.CleanDirftPanelInfo();
-        GameControl.gameControl.PopPanel();
+        GameOperation.gameOperation.GetInfoOperation.uIDirftInfo.CleanDirftPanelInfo();
+        GameControl.gameControl.RemovePanel(UIPanelType.ItemInfos);
     }
-    private void DirftOPeration(Vector3 postion) {
+    private void DirftOperation(Vector3 postion) {
 
         uiDirftInfo.SetDirftPanelInfo(postion, mBaseMember.selfDataValue.m_data.selfName, mBaseMember.selfDataValue.m_data.selfOutlay, mBaseMember.selfDataValue.m_data.selfIntroduce);
-        GameControl.gameControl.PushPanel(UIPanelType.ItemInfos);
+
+        GameControl.gameControl.AddPanel(UIPanelType.ItemInfos);
+    }
+    private void ItemPitchOnEvent() {
+        if (selectCount > 0)
+        {
+            maskProgress -= Time.deltaTime;
+            selectHeadMAsk.fillAmount = maskProgress;
+            if (maskProgress <= 0)
+            {
+                selectCount--;
+                SelectNum.text = selectCount.ToString();
+                if (selectCount == 0)
+                    SelectNum.text = "";
+                maskProgress = 1;
+                GameOperation.gameOperation.AddMemInCountry(1, mBaseMember);//TODO
+            }
+        }
     }
 }

@@ -249,24 +249,24 @@ public class MouseControl : BaseControl {
                 if (hit.collider.tag == "Plane" && !EventSystem.current.IsPointerOverGameObject())
                 {
                     if (isBuildingSelect == false) {
-                        selectItem.HideSelfAllSelectItem_FP();
-                        //selectItemBuild.GetComponent<BoxCollider>().enabled = false;
+                        selectItem.HideSelfAllSelectItem_FP();  //当选择对象被拖出Bar之外后,让其父面板隐藏Bar中的所有对象
                     }
                     isBuildingSelect = true;
 
 
-                    if (selectItemBuild.activeSelf == false)
+                    if (selectItemBuild.activeSelf == false)        //队形模型未激活，就将其激活显示
                         selectItemBuild.SetActive(true);
-                    selectItemBuild.transform.position = hit.point;
+                    selectItemBuild.transform.position = hit.point; //对象模型位置跟所鼠标
                 }
             }
         }
     }
     private void EventMouseLU() {
-        if (Input.GetMouseButtonUp(0) && isBuildSelectStart)
+
+        if (Input.GetMouseButtonUp(0) && isBuildSelectStart)    //鼠标弹起而且选择回合已开始,就结束该选择回合
         {
-            selectItem.CancelSelfInvoke(isBuildingSelect);
-            
+            selectItem.CancelSelfInvoke(isBuildingSelect);      //告诉选择项目面板对象模型是否激活
+
             selectItem = null;
             selectItemBuild = null;
             isBuildSelectStart = false;

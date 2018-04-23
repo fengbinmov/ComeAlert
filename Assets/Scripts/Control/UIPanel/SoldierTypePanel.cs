@@ -7,15 +7,29 @@ using UnityEngine.SceneManagement;
 
 public class SoldierTypePanel : BasePanel
 {
-    private RectTransform mRectTransform;
+    private GameObject selectItemPanel;
+    private GameObject volumePanel;
+    private bool volumePanelActive = false;
 
+    private List<Button> BuildBtnList = new List<Button>();
     private Button DemosBuildBtn;
     private Button SoldierBuildBtn;
     private Button CarBuildBtn;
     private Button WaterBuildBtn;
     private Button AirBuildBtn;
+    private GameObject VolumeBtnObject;
 
-    public SoldierTypePanel():base()
+    private List<Text> BuildTextList = new List<Text>();
+    private Text DemosHasNum;
+    private Text SoldierHasNum;
+    private Text CarHasNum;
+    private Text WaterHasNum;
+    private Text AirHasNum;
+
+    //Demos、Soldier、Car、Water、Air   数量
+    private ushort[] activeArr = { 0, 0, 0, 0, 0 };
+
+    public SoldierTypePanel() : base()
     {
         uIPanelType = UIPanelType.SoldierType;
     }
@@ -25,7 +39,7 @@ public class SoldierTypePanel : BasePanel
         base.OnEnter();
         StartShowAnim();
         Init();
-
+        InitBuildNum();
     }
 
     public override void OnExit()
@@ -35,6 +49,8 @@ public class SoldierTypePanel : BasePanel
 
     public override void OnPause()
     {
+        volumePanelActive = false;
+        volumePanel.SetActive(volumePanelActive);
         HiteAnim();
     }
 
@@ -42,27 +58,90 @@ public class SoldierTypePanel : BasePanel
     {
         ShowAnim();
     }
-    private void OnClickBuildVolume() {
-        GameControl.gameControl.PushPanel(UIPanelType.SelectItem);
+    public override void ListPanelRemoveEvent(UIPanelType uIPanelType)
+    {
+        if (uIPanelType == UIPanelType.SelectItem) {
+            InitBuildNum();
+            VolumeBtnObject.SetActive(true);
+        }
     }
-    private void StartShowAnim() {
+    #region 主选项按键事件
+    private void OnClickBuildVolume()
+    {
+        if (GameControl.gameControl.LookPanelListTop() == UIPanelType.SelectItem)
+        {
+            GameControl.gameControl.RemovePanel(UIPanelType.SelectItem);
+        }
+        volumePanelActive = !volumePanelActive;
+        volumePanel.SetActive(volumePanelActive);
+
+    }
+    private void OnClickBuildDemos()
+    {
+        VolumeBtnObject.SetActive(true);
+        OnClickOpenBar();
+    }
+    private void OnClickBuildSoldier()
+    {
+        VolumeBtnObject.SetActive(true);
+        OnClickOpenBar();
+    }
+    private void OnClickBuildCar()
+    {
+        VolumeBtnObject.SetActive(true);
+        OnClickOpenBar();
+    }
+    private void OnClickBuildWater()
+    {
+        VolumeBtnObject.SetActive(true);
+        OnClickOpenBar();
+    }
+    private void OnClickBuildAir()
+    {
+        VolumeBtnObject.SetActive(true);
+        OnClickOpenBar();
+    }
+    private void OnClickOpenBar()
+    {
+        volumePanel.SetActive(false);
+        if (GameControl.gameControl.LookPanelListTop() == UIPanelType.SelectItem)
+        {
+            GameControl.gameControl.RemovePanel(UIPanelType.SelectItem);
+        }
+        GameControl.gameControl.AddPanel(UIPanelType.SelectItem);
+
+    }
+    #endregion
+
+    #region Volume按键事件
+
+    public void OnClickBuilds() {
+        VolumeBtnObject.SetActive(false);
+        OnClickOpenBar();
+    }
+    #endregion
+
+    #region 动画事件
+    private void StartShowAnim()
+    {
         gameObject.SetActive(true);
         transform.position = new Vector3(transform.position.x + 100f, transform.position.y, transform.position.z);
         transform.DOMoveX(transform.position.x - 100f, 0.4f);
     }
-    private void ShowAnim() {
+    private void ShowAnim()
+    {
         gameObject.SetActive(true);
         transform.DOMoveX(transform.position.x - 100f, 0.1f);
-        //mRectTransform.DOLocalMove(new Vector3(0, 0), 0.1f);
     }
     private void HiteAnim()
     {
         transform.DOMoveX(transform.position.x + 100f, 0.2f).OnComplete(() => gameObject.SetActive(false));
-        //mRectTransform.DOLocalMove(new Vector3(70f, 0), 0.2f).OnComplete(() => gameObject.SetActive(false));
     }
+    #endregion
+
     private void OnGUI()
     {
-        if (GUI.Button(new Rect(25, 25, 100, 30), "切换场景"))
+        if (GUI.Button(new Rect(25, 55, 100, 30), "切换场景"))
         {
             //Debug.Log("切换场景");
             //Debug.Log("ObjectCount:["+GameOperation.gameOperation.GetObjectCount().ToString()+"]");
@@ -70,13 +149,56 @@ public class SoldierTypePanel : BasePanel
         }
     }
     private void Init() {
-        mRectTransform = transform.Find("SoldierType").GetComponent<RectTransform>();
-        transform.Find("SoldierType/BuildVolume").GetComponent<Button>().onClick.AddListener(OnClickBuildVolume);
+
+        volumePanel = transform.Find("VolumePanel").gameObject;
+
+        VolumeBtnObject = transform.Find("SoldierType/BuildVolume").gameObject;
+        VolumeBtnObject.GetComponent<Button>().onClick.AddListener(OnClickBuildVolume);
 
         DemosBuildBtn = transform.Find("SoldierType/DemosBuild").GetComponent<Button>();
+        DemosHasNum = transform.Find("SoldierType/DemosBuild/BuildNum").GetComponent<Text>();
+        DemosBuildBtn.onClick.AddListener(OnClickBuildDemos);
+        BuildTextList.Add(DemosHasNum);
+        BuildBtnList.Add(DemosBuildBtn);
+
         SoldierBuildBtn = transform.Find("SoldierType/SoldierBuild").GetComponent<Button>();
+        SoldierHasNum = transform.Find("SoldierType/SoldierBuild/BuildNum").GetComponent<Text>();
+        SoldierBuildBtn.onClick.AddListener(OnClickBuildSoldier);
+        BuildTextList.Add(SoldierHasNum);
+        BuildBtnList.Add(SoldierBuildBtn);
+
         CarBuildBtn = transform.Find("SoldierType/CarBuild").GetComponent<Button>();
+        CarHasNum = transform.Find("SoldierType/CarBuild/BuildNum").GetComponent<Text>();
+        CarBuildBtn.onClick.AddListener(OnClickBuildCar);
+        BuildTextList.Add(CarHasNum);
+        BuildBtnList.Add(CarBuildBtn);
+
         WaterBuildBtn = transform.Find("SoldierType/WaterBuild").GetComponent<Button>();
+        WaterHasNum = transform.Find("SoldierType/WaterBuild/BuildNum").GetComponent<Text>();
+        WaterBuildBtn.onClick.AddListener(OnClickBuildWater);
+        BuildTextList.Add(WaterHasNum);
+        BuildBtnList.Add(WaterBuildBtn);
+
         AirBuildBtn = transform.Find("SoldierType/AirBuild").GetComponent<Button>();
+        AirHasNum = transform.Find("SoldierType/AirBuild/BuildNum").GetComponent<Text>();
+        AirBuildBtn.onClick.AddListener(OnClickBuildAir);
+        BuildTextList.Add(AirHasNum);
+        BuildBtnList.Add(AirBuildBtn);
+    }
+    private void InitBuildNum() {
+        
+        activeArr = GameOperation.gameOperation.GetInfoOperation.uIActiveInfoDict[1].GetActiveInfo;
+
+        for (int i = 0; i < 5; i++) {
+            if (activeArr[i] > 0)
+            {
+                BuildTextList[i].text = activeArr[i].ToString();
+                BuildBtnList[i].interactable = true;
+            }
+            else {
+                BuildTextList[i].text = "0";
+                BuildBtnList[i].interactable = false;
+            }
+        }
     }
 }

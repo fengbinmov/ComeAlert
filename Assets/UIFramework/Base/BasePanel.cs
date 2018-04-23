@@ -19,6 +19,9 @@ public class BasePanel : MonoBehaviour {
     public virtual void OnExit()
     {
     }
+    public virtual void ListPanelRemoveEvent(UIPanelType uIPanelType)
+    {
+    }
     public virtual UIPanelType GetUIPanelType() {
         return uIPanelType;
     }

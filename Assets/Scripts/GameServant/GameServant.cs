@@ -27,10 +27,14 @@ public class GameServant : MonoBehaviour {
 
                     GameControl.gameControl.ControlViewInstance = true;
                     GameControl.gameControl.CleanAllDict();
-                    GameControl.gameControl.PushPanel(UIPanelType.SoldierType);
+                    
+                    GameOperation.gameOperation.AddCountryList(1);
+                    GameOperation.gameOperation.AddCountryList(2);
+                    GameOperation.gameOperation.GetCountryInfo();       //test专用
+                    GameOperation.gameOperation.GetInfoOperation.gameProgressInfo.IsGamePlay = true;
 
-                    GameOperation.gameOperation.AddMenList();
-                    GameOperation.gameOperation.AddMenList();
+
+                    GameControl.gameControl.PushPanel(UIPanelType.SoldierType);
                 }
 
                 break;

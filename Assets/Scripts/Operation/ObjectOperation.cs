@@ -9,45 +9,37 @@ public class ObjectOperation : BaseOperation
 {
     public ObjectOperation(GameOperation gameOperation) : base(gameOperation) { }
 
-    private UInt32 iDNumCount = 0;
-    private List<Dictionary<UInt32, BaseMember>> memObjects = new List<Dictionary<UInt32, BaseMember>>();
-    private List<IDNum> CountryIDNum = new List<IDNum>(); 
-    private List<ObjectTypeNum> CountryTypeNum = new List<ObjectTypeNum>();
+    private UInt32 iDNumCount = 0;          //“对象省份证”|总数
+    private UInt16 iDCountryCount = 0;      //“国家省份证”|总数
+    private CountrySystem mCountrySystem = new CountrySystem();
+    private BuildSystem mBuildSystem = new BuildSystem();
 
+    public void AddCountryList(ushort team) {
 
-    public void AddMenList(Dictionary<UInt32, BaseMember> memList){
-        memObjects.Add(memList);
-        CountryIDNum.Add(new IDNum());
-        CountryTypeNum.Add(new ObjectTypeNum());
+        ++iDCountryCount;
+        mCountrySystem.AddCountryList(iDCountryCount,team, mBuildSystem);
     }
-    public void AddMem(int listNum, BaseMember mem){
-        iDNumCount++;
+    public void AddMemInCountry(ushort idCountryCount,BaseMember mem) {
 
-        //更新士兵省份证ID的信息
-        mem.selfDataValue.m_data.m_u4IDNum = iDNumCount;
-
-        memObjects[listNum].Add(iDNumCount, mem);
-        CountryIDNum[listNum].objects.Add(iDNumCount);
-        AddTypeNum(listNum, mem.selfDataValue.m_data.m_u2ID);
+        ++iDNumCount;
+        mCountrySystem.AddMemInCountry(idCountryCount, mem, iDNumCount, mBuildSystem);
     }
+    public void RemoveCountryList(ushort idCountryCount) {
 
-    public void RemoveMenList(Dictionary<UInt32, BaseMember> memList){
-        memObjects.Remove(memList);
+        --iDCountryCount;
+        mCountrySystem.RemoveCountryList(idCountryCount);
     }
-    public void RemoveMem(int listNum, UInt32 id){
-
-        SubTypeNum(listNum, memObjects[listNum].TryGet(id).selfDataValue.m_data.m_u2ID);
-        memObjects[listNum].Remove(id);
-        CountryIDNum[listNum].objectsDie.Add(id);
+    public void RemoveMemInCountry(ushort idCountryCount, UInt32 memID)
+    {
+        mCountrySystem.RemoveMemInCountry(idCountryCount, memID, mBuildSystem);
     }
-
 
     public override void Init()
     {
         base.Init();
-        foreach (Dictionary<UInt32, BaseMember> mems in memObjects)
+        foreach (Dictionary<UInt32, BaseMember> memCountry in mCountrySystem.CountryMem.Values)
         {
-            foreach (BaseMember mem in mems.Values)
+            foreach (BaseMember mem in memCountry.Values)
             {
                 mem.Init();
             }
@@ -55,394 +47,55 @@ public class ObjectOperation : BaseOperation
     }
     public override void Update()
     {
-        foreach (Dictionary<UInt32, BaseMember> mems in memObjects)
+        foreach (Dictionary<UInt32, BaseMember> memCountry in mCountrySystem.CountryMem.Values)
         {
-            foreach (BaseMember mem in mems.Values)
+            foreach (BaseMember mem in memCountry.Values)
             {
                 mem.Updata();
             }
         }
+
     }
     public override void Destroy()
     {
         base.Destroy();
-        foreach (Dictionary<UInt32, BaseMember> mems in memObjects)
+        foreach (Dictionary<UInt32, BaseMember> memCountry in mCountrySystem.CountryMem.Values)
         {
-            foreach (BaseMember mem in mems.Values)
+            foreach (BaseMember mem in memCountry.Values)
             {
                 mem.Destroy();
             }
         }
     }
+    
 
-    private void AddTypeNum(int listNum, UInt32 id) {
+    //返回场景中所有的 士兵数+建筑数
+    public UInt32 MemCount { get { return iDNumCount; } }
 
-        switch (id) {
-            case 1100:
-                CountryTypeNum[listNum].Solider1100++;
-                break;
-            case 1101:
-                CountryTypeNum[listNum].Solider1101++;
-                break;
-            case 1102:
-                CountryTypeNum[listNum].Solider1102++;
-                break;
-            case 1103:
-                CountryTypeNum[listNum].Solider1103++;
-                break;
-            case 1104:
-                CountryTypeNum[listNum].Solider1104++;
-                break;
-            case 1105:
-                CountryTypeNum[listNum].Solider1105++;
-                break;
-            case 1106:
-                CountryTypeNum[listNum].Solider1106++;
-                break;
-            case 1107:
-                CountryTypeNum[listNum].Solider1107++;
-                break;
-            case 1108:
-                CountryTypeNum[listNum].Solider1108++;
-                break;
-            case 1200:
-                CountryTypeNum[listNum].Solider1200++;
-                break;
-            case 1201:
-                CountryTypeNum[listNum].Solider1201++;
-                break;
-            case 1202:
-                CountryTypeNum[listNum].Solider1202++;
-                break;
-            case 1203:
-                CountryTypeNum[listNum].Solider1203++;
-                break;
-            case 1204:
-                CountryTypeNum[listNum].Solider1204++;
-                break;
-            case 1205:
-                CountryTypeNum[listNum].Solider1205++;
-                break;
-            case 1206:
-                CountryTypeNum[listNum].Solider1206++;
-                break;
-            case 1207:
-                CountryTypeNum[listNum].Solider1207++;
-                break;
-            case 1300:
-                CountryTypeNum[listNum].Solider1300++;
-                break;
-            case 1301:
-                CountryTypeNum[listNum].Solider1301++;
-                break;
-            case 1302:
-                CountryTypeNum[listNum].Solider1302++;
-                break;
-            case 1303:
-                CountryTypeNum[listNum].Solider1303++;
-                break;
-            case 1304:
-                CountryTypeNum[listNum].Solider1304++;
-                break;
-            case 1400:
-                CountryTypeNum[listNum].Solider1400++;
-                break;
-            case 1401:
-                CountryTypeNum[listNum].Solider1401++;
-                break;
-            case 1402:
-                CountryTypeNum[listNum].Solider1402++;
-                break;
-            case 1403:
-                CountryTypeNum[listNum].Solider1403++;
-                break;
-            case 1404:
-                CountryTypeNum[listNum].Solider1404++;
-                break;
-            case 1405:
-                CountryTypeNum[listNum].Solider1405++;
-                break;
-            case 1500:
-                CountryTypeNum[listNum].build1500++;
-                break;
-            case 1501:
-                CountryTypeNum[listNum].build1501++;
-                break;
-            case 1502:
-                CountryTypeNum[listNum].build1502++;
-                break;
-            case 1503:
-                CountryTypeNum[listNum].build1503++;
-                break;
-            case 1504:
-                CountryTypeNum[listNum].build1504++;
-                break;
-            case 1505:
-                CountryTypeNum[listNum].build1505++;
-                break;
-            case 1506:
-                CountryTypeNum[listNum].build1506++;
-                break;
-            case 1507:
-                CountryTypeNum[listNum].build1507++;
-                break;
-            case 1508:
-                CountryTypeNum[listNum].build1508++;
-                break;
-            case 1509:
-                CountryTypeNum[listNum].build1509++;
-                break;
-            case 1510:
-                CountryTypeNum[listNum].build1510++;
-                break;
-            case 1511:
-                CountryTypeNum[listNum].build1511++;
-                break;
-            case 1512:
-                CountryTypeNum[listNum].build1512++;
-                break;
-            case 1513:
-                CountryTypeNum[listNum].build1513++;
-                break;
-            case 1514:
-                CountryTypeNum[listNum].build1514++;
-                break;
-            case 1515:
-                CountryTypeNum[listNum].build1515++;
-                break;
-            case 1516:
-                CountryTypeNum[listNum].build1516++;
-                break;
-            case 1517:
-                CountryTypeNum[listNum].build1517++;
-                break;
-            case 1518:
-                CountryTypeNum[listNum].build1518++;
-                break;
 
-            default:
-                break;
+    //返回场景中的国家数
+    public UInt32 CountryCount { get { return iDCountryCount; } }
+
+
+    public void GetCountryInfo() {
+        foreach (ushort keyID in mCountrySystem.CountryMem.Keys)
+        {
+            Debug.Log("总数keyID[" + keyID + "]");
         }
     }
-    private void SubTypeNum(int listNum, UInt32 id)
+    public ushort GetBuildNumForACountry(ushort countryID, ENUM_BUILD_TYPE buildType) {
+
+        return mBuildSystem.GetBuildNumForACountry(countryID, buildType);
+    }
+    public ushort[] GetAllCountryID()
     {
-
-        switch (id)
+        ushort[] countryID = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        ushort count = 0;
+        foreach (ushort memCountryID in mCountrySystem.CountryMem.Keys)
         {
-            case 1100:
-                CountryTypeNum[listNum].Solider1100--;
-                break;
-            case 1101:
-                CountryTypeNum[listNum].Solider1101--;
-                break;
-            case 1102:
-                CountryTypeNum[listNum].Solider1102--;
-                break;
-            case 1103:
-                CountryTypeNum[listNum].Solider1103--;
-                break;
-            case 1104:
-                CountryTypeNum[listNum].Solider1104--;
-                break;
-            case 1105:
-                CountryTypeNum[listNum].Solider1105--;
-                break;
-            case 1106:
-                CountryTypeNum[listNum].Solider1106--;
-                break;
-            case 1107:
-                CountryTypeNum[listNum].Solider1107--;
-                break;
-            case 1108:
-                CountryTypeNum[listNum].Solider1108--;
-                break;
-            case 1200:
-                CountryTypeNum[listNum].Solider1200--;
-                break;
-            case 1201:
-                CountryTypeNum[listNum].Solider1201--;
-                break;
-            case 1202:
-                CountryTypeNum[listNum].Solider1202--;
-                break;
-            case 1203:
-                CountryTypeNum[listNum].Solider1203--;
-                break;
-            case 1204:
-                CountryTypeNum[listNum].Solider1204--;
-                break;
-            case 1205:
-                CountryTypeNum[listNum].Solider1205--;
-                break;
-            case 1206:
-                CountryTypeNum[listNum].Solider1206--;
-                break;
-            case 1207:
-                CountryTypeNum[listNum].Solider1207--;
-                break;
-            case 1300:
-                CountryTypeNum[listNum].Solider1300--;
-                break;
-            case 1301:
-                CountryTypeNum[listNum].Solider1301--;
-                break;
-            case 1302:
-                CountryTypeNum[listNum].Solider1302--;
-                break;
-            case 1303:
-                CountryTypeNum[listNum].Solider1303--;
-                break;
-            case 1304:
-                CountryTypeNum[listNum].Solider1304--;
-                break;
-            case 1400:
-                CountryTypeNum[listNum].Solider1400--;
-                break;
-            case 1401:
-                CountryTypeNum[listNum].Solider1401--;
-                break;
-            case 1402:
-                CountryTypeNum[listNum].Solider1402--;
-                break;
-            case 1403:
-                CountryTypeNum[listNum].Solider1403--;
-                break;
-            case 1404:
-                CountryTypeNum[listNum].Solider1404--;
-                break;
-            case 1405:
-                CountryTypeNum[listNum].Solider1405--;
-                break;
-            case 1500:
-                CountryTypeNum[listNum].build1500--;
-                break;
-            case 1501:
-                CountryTypeNum[listNum].build1501--;
-                break;
-            case 1502:
-                CountryTypeNum[listNum].build1502--;
-                break;
-            case 1503:
-                CountryTypeNum[listNum].build1503--;
-                break;
-            case 1504:
-                CountryTypeNum[listNum].build1504--;
-                break;
-            case 1505:
-                CountryTypeNum[listNum].build1505--;
-                break;
-            case 1506:
-                CountryTypeNum[listNum].build1506--;
-                break;
-            case 1507:
-                CountryTypeNum[listNum].build1507--;
-                break;
-            case 1508:
-                CountryTypeNum[listNum].build1508--;
-                break;
-            case 1509:
-                CountryTypeNum[listNum].build1509--;
-                break;
-            case 1510:
-                CountryTypeNum[listNum].build1510--;
-                break;
-            case 1511:
-                CountryTypeNum[listNum].build1511--;
-                break;
-            case 1512:
-                CountryTypeNum[listNum].build1512--;
-                break;
-            case 1513:
-                CountryTypeNum[listNum].build1513--;
-                break;
-            case 1514:
-                CountryTypeNum[listNum].build1514--;
-                break;
-            case 1515:
-                CountryTypeNum[listNum].build1515--;
-                break;
-            case 1516:
-                CountryTypeNum[listNum].build1516--;
-                break;
-            case 1517:
-                CountryTypeNum[listNum].build1517--;
-                break;
-            case 1518:
-                CountryTypeNum[listNum].build1518--;
-                break;
-
-            default:
-                break;
+            countryID[count] = memCountryID;
+            count++;
         }
+        return countryID;
     }
-
-    public UInt32 ObjectCount {
-        get
-        {
-            return iDNumCount;
-        }
-    }
-}
-public class IDNum{
-    public List<UInt32> objects = new List<UInt32>();
-    public List<UInt32> objectsDie = new List<UInt32>();
-}
-public class ObjectTypeNum
-{
-    //地面士兵
-    public UInt16 Solider1100 = 0;
-    public UInt16 Solider1101 = 0;
-    public UInt16 Solider1102 = 0;
-    public UInt16 Solider1103 = 0;
-    public UInt16 Solider1104 = 0;
-    public UInt16 Solider1105 = 0;
-    public UInt16 Solider1106 = 0;
-    public UInt16 Solider1107 = 0;
-    public UInt16 Solider1108 = 0;
-
-    //地面机械类
-    public UInt16 Solider1200 = 0;
-    public UInt16 Solider1201 = 0;
-    public UInt16 Solider1202 = 0;
-    public UInt16 Solider1203 = 0;
-    public UInt16 Solider1204 = 0;
-    public UInt16 Solider1205 = 0;
-    public UInt16 Solider1206 = 0;
-    public UInt16 Solider1207 = 0;
-
-    //天空机械类
-    public UInt16 Solider1300 = 0;
-    public UInt16 Solider1301 = 0;
-    public UInt16 Solider1302 = 0;
-    public UInt16 Solider1303 = 0;
-    public UInt16 Solider1304 = 0;
-
-    //水体机械类
-    public UInt16 Solider1400 = 0;
-    public UInt16 Solider1401 = 0;
-    public UInt16 Solider1402 = 0;
-    public UInt16 Solider1403 = 0;
-    public UInt16 Solider1404 = 0;
-    public UInt16 Solider1405 = 0;
-
-    //建筑
-    public UInt16 build1500 = 0;
-    public UInt16 build1501 = 0;
-    public UInt16 build1502 = 0;
-    public UInt16 build1503 = 0;
-    public UInt16 build1504 = 0;
-    public UInt16 build1505 = 0;
-    public UInt16 build1506 = 0;
-    public UInt16 build1507 = 0;
-    public UInt16 build1508 = 0;
-    public UInt16 build1509 = 0;
-    public UInt16 build1510 = 0;
-    public UInt16 build1511 = 0;
-    public UInt16 build1512 = 0;
-    public UInt16 build1513 = 0;
-    public UInt16 build1514 = 0;
-    public UInt16 build1515 = 0;
-    public UInt16 build1516 = 0;
-    public UInt16 build1517 = 0;
-    public UInt16 build1518 = 0;
 }

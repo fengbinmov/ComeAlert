@@ -72,7 +72,7 @@ public class BuildSystem  {
 
     public ushort GetBuildNumForACountry(ushort countryID, ENUM_BUILD_TYPE buildType)
     {
-        Debug.Log("countryID[" + countryID + "]");
+        //Debug.Log("countryID[" + countryID + "]");
         return buildhas[countryID].TryGet(buildType);
     }
 }

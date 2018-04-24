@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using GameAttrType;
 using UnityEngine.SceneManagement;
 
 public class SoldierTypePanel : BasePanel
@@ -64,6 +65,37 @@ public class SoldierTypePanel : BasePanel
             InitBuildNum();
             VolumeBtnObject.SetActive(true);
         }
+    }
+    public override void GetBroadInfo<T>(T info)
+    {
+        BaseMember baseMember = info as BaseMember;
+        List<BaseMember> list = new List<BaseMember>();
+        switch (baseMember.selfDataValue.m_data.m_u2ID)
+        {
+            case 1500:
+                OnClickBuildDemos();
+                list.Add(new SoldierMem1100());
+                list.Add(new SoldierMem1100());
+                break;
+            case 1502:
+                OnClickBuildSoldier();
+                list.Add(new SoldierMem1100());
+                list.Add(new SoldierMem1100());
+                break;
+            case 1503:
+                OnClickBuildCar();
+                break;
+            case 1504:
+                OnClickBuildWater();
+                break;
+            case 1505:
+                OnClickBuildAir();
+                break;
+            default:
+                break;
+        }
+        GameControl.gameControl.SendBuildInfoForUI(UIPanelType.SelectItem, list);
+
     }
     #region 主选项按键事件
     private void OnClickBuildVolume()
@@ -146,6 +178,7 @@ public class SoldierTypePanel : BasePanel
             //Debug.Log("切换场景");
             //Debug.Log("ObjectCount:["+GameOperation.gameOperation.GetObjectCount().ToString()+"]");
             //SceneManager.LoadScene(0);
+            //GameObject.Instantiate(Resources.Load("Prefabs/Build/CarBuild") as GameObject);
         }
     }
     private void Init() {
@@ -201,4 +234,6 @@ public class SoldierTypePanel : BasePanel
             }
         }
     }
+
+
 }

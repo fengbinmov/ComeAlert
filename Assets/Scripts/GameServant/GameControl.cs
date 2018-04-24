@@ -159,6 +159,9 @@ public class GameControl : MonoBehaviour {
     {
         return mUIControl.LookPanelListTop();
     }
+    public void SendBuildInfoForUI<T>(UIPanelType uIPanelType, T info) {
+        mUIControl.SendBroadInfoForOne(uIPanelType, info);
+    }
     #endregion
 
 }

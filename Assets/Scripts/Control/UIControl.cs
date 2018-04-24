@@ -5,12 +5,11 @@ using System;
 
 public class UIControl : BaseControl
 {
-    private const string RESOURCE_HEAD = "UIPanel/";
-    private const string RESOURCE_TAIL = "Panel";
-    private Dictionary<UIPanelType, string> panelPathDict;  //存储面板的路径
-    private Dictionary<UIPanelType, BasePanel> panelDict;   //存储实例化面板游戏物体上的BasePanel组件
-    private Stack<BasePanel> panelStack = null;                    //管理实例化的父子页面的状态
-    private List<BasePanel> panelList = null;                      //管理实例化的页面的状态
+
+    private Dictionary<UIPanelType, string> panelPathDict;          //存储面板的路径
+    private Dictionary<UIPanelType, BasePanel> panelDict;           //存储实例化面板游戏物体上的BasePanel组件
+    private Stack<BasePanel> panelStack = null;                     //管理实例化的父子页面的状态
+    private List<BasePanel> panelList = null;                       //管理实例化的页面的状态
     private Transform _canvasTransfrom;
     private UIPanelType _UIPanelType = UIPanelType.None;
 
@@ -125,6 +124,30 @@ public class UIControl : BaseControl
             return UIPanelType.None;
         return panelList[panelList.Count-1].GetUIPanelType();
     }
+    //向所有面板发送广播
+    public void SendBroadInfo<T>(T info) {
+        foreach (BasePanel panel in panelStack) {
+            panel.GetBroadInfo(info);
+        }
+        foreach (BasePanel panel in panelList)
+        {
+            panel.GetBroadInfo(info);
+        }
+    }
+    //向特定面板发送广播
+    public bool SendBroadInfoForOne<T>(UIPanelType uIPanelType, T info)
+    {
+        BasePanel panel = panelDict.TryGet(uIPanelType);
+        if (panel != null)
+        {
+            panel.GetBroadInfo(info);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     private BasePanel GetPanel(UIPanelType panelType)       //根据面板类型 得到实例化的面板
     {
         if (panelDict == null)

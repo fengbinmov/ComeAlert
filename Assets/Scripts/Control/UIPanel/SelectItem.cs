@@ -61,7 +61,6 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
                 if (mBaseMember.selfDataValue.m_data.m_emObjectType == ENUM_OBJECT_TYPE.OBJECT_BUILD)
                 {
                     cubeBuild = Instantiate(cubeSoliderObject);
-                    cubeBuild.transform.position = hit.point;
                     cubeBuild.SetActive(false);
                     m_parentPanel.CurrentSelectObjectData = mBaseMember.selfDataValue;
 
@@ -110,6 +109,7 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
         {
             m_parentPanel.NotHideSelfAllSelectItem();
             GameOperation.gameOperation.AddMemInCountry(1, mBaseMember);
+            cubeBuild.AddComponent<BuildOnClick>().SetMemeber = mBaseMember;
 
         }
         else{                      //对象选择失败,销毁数遍按下时生成的未激活对象模型

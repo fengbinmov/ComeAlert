@@ -42,6 +42,11 @@ public class SelectItemPanel : BasePanel{
     {
         Destroy(this.gameObject);
     }
+    public override void GetBroadInfo<T>(T info)
+    {
+        List<BaseMember> list = info as List<BaseMember>;
+        LoadSelectList(list);
+    }
 
     private void ShowAnim()
     {

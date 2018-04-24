@@ -5,14 +5,16 @@ using UnityEngine.EventSystems;
 
 public class MouseControl : BaseControl {
 
+    //屏幕点记录
     public Vector3 screenPointStart;
     public Vector3 screenPointEnd;
     private Vector3 currentScreenPoint;
     private Vector3 currentScreenPointSith;
-
-    //private Vector3 cameraRotateStartPoint;
+    
+    //选择框的开始点
     private Vector3 selectRectStartPoint;
 
+    //鼠标选择右键的特效体，选择体的初始模型+自身检测碰撞体，选择体控制代码
     private GameObject mouseEffectObject;
     private GameObject selectRectObject;
     private GameObject selectRect;
@@ -22,11 +24,15 @@ public class MouseControl : BaseControl {
     private LayerMask layerMask = 1<<8;
 
     private float cubeHeight = 0.05f;
+    //选择体生成条件
     private bool getRecrtStartChart = true;
     private bool getRecrtStayChart = false;
     private bool isBuildSelectStart = false;
     private bool isBuildingSelect = false;
+    //视图可缩放条件
+    private bool controlViewInstance = false;
 
+    //相机移动参数
     private const float cameraHeight = 1.5f;
     private float cameraRatateDetail = 0.5f;
     private float cameraMoveDetail = 0.01f;
@@ -34,17 +40,14 @@ public class MouseControl : BaseControl {
     private float cameraSenceRotateXRota = 4f;
     private float cameraSenceDistanceRange = 0.5f;
     
-    private SelectItem selectItem = null;
-    private GameObject selectItemBuild = null;
+    private SelectItem selectItem = null;           //选项Bar中被选中的Item自身的脚本
+    private GameObject selectItemBuild = null;      //选项Bar中被选中的Item对应的对象
 
-    private bool controlViewInstance = false;
 
     public MouseControl(GameControl gameControl) : base(gameControl){ }
     public override void OnInit()
     {
-        base.OnInit();
-        mouseEffectObject = Resources.Load("Prefabs/MouseEffect/MouseEffect") as GameObject;
-        selectRectObject = Resources.Load("Prefabs/MouseEffect/MouseSelectRect") as GameObject;
+        Init();
     }
     public override void Updata()
     {
@@ -69,6 +72,12 @@ public class MouseControl : BaseControl {
             controlViewInstance = value;
         }
     }
+    private void Init() {
+
+        mouseEffectObject = Resources.Load("Prefabs/MouseEffect/MouseEffect") as GameObject;
+        selectRectObject = Resources.Load("Prefabs/MouseEffect/MouseSelectRect") as GameObject;
+    }
+
     #region 右键点击的特效的显示
 
     private void MouseEffectShow(Vector3 mousePostion)
@@ -230,7 +239,7 @@ public class MouseControl : BaseControl {
 
     #endregion
 
-    #region 生成选择的建筑对象
+    #region 拖动或点击生成选择的对象
 
     public void InitBuildSelectItem(GameObject selectBuild,SelectItem selectItem)
     {

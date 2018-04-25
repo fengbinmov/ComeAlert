@@ -7,6 +7,9 @@ using GameAttrType;
 
 public class CommandOperation : BaseOperation
 {
+    private bool isAIInit = true;
+    private Dictionary<ushort,AICountrysOperation> aiCountrys = new Dictionary<ushort, AICountrysOperation>();
+
     public CommandOperation(GameOperation gameOperation) : base(gameOperation) {}
 
     public override void Init()
@@ -17,12 +20,24 @@ public class CommandOperation : BaseOperation
     public override void Update()
     {
         BuildPanelActiveEvent();
+        if (GameOperation.gameOperation.GetInfoOperation.gameProgressInfo.IsGamePlaying()) {
+            if (isAIInit) {
+                isAIInit = false;
+                InitCountrysInfo();
+            }
+            foreach (AICountrysOperation country in aiCountrys.Values)
+            {
+                country.Update();
+            }
+        }
+        
     }
 
     public override void Destroy()
     {
 
     }
+    //检测所有国家的对应的建筑所激活的面板，并激活相应的面板事件
     private void BuildPanelActiveEvent()
     {
         ushort[] allCounteyID = GameOperation.gameOperation.GetAllCountryID();
@@ -54,5 +69,14 @@ public class CommandOperation : BaseOperation
             allCounteyId[7].ToString() + "、" +
             allCounteyId[8].ToString() + "、" +
             allCounteyId[9].ToString() + "]");
+    }
+    private void InitCountrysInfo() {
+
+        ushort[] allCounteyID = GameOperation.gameOperation.GetAllCountryID();
+        for (int num = 0; allCounteyID[num] != 0; num++)
+        {
+            AICountrysOperation aICountry = new AICountrysOperation();
+            aICountry.Init(GameOperation.gameOperation.GetCountrySystem().GetObjectSystem(allCounteyID[num]));
+        }
     }
 }          

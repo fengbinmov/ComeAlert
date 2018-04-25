@@ -10,7 +10,7 @@ public class CountrySystem
     private Dictionary<ushort,Dictionary<UInt32, BaseMember>> countryMems = new Dictionary<ushort, Dictionary<UInt32, BaseMember>>();
     private Dictionary<ushort, IDNum> countryIDCenter = new Dictionary<ushort, IDNum>();
     private Dictionary<ushort, ObjectTypeNum> countrySametypeNum = new Dictionary<ushort, ObjectTypeNum>();
-    private ushort teamID = 0;      //队伍信息
+    private Dictionary<ushort, ushort> teamID = new Dictionary<ushort, ushort>();      //队伍信息
 
 
 
@@ -24,7 +24,7 @@ public class CountrySystem
     public void AddCountryList(ushort countryID, ushort teamNum, BuildSystem buildSystem)
     {
         Debug.Log("AddCountryList[" + countryID + "]");
-        teamID = teamNum;                                               //设定队伍信息
+        teamID.Add(countryID, teamNum);                                 //设定队伍信息
 
         countryMems.Add(countryID,new Dictionary<uint, BaseMember>());   //增加一个国家
         buildSystem.AddCountry(countryID);                               //为该国家增加“建筑系统
@@ -356,6 +356,13 @@ public class CountrySystem
             default:
                 break;
         }
+    }
+
+    //返回国家ID指定的国家信息
+    public ObjectSystem GetObjectSystem(ushort countryID) {
+
+        ObjectSystem objectSystem = new ObjectSystem(countryMems[countryID],countryIDCenter[countryID],countrySametypeNum[countryID],teamID[countryID]);
+        return objectSystem;
     }
 }
 public class IDNum

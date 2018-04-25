@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -123,7 +125,14 @@
     <Compile Include="Assets\Scripts\GameServant\GameOperation.cs" />
     <Compile Include="Assets\Scripts\GameServant\GameServant.cs" />
     <Compile Include="Assets\Scripts\Operation\BaseOperation.cs" />
+    <Compile Include="Assets\Scripts\Operation\Command\AICountrysOperation.cs" />
+    <Compile Include="Assets\Scripts\Operation\Command\AllotSystem.cs" />
+    <Compile Include="Assets\Scripts\Operation\Command\InferSystem.cs" />
+    <Compile Include="Assets\Scripts\Operation\Command\MakePolicySystem.cs" />
+    <Compile Include="Assets\Scripts\Operation\Command\MoveSystem.cs" />
+    <Compile Include="Assets\Scripts\Operation\Command\ObjectSystem.cs" />
     <Compile Include="Assets\Scripts\Operation\CommandOperation.cs" />
+    <Compile Include="Assets\Scripts\Operation\Command\PostRecordSystem.cs" />
     <Compile Include="Assets\Scripts\Operation\Cube\CubeMoveAI.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation\GameAtrr\BuildData1500.cs" />

@@ -98,4 +98,7 @@ public class ObjectOperation : BaseOperation
         }
         return countryID;
     }
+    public CountrySystem GetCountrySystem() {
+        return mCountrySystem;
+    }
 }

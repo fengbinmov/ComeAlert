@@ -92,9 +92,13 @@ public class GameOperation : MonoBehaviour
     {
         return mObjectOperation.GetAllCountryID();
     }
+    public CountrySystem GetCountrySystem()
+    {
+        return mObjectOperation.GetCountrySystem();
+    }
     #endregion
 
-        #region InfoOPeration集合
+    #region InfoOPeration集合
     public InfoOperation GetInfoOperation
     {
         get{

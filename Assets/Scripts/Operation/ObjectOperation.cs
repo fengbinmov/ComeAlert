@@ -77,6 +77,7 @@ public class ObjectOperation : BaseOperation
     public UInt32 CountryCount { get { return iDCountryCount; } }
 
 
+    //Debug
     public void GetCountryInfo() {
         foreach (ushort keyID in mCountrySystem.CountryMem.Keys)
         {
@@ -100,5 +101,8 @@ public class ObjectOperation : BaseOperation
     }
     public CountrySystem GetCountrySystem() {
         return mCountrySystem;
+    }
+    public List<BaseMember> GetBuildsForACountry(ushort countryID, ENUM_BUILD_TYPE buildType) {
+        return mBuildSystem.GetBuildsForACountry(countryID, buildType);
     }
 }

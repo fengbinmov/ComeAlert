@@ -31,14 +31,16 @@ public class FootSoldierMem : BaseMember
     {
         base.Destroy();
     }
-    protected void CubeMove()
+    protected void CubeCanMove()
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPostion + dirtionHead, Time.deltaTime * speed);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirtionFace), Time.deltaTime * rotateSpeed);
     }
-    protected void CollectSolider()
+    protected void CubeCanAttack()
     {
-
+    }
+    protected void CubeCanPlayAnim()
+    {
     }
     protected void OnDestroy()
     {
@@ -62,6 +64,9 @@ public class FootSoldierMem : BaseMember
 
     protected void MemUpdate()
     {
+        if(GameOperation.gameOperation.GetInfoOperation.gameProgressInfo.IsGamePlaying()){
+            return;
+        }
         //判断是否受到指挥官的命令      //TODO
         if (GameControl.gameControl.GetIndexOfCommand(transform) > -1)
         {
@@ -92,7 +97,7 @@ public class FootSoldierMem : BaseMember
                 float distance = Vector3.Distance(transform.position, targetPostion + dirtionHead);
                 if (distance > 0.1f)
                 {
-                    CubeMove();
+                    CubeCanMove();
                 }
                 //Debug.DrawLine(transform.position, targetPostion + dirtionHead, Color.green);
             }
@@ -102,7 +107,7 @@ public class FootSoldierMem : BaseMember
             float distance = Vector3.Distance(transform.position, targetPostion + dirtionHead);
             if (distance > 0.1f)
             {
-                CubeMove();
+                CubeCanMove();
             }
             GetComponent<MeshRenderer>().material.color = Color.white;
         }

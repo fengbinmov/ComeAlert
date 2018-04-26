@@ -51,16 +51,16 @@ public class SketchPanel : BasePanel
 
             ushort toProgress = 0;
             if (asyncOperation.progress < 0.9f){
-                toProgress = (ushort)(asyncOperation.progress * 200);
+                toProgress = (ushort)(asyncOperation.progress * 100);
             }
             else {
-                toProgress = 200;
+                toProgress = 100;
             }
             if (nowProgress < toProgress) {
                 nowProgress++;
             }
-            loaderSlider.value = nowProgress/200f;
-            if (nowProgress == 200)
+            loaderSlider.value = nowProgress/100f;
+            if (nowProgress == 100)
                 asyncOperation.allowSceneActivation = true;
         }
     }

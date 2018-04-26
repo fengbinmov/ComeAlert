@@ -10,4 +10,6 @@ public class Build1500 : BuildMem
     {
         selfDataValue = new BuildData1500();
     }
+
+
 }

@@ -12,5 +12,8 @@ public class BuildData1503 : ObjectDataValue
         m_data.selfName = "机械厂";
         m_data.selfOutlay = "1111|2323|32423|233";
         m_data.selfIntroduce = "生产机械的基地，可激活机械面板";
+
+
+        m_atrr.m_u2MakeTime = 2;
     }
 }

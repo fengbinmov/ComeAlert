@@ -95,7 +95,6 @@ public class SoldierTypePanel : BasePanel
                 break;
         }
         GameControl.gameControl.SendBuildInfoForUI(UIPanelType.SelectItem, list);
-
     }
     #region 主选项按键事件
     private void OnClickBuildVolume()
@@ -141,7 +140,6 @@ public class SoldierTypePanel : BasePanel
             GameControl.gameControl.RemovePanel(UIPanelType.SelectItem);
         }
         GameControl.gameControl.AddPanel(UIPanelType.SelectItem);
-
     }
     #endregion
 

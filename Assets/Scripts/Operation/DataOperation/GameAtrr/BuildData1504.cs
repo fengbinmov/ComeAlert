@@ -13,5 +13,8 @@ public class BuildData1504 : ObjectDataValue
         m_data.selfName = "海军船坞";
         m_data.selfOutlay = "1111|2323|32423|233";
         m_data.selfIntroduce = "生产水类机械的基地，可激活海军船坞面板";
+
+
+        m_atrr.m_u2MakeTime = 2;
     }
 }

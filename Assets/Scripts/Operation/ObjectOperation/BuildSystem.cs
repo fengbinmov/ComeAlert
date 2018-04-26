@@ -6,7 +6,10 @@ using GameAttrType;
 
 public class BuildSystem  {
 
-    public Dictionary<ushort,Dictionary<ENUM_BUILD_TYPE, UInt16>> buildhas = new Dictionary<ushort, Dictionary<ENUM_BUILD_TYPE, ushort>>();
+    //<国家ID<建筑类型，该建筑数>>
+    private Dictionary<ushort,Dictionary<ENUM_BUILD_TYPE, UInt16>> buildhas = new Dictionary<ushort, Dictionary<ENUM_BUILD_TYPE, ushort>>();
+    private Dictionary<ushort, Dictionary<ENUM_BUILD_TYPE, List<BaseMember>>> buildsMen = new Dictionary<ushort, Dictionary<ENUM_BUILD_TYPE, List<BaseMember>>>();
+
 
     public void AddCountry(ushort countryID) {
         Dictionary<ENUM_BUILD_TYPE, UInt16> dictionary = new Dictionary<ENUM_BUILD_TYPE, ushort>
@@ -17,56 +20,31 @@ public class BuildSystem  {
             { ENUM_BUILD_TYPE.WATER, 0 },
             { ENUM_BUILD_TYPE.AIR, 0 }
         };
+        Dictionary<ENUM_BUILD_TYPE,List<BaseMember>> dictionary2 = new Dictionary<ENUM_BUILD_TYPE, List<BaseMember>>
+        {
+            { ENUM_BUILD_TYPE.DEMOS, new List<BaseMember>() },
+            { ENUM_BUILD_TYPE.SOLDIER, new List<BaseMember>() },
+            { ENUM_BUILD_TYPE.CAR, new List<BaseMember>() },
+            { ENUM_BUILD_TYPE.WATER, new List<BaseMember>() },
+            { ENUM_BUILD_TYPE.AIR, new List<BaseMember>() }
+        };
 
         buildhas.Add(countryID,dictionary);
+        buildsMen.Add(countryID, dictionary2);
     }
-    public void AddBuildForACountry(ushort countryID, UInt16 id) {
-        switch ((ENUM_BUILD_TYPE)id)
-        {
-            case ENUM_BUILD_TYPE.DEMOS:
-                buildhas[countryID][ENUM_BUILD_TYPE.DEMOS]++;
-                break;
-            case ENUM_BUILD_TYPE.POWER:
-                break;
-            case ENUM_BUILD_TYPE.SOLDIER:
-                buildhas[countryID][ENUM_BUILD_TYPE.SOLDIER]++;
-                break;
-            case ENUM_BUILD_TYPE.CAR:
-                buildhas[countryID][ENUM_BUILD_TYPE.CAR]++;
-                break;
-            case ENUM_BUILD_TYPE.WATER:
-                buildhas[countryID][ENUM_BUILD_TYPE.WATER]++;
-                break;
-            case ENUM_BUILD_TYPE.AIR:
-                buildhas[countryID][ENUM_BUILD_TYPE.AIR]++;
-                break;
-            default:
-                break;
+    public void AddBuildForACountry(ushort countryID, UInt16 id,BaseMember mem) {
+        if (id >= 1500 && id < 1600) {
+
+            buildhas[countryID][(ENUM_BUILD_TYPE)id]++;
+            buildsMen[countryID][(ENUM_BUILD_TYPE)id].Add(mem);
         }
     }
-    public void SubBuildForACountry(ushort countryID, UInt16 id)
+    public void SubBuildForACountry(ushort countryID, UInt16 id, BaseMember mem)
     {
-        switch ((ENUM_BUILD_TYPE)id)
+        if (id >= 1500 && id < 1600)
         {
-            case ENUM_BUILD_TYPE.DEMOS:
-                buildhas[countryID][ENUM_BUILD_TYPE.DEMOS]--;
-                break;
-            case ENUM_BUILD_TYPE.POWER:
-                break;
-            case ENUM_BUILD_TYPE.SOLDIER:
-                buildhas[countryID][ENUM_BUILD_TYPE.SOLDIER]--;
-                break;
-            case ENUM_BUILD_TYPE.CAR:
-                buildhas[countryID][ENUM_BUILD_TYPE.CAR]--;
-                break;
-            case ENUM_BUILD_TYPE.WATER:
-                buildhas[countryID][ENUM_BUILD_TYPE.WATER]--;
-                break;
-            case ENUM_BUILD_TYPE.AIR:
-                buildhas[countryID][ENUM_BUILD_TYPE.AIR]--;
-                break;
-            default:
-                break;
+            buildhas[countryID][(ENUM_BUILD_TYPE)id]--;
+            buildsMen[countryID][(ENUM_BUILD_TYPE)id].Remove(mem);
         }
     }
 
@@ -74,5 +52,9 @@ public class BuildSystem  {
     {
         //Debug.Log("countryID[" + countryID + "]");
         return buildhas[countryID].TryGet(buildType);
+    }
+    public List<BaseMember> GetBuildsForACountry(ushort countryID, ENUM_BUILD_TYPE buildType)
+    {
+        return buildsMen[countryID][buildType];
     }
 }

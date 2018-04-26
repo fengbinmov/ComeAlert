@@ -77,6 +77,7 @@ public class CommandOperation : BaseOperation
         {
             AICountrysOperation aICountry = new AICountrysOperation();
             aICountry.Init(GameOperation.gameOperation.GetCountrySystem().GetObjectSystem(allCounteyID[num]));
+            aiCountrys.Add(allCounteyID[num], aICountry);
         }
     }
 }          

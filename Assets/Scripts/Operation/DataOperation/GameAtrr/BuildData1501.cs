@@ -13,5 +13,8 @@ public class BuildData1501 : ObjectDataValue
         m_data.selfName = "电站";
         m_data.selfOutlay = "1111|2323|32423|233";
         m_data.selfIntroduce = "生产电能";
+
+
+        m_atrr.m_u2MakeTime = 2;
     }
 }

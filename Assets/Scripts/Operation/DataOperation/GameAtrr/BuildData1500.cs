@@ -13,5 +13,8 @@ public class BuildData1500 : ObjectDataValue
         m_data.selfName = "社区";
         m_data.selfOutlay = "1111|2323|32423|233";
         m_data.selfIntroduce = "人民赖以生存的社区，可激活社区面板";
+
+
+        m_atrr.m_u2MakeTime = 2;
     }
 }

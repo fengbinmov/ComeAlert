@@ -96,6 +96,10 @@ public class GameOperation : MonoBehaviour
     {
         return mObjectOperation.GetCountrySystem();
     }
+    public List<BaseMember> GetBuildsForACountry(ushort countryID, ENUM_BUILD_TYPE buildType)
+    {
+        return mObjectOperation.GetBuildsForACountry(countryID, buildType);
+    }
     #endregion
 
     #region InfoOPeration集合

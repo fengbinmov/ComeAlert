@@ -17,5 +17,8 @@ public class BuildData1502 : ObjectDataValue
         m_data.selfName = "士兵营";
         m_data.selfOutlay = "1111|2323|32423|233";
         m_data.selfIntroduce = "可训练士兵，并激活士兵面板";
+
+
+        m_atrr.m_u2MakeTime = 2;
     }
 }

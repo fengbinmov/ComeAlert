@@ -24,7 +24,8 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
     private Text SelectNum;
     private RawImage selectHeadP;
     private Image selectHeadMAsk;
-    private float maskProgress = 1;
+    private float maskProgressMax = 0;
+    private float maskProgressNow = 0;
     private int selectCount = 0;
 
     private UIDirftInfo uiDirftInfo;
@@ -36,6 +37,8 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
 
         Init();
         mBaseMember = value;
+        maskProgressMax = mBaseMember.selfDataValue.m_atrr.m_u2MakeTime;
+        maskProgressNow = maskProgressMax;
         cubeSoliderObject = Resources.Load(mBaseMember.selfDataValue.m_data.self) as GameObject;
         selectName.text = mBaseMember.selfDataValue.m_data.selfName;
         selectHeadP.texture = Resources.Load(mBaseMember.selfDataValue.m_data.selfHeadP) as Texture;
@@ -135,16 +138,17 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
     private void ItemPitchOnEvent() {
         if (selectCount > 0)
         {
-            maskProgress -= Time.deltaTime;
-            selectHeadMAsk.fillAmount = maskProgress;
-            if (maskProgress <= 0)
+            maskProgressNow -= Time.deltaTime;
+            selectHeadMAsk.fillAmount = maskProgressNow/maskProgressMax;
+            if (maskProgressNow <= 0)
             {
                 selectCount--;
                 SelectNum.text = selectCount.ToString();
                 if (selectCount == 0)
                     SelectNum.text = "";
-                maskProgress = 1;
+                maskProgressNow = maskProgressMax;
                 GameOperation.gameOperation.AddMemInCountry(1, mBaseMember);//TODO
+
             }
         }
     }

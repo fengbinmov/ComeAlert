@@ -42,10 +42,23 @@ public class SelectItemPanel : BasePanel{
     {
         Destroy(this.gameObject);
     }
-    public override void GetBroadInfo<T>(T info)
+    public override void GetBroadInfo<T>(ENUM_MSG_TYPE mSG_TYPE, T info)
     {
-        List<BaseMember> list = info as List<BaseMember>;
-        LoadSelectList(list);
+        switch (mSG_TYPE)
+        {
+            case ENUM_MSG_TYPE.OBJECT:
+                break;
+            case ENUM_MSG_TYPE.CONTAINER:
+                List<BaseMember> list = info as List<BaseMember>;
+                LoadSelectList(list);
+                break;
+            case ENUM_MSG_TYPE.STRING:
+                break;
+            case ENUM_MSG_TYPE.ARRAY:
+                break;
+            default:
+                break;
+        }
     }
 
     private void ShowAnim()

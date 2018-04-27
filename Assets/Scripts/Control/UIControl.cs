@@ -125,22 +125,22 @@ public class UIControl : BaseControl
         return panelList[panelList.Count-1].GetUIPanelType();
     }
     //向所有面板发送广播
-    public void SendBroadInfo<T>(T info) {
+    public void SendBroadInfo<T>(ENUM_MSG_TYPE mSG_TYPE, T info) {
         foreach (BasePanel panel in panelStack) {
-            panel.GetBroadInfo(info);
+            panel.GetBroadInfo(mSG_TYPE,info);
         }
         foreach (BasePanel panel in panelList)
         {
-            panel.GetBroadInfo(info);
+            panel.GetBroadInfo(mSG_TYPE,info);
         }
     }
     //向特定面板发送广播
-    public bool SendBroadInfoForOne<T>(UIPanelType uIPanelType, T info)
+    public bool SendBroadInfoForOne<T>(UIPanelType uIPanelType, ENUM_MSG_TYPE mSG_TYPE, T info)
     {
         BasePanel panel = panelDict.TryGet(uIPanelType);
         if (panel != null)
         {
-            panel.GetBroadInfo(info);
+            panel.GetBroadInfo(mSG_TYPE,info);
             return true;
         }
         else {

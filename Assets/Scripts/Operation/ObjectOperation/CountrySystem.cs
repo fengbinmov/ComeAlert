@@ -29,9 +29,10 @@ public class CountrySystem
 
         countryMems.Add(countryID,new Dictionary<uint, BaseMember>());   //增加一个国家
         buildSystem.AddCountry(countryID);                               //为该国家增加“建筑系统
+        //delete
         GameOperation.gameOperation.GetInfoOperation.uIActiveInfoDict.Add(countryID,new UIActiveInfo());//为该国家增加“信息存储单元”
         countryIDCenter.Add(countryID,new IDNum());                      //为该国家增加“对象省份证”记录空间
-        countrySametypeNum.Add(countryID,new Dictionary<ENUM_OBJECT_NAME, ushort>());           //为该国家增加“同类型对象数量”记录空间
+        AddCountrySametypeNum(countryID);                               //为该国家增加“同类型对象数量”记录空间        
     }
     public void AddMemInCountry(ushort countryID, BaseMember mem,uint memID, BuildSystem buildSystem)
     {
@@ -63,6 +64,62 @@ public class CountrySystem
 
         ObjectSystem objectSystem = new ObjectSystem(countryMems[countryID],countryIDCenter[countryID],countrySametypeNum[countryID],teamID[countryID]);
         return objectSystem;
+    }
+    private void AddCountrySametypeNum(ushort countryID) {
+        countrySametypeNum.Add(countryID, new Dictionary<ENUM_OBJECT_NAME, ushort>
+        {
+            { ENUM_OBJECT_NAME.Z_NENGSHI,0 },
+            { ENUM_OBJECT_NAME.Z_JINSHU,0 },
+            { ENUM_OBJECT_NAME.Z_ZHINENG,0 },
+            { ENUM_OBJECT_NAME.Z_XINENG,0 },
+            { ENUM_OBJECT_NAME.F_BUBING,0 },
+            { ENUM_OBJECT_NAME.F_TEZHONG,0 },
+            { ENUM_OBJECT_NAME.F_FANGKONG,0 },
+            { ENUM_OBJECT_NAME.F_NATASHA,0 },
+            { ENUM_OBJECT_NAME.F_GONGCHENG,0 },
+            { ENUM_OBJECT_NAME.F_YILIAO,0 },
+            { ENUM_OBJECT_NAME.F_GOU,0 },
+            { ENUM_OBJECT_NAME.F_FANJIA,0 },
+            { ENUM_OBJECT_NAME.F_CIBAO,0 },
+            { ENUM_OBJECT_NAME.C_ZHENCHA,0 },
+            { ENUM_OBJECT_NAME.C_ZHUANGJIA,0 },
+            { ENUM_OBJECT_NAME.C_TANKE,0 },
+            { ENUM_OBJECT_NAME.C_TIANQI,0 },
+            { ENUM_OBJECT_NAME.C_FANGKONG,0 },
+            { ENUM_OBJECT_NAME.C_HUOJIAN,0 },
+            { ENUM_OBJECT_NAME.C_JIHUANG,0 },
+            { ENUM_OBJECT_NAME.C_HEDAN,0 },
+            { ENUM_OBJECT_NAME.A_ZHENCHA,0 },
+            { ENUM_OBJECT_NAME.A_ZHISHENG,0 },
+            { ENUM_OBJECT_NAME.A_ZHANDOU,0 },
+            { ENUM_OBJECT_NAME.A_YUNSHU,0 },
+            { ENUM_OBJECT_NAME.A_YUJING,0 },
+            { ENUM_OBJECT_NAME.W_KUAITING,0 },
+            { ENUM_OBJECT_NAME.W_ZAIJU,0 },
+            { ENUM_OBJECT_NAME.W_YUNSHU,0 },
+            { ENUM_OBJECT_NAME.W_ZHANJIAN,0 },
+            { ENUM_OBJECT_NAME.W_HANGMU,0 },
+            { ENUM_OBJECT_NAME.W_QIANTING,0 },
+            { ENUM_OBJECT_NAME.B_DEMOS,0 },
+            { ENUM_OBJECT_NAME.B_POWER,0 },
+            { ENUM_OBJECT_NAME.B_SOLDIER,0 },
+            { ENUM_OBJECT_NAME.B_ZHANZHENG,0 },
+            { ENUM_OBJECT_NAME.B_WATER,0 },
+            { ENUM_OBJECT_NAME.B_AIR,0 },
+            { ENUM_OBJECT_NAME.B_ZHIHUI,0 },
+            { ENUM_OBJECT_NAME.B_SCHOOL,0 },
+            { ENUM_OBJECT_NAME.B_KEXUE,0 },
+            { ENUM_OBJECT_NAME.B_ZHENFU,0 },
+            { ENUM_OBJECT_NAME.B_JINGWEI,0 },
+            { ENUM_OBJECT_NAME.B_MAOYI,0 },
+            { ENUM_OBJECT_NAME.B_YULE,0 },
+            { ENUM_OBJECT_NAME.B_TEZHONG,0 },
+            { ENUM_OBJECT_NAME.B_WEIQIANG,0 },
+            { ENUM_OBJECT_NAME.B_SHAOJIE,0 },
+            { ENUM_OBJECT_NAME.B_DIAOBAO,0 },
+            { ENUM_OBJECT_NAME.B_DIAOBAOG,0 },
+            { ENUM_OBJECT_NAME.B_TIBA,0 }
+        });
     }
 }
 public class IDNum

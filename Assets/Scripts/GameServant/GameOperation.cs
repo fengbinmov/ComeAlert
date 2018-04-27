@@ -85,7 +85,7 @@ public class GameOperation : MonoBehaviour
     public void GetCountryInfo() {
         mObjectOperation.GetCountryInfo();
     }
-    public ushort GetBuildNumForACountry(ushort countryID, ENUM_BUILD_TYPE buildType) {
+    public ushort GetBuildNumForACountry(ushort countryID, ENUM_OBJECT_NAME buildType) {
         return mObjectOperation.GetBuildNumForACountry(countryID, buildType);
     }
     public ushort[] GetAllCountryID()
@@ -96,7 +96,7 @@ public class GameOperation : MonoBehaviour
     {
         return mObjectOperation.GetCountrySystem();
     }
-    public List<BaseMember> GetBuildsForACountry(ushort countryID, ENUM_BUILD_TYPE buildType)
+    public List<BaseMember> GetBuildsForACountry(ushort countryID, ENUM_OBJECT_NAME buildType)
     {
         return mObjectOperation.GetBuildsForACountry(countryID, buildType);
     }

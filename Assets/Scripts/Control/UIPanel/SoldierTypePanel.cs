@@ -27,8 +27,9 @@ public class SoldierTypePanel : BasePanel
     private Text WaterHasNum;
     private Text AirHasNum;
 
-    //Demos、Soldier、Car、Water、Air   数量
+    //Demos、Soldier、Car、Water、Air   建筑数量
     private ushort[] activeArr = { 0, 0, 0, 0, 0 };
+    private ushort[] activeArrNow = { 0, 0, 0, 0, 0 };
 
     public SoldierTypePanel() : base()
     {
@@ -40,7 +41,6 @@ public class SoldierTypePanel : BasePanel
         base.OnEnter();
         StartShowAnim();
         Init();
-        InitBuildNum();
     }
 
     public override void OnExit()
@@ -62,12 +62,32 @@ public class SoldierTypePanel : BasePanel
     public override void ListPanelRemoveEvent(UIPanelType uIPanelType)
     {
         if (uIPanelType == UIPanelType.SelectItem) {
-            InitBuildNum();
             VolumeBtnObject.SetActive(true);
         }
     }
-    public override void GetBroadInfo<T>(T info)
+    public override void GetBroadInfo<T>(ENUM_MSG_TYPE mSG_TYPE, T info)
     {
+        switch (mSG_TYPE)
+        {
+            case ENUM_MSG_TYPE.OBJECT:
+                    MakeMessageOBJ(info);
+                break;
+            case ENUM_MSG_TYPE.CONTAINER:
+                break;
+            case ENUM_MSG_TYPE.STRING:
+                break;
+            case ENUM_MSG_TYPE.ARRAY:
+                    InitBuildNum(info);
+                break;
+            case ENUM_MSG_TYPE.NUMBER:
+                break;
+            case ENUM_MSG_TYPE.STRUCT:
+                break;
+            default:
+                break;
+        }
+    }
+    private void MakeMessageOBJ<T>(T info) {
         BaseMember baseMember = info as BaseMember;
         List<BaseMember> list = new List<BaseMember>();
         switch (baseMember.selfDataValue.m_data.m_u2ID)
@@ -94,7 +114,7 @@ public class SoldierTypePanel : BasePanel
             default:
                 break;
         }
-        GameControl.gameControl.SendBuildInfoForUI(UIPanelType.SelectItem, list);
+        GameControl.gameControl.SendBuildInfoForUI(UIPanelType.SelectItem, ENUM_MSG_TYPE.CONTAINER, list);
     }
     #region 主选项按键事件
     private void OnClickBuildVolume()
@@ -110,26 +130,32 @@ public class SoldierTypePanel : BasePanel
     private void OnClickBuildDemos()
     {
         VolumeBtnObject.SetActive(true);
+        UpdateBuildNumLab(ENUM_BUILDLAB_TYPE.DEMOS);
         OnClickOpenBar();
+        //GameControl.gameControl.SendBuildInfoForUI<List<BaseMember>>(UIPanelType.SelectItem,ENUM_MSG_TYPE.CONTAINER,)
     }
     private void OnClickBuildSoldier()
     {
         VolumeBtnObject.SetActive(true);
+        UpdateBuildNumLab(ENUM_BUILDLAB_TYPE.SOLDIER);
         OnClickOpenBar();
     }
     private void OnClickBuildCar()
     {
         VolumeBtnObject.SetActive(true);
+        UpdateBuildNumLab(ENUM_BUILDLAB_TYPE.CAR);
         OnClickOpenBar();
     }
     private void OnClickBuildWater()
     {
         VolumeBtnObject.SetActive(true);
+        UpdateBuildNumLab(ENUM_BUILDLAB_TYPE.WATER);
         OnClickOpenBar();
     }
     private void OnClickBuildAir()
     {
         VolumeBtnObject.SetActive(true);
+        UpdateBuildNumLab(ENUM_BUILDLAB_TYPE.AIR);
         OnClickOpenBar();
     }
     private void OnClickOpenBar()
@@ -216,9 +242,10 @@ public class SoldierTypePanel : BasePanel
         BuildTextList.Add(AirHasNum);
         BuildBtnList.Add(AirBuildBtn);
     }
-    private void InitBuildNum() {
-        
-        activeArr = GameOperation.gameOperation.GetInfoOperation.uIActiveInfoDict[1].GetActiveInfo;
+    private void InitBuildNum<T>(T info) {
+
+        Debug.Log("InitBuildNum");
+        activeArr = info as ushort[];
 
         for (int i = 0; i < 5; i++) {
             if (activeArr[i] > 0)
@@ -232,6 +259,14 @@ public class SoldierTypePanel : BasePanel
             }
         }
     }
+    private void UpdateBuildNumLab(ENUM_BUILDLAB_TYPE buildLab) {
 
-
+        int order = (int)buildLab - 1500;
+        if (activeArr[order] > 0)
+        {
+            activeArrNow[order] += 1;
+            BuildTextList[order].text = activeArrNow[order].ToString();
+            activeArrNow[order] = (ushort)((activeArrNow[order] % activeArr[order]));
+        }
+    }
 }

@@ -23,7 +23,7 @@ public class BasePanel : MonoBehaviour {
     public virtual void ListPanelRemoveEvent(UIPanelType uIPanelType)
     {
     }
-    public virtual void GetBroadInfo<T>(T info) {
+    public virtual void GetBroadInfo<T>(ENUM_MSG_TYPE mSG_TYPE, T info) {
 
     }
     public virtual UIPanelType GetUIPanelType() {

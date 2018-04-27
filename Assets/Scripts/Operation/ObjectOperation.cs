@@ -84,7 +84,7 @@ public class ObjectOperation : BaseOperation
             Debug.Log("总数keyID[" + keyID + "]");
         }
     }
-    public ushort GetBuildNumForACountry(ushort countryID, ENUM_BUILD_TYPE buildType) {
+    public ushort GetBuildNumForACountry(ushort countryID, ENUM_OBJECT_NAME buildType) {
 
         return mBuildSystem.GetBuildNumForACountry(countryID, buildType);
     }
@@ -102,7 +102,7 @@ public class ObjectOperation : BaseOperation
     public CountrySystem GetCountrySystem() {
         return mCountrySystem;
     }
-    public List<BaseMember> GetBuildsForACountry(ushort countryID, ENUM_BUILD_TYPE buildType) {
+    public List<BaseMember> GetBuildsForACountry(ushort countryID, ENUM_OBJECT_NAME buildType) {
         return mBuildSystem.GetBuildsForACountry(countryID, buildType);
     }
 }

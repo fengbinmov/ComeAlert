@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-
+using GameAttrType;
 
 public class BaseMember :MonoBehaviour
 {

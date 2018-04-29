@@ -39,7 +39,7 @@ public class ObjectDataValue
         public UInt32 m_u4Soul;        //心灵创伤
         public UInt32 m_u4SoulY;
 
-        public UInt16 m_u2MakeTime;
+        public float m_u2MakeTime;
 
     }
     public struct selfGameData {

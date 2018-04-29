@@ -29,7 +29,6 @@ public class CommandOperation : BaseOperation
                 country.Update();
             }
         }
-        
     }
 
     public override void Destroy()

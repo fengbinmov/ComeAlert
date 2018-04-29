@@ -6,7 +6,14 @@ using GameAttrType;
 
 public class BuildMem:BaseMember
 {
-
-    public virtual void BuildMakeObject(BaseMember mem) {
+    protected List<BaseMember> makeObjectList = new List<BaseMember>();
+    protected UInt16 countryID;
+    
+    public virtual void BuildMakeObject() {
+    }
+    public virtual void AddMakeObject(UInt16 countryID, BaseMember mem)
+    {
+        this.countryID = countryID;
+        makeObjectList.Add(mem);
     }
 }

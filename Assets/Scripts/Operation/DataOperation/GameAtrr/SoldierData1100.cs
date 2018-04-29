@@ -20,7 +20,7 @@ public class SoldierData1100:ObjectDataValue
         m_atrr.m_u4ConcussionY = 5;
         m_atrr.m_u4Laceration = 5;
         m_atrr.m_u4LacerationY = 0;
-        m_atrr.m_u2MakeTime = 2;
+        m_atrr.m_u2MakeTime = 2f;
         
     }
 }

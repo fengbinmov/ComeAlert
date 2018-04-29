@@ -96,13 +96,17 @@ public class GameOperation : MonoBehaviour
     {
         return mObjectOperation.GetCountrySystem();
     }
-    public List<BaseMember> GetBuildsForACountry(ushort countryID, ENUM_OBJECT_NAME buildType)
+    //public void SetActiveBuild(UInt16 countryID, BuildMem mem)
+    //{
+    //    mObjectOperation.SetActiveBuild(countryID, mem);
+    //}
+    public BaseMember GetMemForMemID(ushort countryID, UInt32 memID)
     {
-        return mObjectOperation.GetBuildsForACountry(countryID, buildType);
+        return mObjectOperation.GetMemForMemID(countryID, memID);
     }
-    #endregion
+        #endregion
 
-    #region InfoOPeration集合
+        #region InfoOPeration集合
     public InfoOperation GetInfoOperation
     {
         get{

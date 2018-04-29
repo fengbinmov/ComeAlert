@@ -102,7 +102,18 @@ public class ObjectOperation : BaseOperation
     public CountrySystem GetCountrySystem() {
         return mCountrySystem;
     }
-    public List<BaseMember> GetBuildsForACountry(ushort countryID, ENUM_OBJECT_NAME buildType) {
-        return mBuildSystem.GetBuildsForACountry(countryID, buildType);
+    public void BuildMakeObject(UInt16 countryID, BuildMem buildMem,BaseMember mem) {
+        mBuildSystem.BuildMakeObject(countryID, mem);
     }
-}
+    public BaseMember GetMemForMemID(ushort countryID, UInt32 memID)
+    {
+        return mCountrySystem.GetMemForMemID(countryID, memID);
+    }
+    //    public void SetActiveBuild(UInt16 countryID, BuildMem mem)
+    //{
+    //    mBuildSystem.SetActiveBuild(countryID,mem);
+    //}
+        //public List<BaseMember> GetBuildsForACountry(ushort countryID, ENUM_OBJECT_NAME buildType) {
+        //    return mBuildSystem.GetBuildsForACountry(countryID, buildType);
+        //}
+    }

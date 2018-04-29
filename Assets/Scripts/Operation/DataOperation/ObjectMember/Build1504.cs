@@ -12,8 +12,5 @@ public class Build1504 : BuildMem
         selfDataValue = new BuildData1504();
     }
 
-    public override void BuildMakeObject(BaseMember mem)
-    {
-
-    }
+ 
 }

@@ -9,10 +9,12 @@ public class CountrySystem
 {
     //所有的国家信息  <国家ID,<省份证号,对象代码>>
     private Dictionary<ushort,Dictionary<UInt32, BaseMember>> countryMems = new Dictionary<ushort, Dictionary<UInt32, BaseMember>>();
-    private Dictionary<ushort, IDNum> countryIDCenter = new Dictionary<ushort, IDNum>();//<国家ID,省份证号>
-    private Dictionary<ushort, Dictionary<ENUM_OBJECT_NAME, ushort>> countrySametypeNum = new Dictionary<ushort, Dictionary<ENUM_OBJECT_NAME, ushort>>();//<国家ID,同对象总数>
-
-    private Dictionary<ushort, ushort> teamID = new Dictionary<ushort, ushort>();      //<国家ID,队伍号>
+    //<国家ID,所有省份证号+死亡对象省份证号>
+    private Dictionary<ushort, IDNum> countryIDCenter = new Dictionary<ushort, IDNum>();
+    //<国家ID,<对象类型,同对象总数>>
+    private Dictionary<ushort, Dictionary<ENUM_OBJECT_NAME, ushort>> countrySametypeNum = new Dictionary<ushort, Dictionary<ENUM_OBJECT_NAME, ushort>>();
+    //<国家ID,队伍号>
+    private Dictionary<ushort, ushort> teamID = new Dictionary<ushort, ushort>();
 
 
 
@@ -40,9 +42,11 @@ public class CountrySystem
         ushort targetID = mem.selfDataValue.m_data.m_u2ID;
 
         countryMems[countryID].Add(memID, mem);                                         //将出生对象加入到对应国家中
-        buildSystem.AddBuildForACountry(countryID, targetID, mem);    //将出生对象放入建筑系统检测是否为建筑并记录
+        
         countryIDCenter[countryID].objects.Add(memID);                                  //将出生对象“对象省份证”信息存入
         countrySametypeNum[countryID][(ENUM_OBJECT_NAME)targetID]++;//将出生对象“同类型对象数”的个数累加
+        buildSystem.UpdateCountrySameBuildNum(countryID,countrySametypeNum[countryID]);//将出生对象放入建筑系统检测是否为建筑并记录
+        buildSystem.AddCountryBuildNum(countryID, memID);
     }
 
     public void RemoveCountryList(ushort countryID)
@@ -53,19 +57,14 @@ public class CountrySystem
     {
         ushort targetID = countryMems[countryID].TryGet(memID).selfDataValue.m_data.m_u2ID; 
         
-        countrySametypeNum[countryID][(ENUM_OBJECT_NAME)targetID]--;    //将已毁灭对象“同类型对象数”的个数减少
-        buildSystem.SubBuildForACountry(countryID, targetID, countryMems[countryID].TryGet(memID));           //将已毁灭对象放入建筑系统检测是否为建筑并记录
+        countrySametypeNum[countryID][(ENUM_OBJECT_NAME)targetID]--;    //将已毁灭对象“同类型对象数”的个数减少  
+        buildSystem.UpdateCountrySameBuildNum(countryID, countrySametypeNum[countryID]);//将已毁灭对象放入建筑系统检测是否为建筑并记录
+        buildSystem.SubCountryBuildNum(countryID, memID);
         countryMems[countryID].Remove(memID);                           //将已毁灭对象从对应国家中移除
         countryIDCenter[countryID].objectsDie.Add(memID);               //将已毁灭对象“对象省份证”从对应国家ID中心更新
     }
-
-    //返回国家ID指定的国家信息
-    public ObjectSystem GetObjectSystem(ushort countryID) {
-
-        ObjectSystem objectSystem = new ObjectSystem(countryMems[countryID],countryIDCenter[countryID],countrySametypeNum[countryID],teamID[countryID]);
-        return objectSystem;
-    }
     private void AddCountrySametypeNum(ushort countryID) {
+
         countrySametypeNum.Add(countryID, new Dictionary<ENUM_OBJECT_NAME, ushort>
         {
             { ENUM_OBJECT_NAME.Z_NENGSHI,0 },
@@ -120,6 +119,20 @@ public class CountrySystem
             { ENUM_OBJECT_NAME.B_DIAOBAOG,0 },
             { ENUM_OBJECT_NAME.B_TIBA,0 }
         });
+    }
+    //返回国家ID指定的国家信息
+    public ObjectSystem GetObjectSystem(ushort countryID)
+    {
+
+        ObjectSystem objectSystem = new ObjectSystem(countryMems[countryID], countryIDCenter[countryID], countrySametypeNum[countryID], teamID[countryID]);
+        return objectSystem;
+    }
+    public BaseMember GetMemForMemID(ushort countryID, UInt32 memID) {
+
+        if (countryMems[countryID].ContainsKey(memID))
+            return countryMems[countryID][memID];
+        else
+            return null;
     }
 }
 public class IDNum

@@ -158,9 +158,9 @@ public class UIControl : BaseControl
         BasePanel panel = panelDict.TryGet(panelType);      //使用扩展方法
         if (panel == null)
         {
-            //string path = RESOURCE_HEAD + panelType.ToString() + RESOURCE_TAIL;
+
             string path = panelPathDict.TryGet(panelType);
-            //Debug.Log(path);
+
             GameObject instPanel = GameObject.Instantiate(Resources.Load(path)) as GameObject;
             instPanel.transform.SetParent(CanvasTransfrom, false);
             if (!panelDict.TryGetValue(panelType, out panel))

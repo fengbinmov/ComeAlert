@@ -9,7 +9,6 @@ public class AICountrysOperation
 
     private ObjectSystem mObjectSystem;
     private MakePolicySystem mMakePolicySystem = new MakePolicySystem();
-    private PostRecordSystem mPostRecordSystem = new PostRecordSystem();
     private InferSystem mInferSystem = new InferSystem();
     private AllotSystem mAllotSystem = new AllotSystem();
     private MoveSystem mMoveSystem = new MoveSystem();

@@ -13,6 +13,7 @@ public class ObjectOperation : BaseOperation
     private UInt16 iDCountryCount = 0;      //“国家省份证”|总数
     private CountrySystem mCountrySystem = new CountrySystem();
     private BuildSystem mBuildSystem = new BuildSystem();
+    private StandToSystem mSelectSystem = new StandToSystem();
 
     public void AddCountryList(ushort team) {
 
@@ -37,35 +38,35 @@ public class ObjectOperation : BaseOperation
     public override void Init()
     {
         base.Init();
-        foreach (Dictionary<UInt32, BaseMember> memCountry in mCountrySystem.CountryMem.Values)
-        {
-            foreach (BaseMember mem in memCountry.Values)
-            {
-                mem.Init();
-            }
-        }
+        //foreach (Dictionary<UInt32, BaseMember> memCountry in mCountrySystem.CountryMem.Values)
+        //{
+        //    foreach (BaseMember mem in memCountry.Values)
+        //    {
+        //        mem.Init();
+        //    }
+        //}
     }
     public override void Update()
     {
-        foreach (Dictionary<UInt32, BaseMember> memCountry in mCountrySystem.CountryMem.Values)
-        {
-            foreach (BaseMember mem in memCountry.Values)
-            {
-                mem.Updata();
-            }
-        }
+        //foreach (Dictionary<UInt32, BaseMember> memCountry in mCountrySystem.CountryMem.Values)
+        //{
+        //    foreach (BaseMember mem in memCountry.Values)
+        //    {
+        //        mem.Updata();
+        //    }
+        //}
 
     }
     public override void Destroy()
     {
         base.Destroy();
-        foreach (Dictionary<UInt32, BaseMember> memCountry in mCountrySystem.CountryMem.Values)
-        {
-            foreach (BaseMember mem in memCountry.Values)
-            {
-                mem.Destroy();
-            }
-        }
+        //foreach (Dictionary<UInt32, BaseMember> memCountry in mCountrySystem.CountryMem.Values)
+        //{
+        //    foreach (BaseMember mem in memCountry.Values)
+        //    {
+        //        mem.Destroy();
+        //    }
+        //}
     }
     
 
@@ -109,11 +110,4 @@ public class ObjectOperation : BaseOperation
     {
         return mCountrySystem.GetMemForMemID(countryID, memID);
     }
-    //    public void SetActiveBuild(UInt16 countryID, BuildMem mem)
-    //{
-    //    mBuildSystem.SetActiveBuild(countryID,mem);
-    //}
-        //public List<BaseMember> GetBuildsForACountry(ushort countryID, ENUM_OBJECT_NAME buildType) {
-        //    return mBuildSystem.GetBuildsForACountry(countryID, buildType);
-        //}
-    }
+}

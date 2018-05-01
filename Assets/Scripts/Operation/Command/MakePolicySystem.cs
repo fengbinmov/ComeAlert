@@ -54,7 +54,8 @@ public class MakePolicySystem
     //决策权值 [地面士兵，海洋士兵，天空士兵] 出兵数量比
     float[] soldierOutRatio = { 0.6f, 0.3f, 0.1f };
 
-
+    //路径
+    List<List<Vector3>> path = new List<List<Vector3>>();
 
     //初始化世界资源值
     private void GetResourceWord()

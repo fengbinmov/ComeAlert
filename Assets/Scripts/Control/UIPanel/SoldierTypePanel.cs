@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class SoldierTypePanel : BasePanel
 {
+    private bool pause = false;
     private GameObject selectItemPanel;
     private GameObject volumePanel;
     private bool volumePanelActive = false;
@@ -199,6 +200,15 @@ public class SoldierTypePanel : BasePanel
     {
         if (GUI.Button(new Rect(25, 55, 100, 30), "切换场景"))
         {
+            pause = !pause;
+            if (pause)
+            {
+                Time.timeScale = 0;
+            }
+            else
+            {
+                Time.timeScale = 1;
+            }
             //Debug.Log("切换场景");
             //Debug.Log("ObjectCount:["+GameOperation.gameOperation.GetObjectCount().ToString()+"]");
             //SceneManager.LoadScene(0);

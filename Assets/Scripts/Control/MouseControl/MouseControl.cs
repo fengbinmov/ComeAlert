@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class MouseControl : BaseControl {
-
+    
     //屏幕点记录
     public Vector3 screenPointStart;
     public Vector3 screenPointEnd;
@@ -61,6 +61,7 @@ public class MouseControl : BaseControl {
 
         BuildingSelectItem();
         EventMouseLU();
+
 
         currentScreenPointSith = currentScreenPoint;
     }

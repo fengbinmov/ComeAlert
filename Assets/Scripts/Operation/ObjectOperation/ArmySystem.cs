@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using System.Reflection;
 
 
 public class ArmySystem
 {
-    //<国家ID<队伍ID,>>
-    private Dictionary<ushort,Dictionary<ushort,Transform>> armyList = new Dictionary<ushort, Dictionary<ushort, Transform>>();
+    private AllotSystem mAllotSystem;
+    private Stack<Army> mArmy;
 
-    public void AddArmyForACountry() {
+    void PushArmy() { }
+    void PopArmy() { }
 
+    public void test() {
+        MethodInfo methodInfo = mAllotSystem.GetType().GetMethod("sdfds");
+        methodInfo.Invoke(mAllotSystem, null);
     }
-    public void SubArmyForACountry()
-    {
+}
+public class Army {
 
-    }
 }

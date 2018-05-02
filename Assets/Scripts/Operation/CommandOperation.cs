@@ -22,7 +22,7 @@ public class CommandOperation : BaseOperation
         if (GameOperation.gameOperation.GetInfoOperation.gameProgressInfo.IsGamePlaying()) {
             if (isAIInit) {
                 isAIInit = false;
-                InitCountrysInfo();
+                //InitCountrysInfo();
             }
             foreach (AICountrysOperation country in aiCountrys.Values)
             {
@@ -48,14 +48,14 @@ public class CommandOperation : BaseOperation
             allCounteyId[8].ToString() + "、" +
             allCounteyId[9].ToString() + "]");
     }
-    private void InitCountrysInfo() {
+    //private void InitCountrysInfo() {
 
-        ushort[] allCounteyID = GameOperation.gameOperation.GetAllCountryID();
-        for (int num = 0; allCounteyID[num] != 0; num++)
-        {
-            AICountrysOperation aICountry = new AICountrysOperation();
-            aICountry.Init(GameOperation.gameOperation.GetCountrySystem().GetObjectSystem(allCounteyID[num]));
-            aiCountrys.Add(allCounteyID[num], aICountry);
-        }
-    }
+    //    ushort[] allCounteyID = GameOperation.gameOperation.GetAllCountryID();
+    //    for (int num = 0; allCounteyID[num] != 0; num++)
+    //    {
+    //        AICountrysOperation aICountry = new AICountrysOperation();
+    //        aICountry.Init(GameOperation.gameOperation.GetCountrySystem().GetObjectSystem(allCounteyID[num]));
+    //        aiCountrys.Add(allCounteyID[num], aICountry);
+    //    }
+    //}
 }          

@@ -7,11 +7,11 @@ using GameAttrType;
 public class BuildSystem  {
 
     //<国家ID<建筑类型，该建筑数>>
-    private Dictionary<ushort,Dictionary<ENUM_OBJECT_NAME, UInt16>> buildhas = new Dictionary<ushort, Dictionary<ENUM_OBJECT_NAME, ushort>>();
-    private Dictionary<ushort, ushort> xuhao = new Dictionary<ushort, ushort>();
+    private Dictionary<ENUM_OBJECT_NAME, UInt16> buildhas = new Dictionary<ENUM_OBJECT_NAME, ushort>();
+    private ushort xuhao;
     //<国家ID<建筑序号，建筑ID>>
-    private Dictionary<ushort, Dictionary<int, uint>> buildIDs = new Dictionary<ushort, Dictionary<int, uint>>();
-    private Dictionary<ushort, BuildMem> activeBuild = new Dictionary<ushort, BuildMem>();
+    private Dictionary<int, uint> buildIDs = new Dictionary<int, uint>();
+    private BuildMem activeBuild = new BuildMem();
 
 
     public void AddCountry(ushort countryID) {
@@ -24,78 +24,78 @@ public class BuildSystem  {
             { ENUM_OBJECT_NAME.B_AIR, 0 }
         };
         
-        buildhas.Add(countryID,dictionary);
-        xuhao.Add(countryID, 0);
-        buildIDs.Add(countryID, new Dictionary<int, uint>());
-        activeBuild.Add(countryID, new BuildMem());
+        buildhas=dictionary;
+        xuhao= 0;
+        buildIDs= new Dictionary<int, uint>();
+        activeBuild= new BuildMem();
     }
     public void UpdateCountrySameBuildNum(ushort countryID, Dictionary<ENUM_OBJECT_NAME, ushort> dicts) {
 
         foreach (ENUM_OBJECT_NAME enums in dicts.Keys) {
             if ((int)enums >= 1500 && (int)enums < 1600) {
-                if (buildhas[countryID].ContainsKey(enums)) {
-                    buildhas[countryID][enums] = dicts[enums];
+                if (buildhas.ContainsKey(enums)) {
+                    buildhas[enums] = dicts[enums];
                 }
                 else
-                    buildhas[countryID].Add(enums, dicts[enums]);
+                    buildhas.Add(enums, dicts[enums]);
             }
         }
     }
     public void AddCountryBuildNum(ushort countryID, uint memID) {
 
-        xuhao[countryID]++;
-        buildIDs[countryID].Add(xuhao[countryID], memID);
+        xuhao++;
+        buildIDs.Add(xuhao, memID);
     }
     public void SubCountryBuildNum(ushort countryID, uint memID)
     {
         int removeXuhao = 0;
-        for (int i = 1; i <= xuhao[countryID]; i++) {
-            if (buildIDs[countryID][i] == memID) {
+        for (int i = 1; i <= xuhao; i++) {
+            if (buildIDs[i] == memID) {
                 removeXuhao = i;
             }
         }
         if (removeXuhao == 0) return;
-        buildIDs[countryID].Remove(removeXuhao);
+        buildIDs.Remove(removeXuhao);
 
-        for (int i = removeXuhao; i < xuhao[countryID]; i++)
+        for (int i = removeXuhao; i < xuhao; i++)
         {
-            uint id = buildIDs[countryID][i+1];
-            buildIDs[countryID].Add(i, id);
+            uint id = buildIDs[i+1];
+            buildIDs.Add(i, id);
         }
-        if(xuhao[countryID] > 1)
-            buildIDs[countryID].Remove(xuhao[countryID]);
-        xuhao[countryID]--;
+        if(xuhao > 1)
+            buildIDs.Remove(xuhao);
+        xuhao--;
     }
     public void UpdateCountryActiveBuild(ushort countryID,BuildMem buildMem) {
 
-        activeBuild[countryID] = buildMem;
+        activeBuild = buildMem;
 
     }
 
-    public ushort GetBuildNumForACountry(ushort countryID, ENUM_OBJECT_NAME buildType)
+    public ushort GetSameBuildCount(ENUM_OBJECT_NAME buildType)
     {
-        return buildhas[countryID].TryGet(buildType);
+        return buildhas.TryGet(buildType);
     }
 
     //检测本地国家的对应的建筑所激活的面板，并激活相应的面板事件
     private void BuildPanelActiveEvent()
     {
         ushort[] activeArr = { 0, 0, 0, 0, 0 };
-        activeArr[0] = GetBuildNumForACountry(1, ENUM_OBJECT_NAME.B_DEMOS);
-        activeArr[1] = GetBuildNumForACountry(1, ENUM_OBJECT_NAME.B_SOLDIER);
-        activeArr[2] = GetBuildNumForACountry(1, ENUM_OBJECT_NAME.B_ZHANZHENG);
-        activeArr[3] = GetBuildNumForACountry(1, ENUM_OBJECT_NAME.B_WATER);
-        activeArr[4] = GetBuildNumForACountry(1, ENUM_OBJECT_NAME.B_AIR);
+        activeArr[0] = GetSameBuildCount(ENUM_OBJECT_NAME.B_DEMOS);
+        activeArr[1] = GetSameBuildCount(ENUM_OBJECT_NAME.B_SOLDIER);
+        activeArr[2] = GetSameBuildCount(ENUM_OBJECT_NAME.B_ZHANZHENG);
+        activeArr[3] = GetSameBuildCount(ENUM_OBJECT_NAME.B_WATER);
+        activeArr[4] = GetSameBuildCount(ENUM_OBJECT_NAME.B_AIR);
 
         GameControl.gameControl.SendBuildInfoForUI<ushort[]>(UIPanelType.SoldierType, ENUM_MSG_TYPE.ARRAY, activeArr);
     }
-    public void BuildMakeObject(UInt16 countryID, BaseMember mem) {
+    public void BuildMakeObject(BaseMember mem) {
 
-        activeBuild[countryID].BuildMakeObject();
+        activeBuild.BuildMakeObject();
     }
     public void SetActiveBuild(UInt16 countryID,ENUM_OBJECT_NAME bUILDLAB_TYPE)
     {
-        //BaseMember mem = GameOperation.gameOperation.GetMemForMemID(countryID,buildhas[countryID][bUILDLAB_TYPE]);
-        //activeBuild[countryID] = mem as BuildMem;
+        //BaseMember mem = GameOperation.gameOperation.GetMemForMemID(countryID,buildhas[bUILDLAB_TYPE]);
+        //activeBuild = mem as BuildMem;
     }
 }

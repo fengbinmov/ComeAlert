@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -126,11 +124,9 @@
     <Compile Include="Assets\Scripts\GameServant\GameServant.cs" />
     <Compile Include="Assets\Scripts\Operation\BaseOperation.cs" />
     <Compile Include="Assets\Scripts\Operation\Command\AICountrysOperation.cs" />
-    <Compile Include="Assets\Scripts\Operation\Command\AllotSystem.cs" />
     <Compile Include="Assets\Scripts\Operation\Command\InferSystem.cs" />
     <Compile Include="Assets\Scripts\Operation\Command\MakePolicySystem.cs" />
     <Compile Include="Assets\Scripts\Operation\Command\MoveSystem.cs" />
-    <Compile Include="Assets\Scripts\Operation\Command\ObjectSystem.cs" />
     <Compile Include="Assets\Scripts\Operation\CommandOperation.cs" />
     <Compile Include="Assets\Scripts\Operation\Cube\CubeMoveAI.cs" />
     <Compile Include="Assets\Scripts\Operation\DataOperation.cs" />
@@ -160,10 +156,12 @@
     <Compile Include="Assets\Scripts\Operation\InfoStorage\UIActiveInfo.cs" />
     <Compile Include="Assets\Scripts\Operation\InfoStorage\UIDirftInfo.cs" />
     <Compile Include="Assets\Scripts\Operation\ObjectOperation.cs" />
+    <Compile Include="Assets\Scripts\Operation\ObjectOperation\AllotSystem.cs" />
     <Compile Include="Assets\Scripts\Operation\ObjectOperation\ArmySystem.cs" />
     <Compile Include="Assets\Scripts\Operation\ObjectOperation\BuildSystem.cs" />
-    <Compile Include="Assets\Scripts\Operation\ObjectOperation\CountrySystem.cs" />
-    <Compile Include="Assets\Scripts\Operation\ObjectOperation\StandToSystem.cs" />
+    <Compile Include="Assets\Scripts\Operation\ObjectOperation\CountryManager.cs" />
+    <Compile Include="Assets\Scripts\Operation\ObjectOperation\EnemySystem.cs" />
+    <Compile Include="Assets\Scripts\Operation\ObjectOperation\ObjectSystem.cs" />
     <Compile Include="Assets\Scripts\UI\ActiveStateToggler.cs" />
     <Compile Include="Assets\Scripts\UI\ApplicationManager.cs" />
     <Compile Include="Assets\Scripts\UI\ChangeColor.cs" />

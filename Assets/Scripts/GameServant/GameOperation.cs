@@ -92,14 +92,6 @@ public class GameOperation : MonoBehaviour
     {
         return mObjectOperation.GetAllCountryID();
     }
-    public CountrySystem GetCountrySystem()
-    {
-        return mObjectOperation.GetCountrySystem();
-    }
-    //public void SetActiveBuild(UInt16 countryID, BuildMem mem)
-    //{
-    //    mObjectOperation.SetActiveBuild(countryID, mem);
-    //}
     public BaseMember GetMemForMemID(ushort countryID, UInt32 memID)
     {
         return mObjectOperation.GetMemForMemID(countryID, memID);

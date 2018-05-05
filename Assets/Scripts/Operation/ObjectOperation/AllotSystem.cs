@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class AllotSystem
 {
+    ushort countryID;
     public void MoveToPostion(List<Transform> armyList,Vector3 postion) {
 
     }

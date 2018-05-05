@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class EnemySystem : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    ushort countryID;
+    // Use this for initialization
+    void Start () {
 		
 	}
 	

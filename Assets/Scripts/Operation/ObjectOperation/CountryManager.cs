@@ -19,10 +19,13 @@ public class CountryManager
     public CountryManager(ushort teamNum,ushort countryId) {
         this.countryTeamNum = teamNum;
         this.countryID = countryId;
-        mObjectSystem = new ObjectSystem();
-        mBuildSystem = new BuildSystem();
+        mObjectSystem = new ObjectSystem(countryID);
+        mBuildSystem = new BuildSystem(countryID);
     }
     public void Init() {
+
+    }
+    public void Update() {
 
     }
 
@@ -30,28 +33,38 @@ public class CountryManager
     public void AddMem(BaseMember mem, uint memID)
     {
 
-        mObjectSystem.AddMemInCountry(mem, memID);
+        BaseMember memT = mObjectSystem.AddMemInCountry(mem, memID);
+        mBuildSystem.AddMem(memT);
     }
     public void RemvoeMem(uint memID)
     {
         mObjectSystem.RemoveMemInCountry(memID);
+        mBuildSystem.SubMem(memID);
     }
     public BaseMember GetMemForMemID(UInt32 memID)
     {
         return mObjectSystem.GetMemForMemID(memID);
     }
+    public ushort GetSameTypeCount(ENUM_OBJECT_NAME oBJECT_NAME)
+    {
+        return mObjectSystem.GetSameTypeCount(oBJECT_NAME);
+    }
+    public void UpdateNativeBuildLabCount()
+    {
+        mObjectSystem.UpdateBuildLabCount();
+    }
 #endregion
 
 #region BuildSystem方法集
-    public ushort GetSameBuildCount(ENUM_OBJECT_NAME oBJECT_NAME)
-    {
-        return mBuildSystem.GetSameBuildCount(oBJECT_NAME);
-    }
     public void BuildMakeObject(BaseMember mem)
     {
         mBuildSystem.BuildMakeObject(mem);
     }
+    public void SetActiveBuild(ENUM_BUILDLAB_TYPE _TYPE, int CodeNum)
+    {
+        mBuildSystem.SetActiveBuild(_TYPE, CodeNum);
+    }
 #endregion
 
 
-}
+    }

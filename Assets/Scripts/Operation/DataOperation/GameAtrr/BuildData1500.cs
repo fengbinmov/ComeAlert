@@ -7,6 +7,7 @@ public class BuildData1500 : ObjectDataValue
     {
         m_data.m_u2ID = 1500;
         m_data.m_emObjectType = ENUM_OBJECT_TYPE.OBJECT_BUILD;
+        m_data.m_emObjectName = ENUM_OBJECT_NAME.B_DEMOS;
         m_data.m_emObjectState = ENUM_OBJECT_STATE.OBJECT_DISPLAY_STATE;
         m_data.self = "Prefabs/Build/DemosBuild";
         m_data.selfHeadP = "Images/ObjectHeadP/DemosBuildHP";

@@ -6,96 +6,87 @@ using GameAttrType;
 
 public class BuildSystem  {
 
-    //<国家ID<建筑类型，该建筑数>>
-    private Dictionary<ENUM_OBJECT_NAME, UInt16> buildhas = new Dictionary<ENUM_OBJECT_NAME, ushort>();
+    ushort countryID;
+    //<建筑ID，建筑脚本>
+    private Dictionary<uint, BuildMem> buildMems = new Dictionary<uint, BuildMem>();
+    private Dictionary<int , List<BuildMem>> activeBuildDict;
     private ushort xuhao;
-    //<国家ID<建筑序号，建筑ID>>
-    private Dictionary<int, uint> buildIDs = new Dictionary<int, uint>();
+    //<建筑序号，建筑ID>
+    private Dictionary<int, uint> buildIDs;
     private BuildMem activeBuild = new BuildMem();
 
+    public BuildSystem(ushort countryId) {
 
-    public void AddCountry(ushort countryID) {
-        Dictionary<ENUM_OBJECT_NAME, UInt16> dictionary = new Dictionary<ENUM_OBJECT_NAME, ushort>
+        countryID = countryId;
+        xuhao = 0;
+        buildIDs = new Dictionary<int, uint>();
+        activeBuild = null;
+        activeBuildDict = new Dictionary<int, List<BuildMem>>
         {
-            { ENUM_OBJECT_NAME.B_DEMOS, 0 },
-            { ENUM_OBJECT_NAME.B_SOLDIER, 0 },
-            { ENUM_OBJECT_NAME.B_ZHANZHENG, 0 },
-            { ENUM_OBJECT_NAME.B_WATER, 0 },
-            { ENUM_OBJECT_NAME.B_AIR, 0 }
+            { 0,new List<BuildMem>()},
+            { 1,new List<BuildMem>()},
+            { 2,new List<BuildMem>()},
+            { 3,new List<BuildMem>()},
+            { 4,new List<BuildMem>()}
         };
+    }
+    public void AddMem(BaseMember mem) {
+
+        uint memID = mem.selfDataValue.m_data.m_u4IDNum;
+        if (IsExist(memID, mem)) {
+
+            BuildMem buildMem = (BuildMem)mem;
+
+            buildMems.Add(memID, buildMem);
+            ushort id = mem.selfDataValue.m_data.m_u2ID;
+            if (id >= 1500 && id < 1505 && id != 1501) {
+                activeBuildDict[id - 1500].Add(buildMem);
+            }
+            if (countryID == 1) {
+                GameOperation.gameOperation.UpdateNativeBuildLabCount();
+            }
+        }
+    }
+    public void SubMem(uint memID){
+
+        if (IsExist(memID,null)) {
+
+            BuildMem buildMem = buildMems[memID];
+
+            ushort id = buildMem.selfDataValue.m_data.m_u2ID;
+            if (id >= 1500 && id < 1505 && id != 1501)
+            {
+                activeBuildDict[id - 1500].Remove(buildMem);
+            }
+
+            buildMems.Remove(memID);
+            
+            if (countryID == 1){
+                GameOperation.gameOperation.UpdateNativeBuildLabCount();
+            }
+        }
+    }
+    public void SetActiveBuild(ENUM_BUILDLAB_TYPE _TYPE, int CodeNum) {
         
-        buildhas=dictionary;
-        xuhao= 0;
-        buildIDs= new Dictionary<int, uint>();
-        activeBuild= new BuildMem();
-    }
-    public void UpdateCountrySameBuildNum(ushort countryID, Dictionary<ENUM_OBJECT_NAME, ushort> dicts) {
-
-        foreach (ENUM_OBJECT_NAME enums in dicts.Keys) {
-            if ((int)enums >= 1500 && (int)enums < 1600) {
-                if (buildhas.ContainsKey(enums)) {
-                    buildhas[enums] = dicts[enums];
-                }
-                else
-                    buildhas.Add(enums, dicts[enums]);
-            }
-        }
-    }
-    public void AddCountryBuildNum(ushort countryID, uint memID) {
-
-        xuhao++;
-        buildIDs.Add(xuhao, memID);
-    }
-    public void SubCountryBuildNum(ushort countryID, uint memID)
-    {
-        int removeXuhao = 0;
-        for (int i = 1; i <= xuhao; i++) {
-            if (buildIDs[i] == memID) {
-                removeXuhao = i;
-            }
-        }
-        if (removeXuhao == 0) return;
-        buildIDs.Remove(removeXuhao);
-
-        for (int i = removeXuhao; i < xuhao; i++)
-        {
-            uint id = buildIDs[i+1];
-            buildIDs.Add(i, id);
-        }
-        if(xuhao > 1)
-            buildIDs.Remove(xuhao);
-        xuhao--;
-    }
-    public void UpdateCountryActiveBuild(ushort countryID,BuildMem buildMem) {
-
-        activeBuild = buildMem;
-
+        activeBuild = activeBuildDict[(int)_TYPE - 1500][CodeNum];
+        Debug.Log("memID=" + activeBuild.selfDataValue.m_data.m_u4IDNum+";Code="+CodeNum+"次序="+activeBuildDict[(int)_TYPE - 1500].IndexOf(activeBuild));
     }
 
-    public ushort GetSameBuildCount(ENUM_OBJECT_NAME buildType)
-    {
-        return buildhas.TryGet(buildType);
-    }
-
-    //检测本地国家的对应的建筑所激活的面板，并激活相应的面板事件
-    private void BuildPanelActiveEvent()
-    {
-        ushort[] activeArr = { 0, 0, 0, 0, 0 };
-        activeArr[0] = GetSameBuildCount(ENUM_OBJECT_NAME.B_DEMOS);
-        activeArr[1] = GetSameBuildCount(ENUM_OBJECT_NAME.B_SOLDIER);
-        activeArr[2] = GetSameBuildCount(ENUM_OBJECT_NAME.B_ZHANZHENG);
-        activeArr[3] = GetSameBuildCount(ENUM_OBJECT_NAME.B_WATER);
-        activeArr[4] = GetSameBuildCount(ENUM_OBJECT_NAME.B_AIR);
-
-        GameControl.gameControl.SendBuildInfoForUI<ushort[]>(UIPanelType.SoldierType, ENUM_MSG_TYPE.ARRAY, activeArr);
-    }
     public void BuildMakeObject(BaseMember mem) {
 
         activeBuild.BuildMakeObject();
     }
-    public void SetActiveBuild(UInt16 countryID,ENUM_OBJECT_NAME bUILDLAB_TYPE)
+    private bool IsExist(uint memID, BaseMember mem)
     {
-        //BaseMember mem = GameOperation.gameOperation.GetMemForMemID(countryID,buildhas[bUILDLAB_TYPE]);
-        //activeBuild = mem as BuildMem;
+        if (mem.selfDataValue == null)
+        {
+            return buildMems.ContainsKey(memID);
+        }
+        else {
+            if (mem.selfDataValue.m_data.m_emObjectType == ENUM_OBJECT_TYPE.OBJECT_BUILD)
+                return true;
+            else
+                return false;
+        }
     }
 }

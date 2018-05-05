@@ -15,7 +15,7 @@ public class Build1500 : BuildMem
     public Build1500()
     {
         selfDataValue = new BuildData1500();
-        objectPostion = transform.Find("ObjectPostion").position;
+        //objectPostion = transform.Find("ObjectPostion").position;
     }
     public override void Updata()
     {
@@ -24,13 +24,18 @@ public class Build1500 : BuildMem
 
     private void BuildMakeObjects()
     {
-        BaseMember mem = makeObjectList[0];
-        if (mem == null) return;
+        //BaseMember mem = makeObjectList[0];
+        //if (mem == null) return;
 
-        prefab = Resources.Load(mem.selfDataValue.m_data.self) as GameObject;
-        mObject = Instantiate(prefab, objectPostion, Quaternion.identity);
-        //mObject.SetActive(false);
-        GameOperation.gameOperation.AddMemInCountry(countryID, mObject.GetComponent<BaseMember>());
+        //prefab = Resources.Load(mem.selfDataValue.m_data.self) as GameObject;
+        //mObject = Instantiate(prefab, objectPostion, Quaternion.identity);
+        ////mObject.SetActive(false);
+        //GameOperation.gameOperation.AddMemInCountry(countryID, mObject.GetComponent<BaseMember>());
+    }
+    public override BaseMember Clone()
+    {
+        Debug.Log("Clone");
+        return new Build1500();
     }
 
 

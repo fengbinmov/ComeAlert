@@ -11,6 +11,10 @@ public class MainMenuPanel : BasePanel {
     private GameObject MenuPanel;
     private GameObject SettingsPanel;
     private bool isStartGame = false;
+    private List<string> test = new List<string>()
+    {
+        "A","B","C","D","E"
+    };
 
     public MainMenuPanel():base()
     {
@@ -66,5 +70,21 @@ public class MainMenuPanel : BasePanel {
 
         MenuPanel = transform.Find("Menu").gameObject;
         SettingsPanel = transform.Find("Settings").gameObject;
+    }
+    private void OnGUI()
+    {
+        //if (GUI.Button(new Rect(50, 50, 100, 30), new GUIContent("按钮"))) {
+        //    foreach (string str in test) {
+        //        Debug.Log(test.IndexOf(str)+" "+ str);
+        //    }
+        //}
+        //if (GUI.Button(new Rect(150, 50, 100, 30), new GUIContent("添加")))
+        //{
+        //    test.Add("F");
+        //}
+        //if (GUI.Button(new Rect(250, 50, 100, 30), new GUIContent("删除")))
+        //{
+        //    test.Remove("B");
+        //}
     }
 }

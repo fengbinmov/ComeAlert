@@ -7,12 +7,12 @@ using GameAttrType;
 public class BaseMember :MonoBehaviour
 {
 
-    public ObjectDataValue selfDataValue;
+    public ObjectDataValue selfDataValue = null;
 
     public virtual void Init() { }
-    public virtual void Updata()
-    {
-    }
+    public virtual void Updata(){ }
     public virtual void Destroy() { }
+
+    public virtual BaseMember Clone() { return null; }
 
 }

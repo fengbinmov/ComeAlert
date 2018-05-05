@@ -11,6 +11,7 @@ public class BuildData1502 : ObjectDataValue
     {
         m_data.m_u2ID = 1502;
         m_data.m_emObjectType = ENUM_OBJECT_TYPE.OBJECT_BUILD;
+        m_data.m_emObjectName = ENUM_OBJECT_NAME.B_SOLDIER;
         m_data.m_emObjectState = ENUM_OBJECT_STATE.OBJECT_DISPLAY_STATE;
         m_data.self = "Prefabs/Build/SoliderBuild";
         m_data.selfHeadP = "Images/ObjectHeadP/SoliderBuildHP";

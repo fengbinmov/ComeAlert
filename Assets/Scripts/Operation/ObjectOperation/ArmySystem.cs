@@ -7,11 +7,16 @@ using System.Reflection;
 
 public class ArmySystem
 {
+    ushort countryID;
     private AllotSystem mAllotSystem;
     private Stack<Army> mArmy;
 
-    void PushArmy() { }
-    void PopArmy() { }
+    void PushArmy(List<BaseMember> armyList) {
+
+    }
+    void PopArmy() {
+
+    }
 
     public void test() {
         MethodInfo methodInfo = mAllotSystem.GetType().GetMethod("sdfds");

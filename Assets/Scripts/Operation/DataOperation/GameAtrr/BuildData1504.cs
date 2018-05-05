@@ -7,6 +7,7 @@ public class BuildData1504 : ObjectDataValue
     {
         m_data.m_u2ID = 1504;
         m_data.m_emObjectType = ENUM_OBJECT_TYPE.OBJECT_BUILD;
+        m_data.m_emObjectName = ENUM_OBJECT_NAME.B_WATER;
         m_data.m_emObjectState = ENUM_OBJECT_STATE.OBJECT_DISPLAY_STATE;
         m_data.self = "Prefabs/Build/WaterBuild";
         m_data.selfHeadP = "Images/ObjectHeadP/WaterBuildHP";

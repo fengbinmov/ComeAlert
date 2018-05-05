@@ -85,8 +85,8 @@ public class GameOperation : MonoBehaviour
     public void GetCountryInfo() {
         mObjectOperation.GetCountryInfo();
     }
-    public ushort GetBuildNumForACountry(ushort countryID, ENUM_OBJECT_NAME buildType) {
-        return mObjectOperation.GetBuildNumForACountry(countryID, buildType);
+    public ushort GetSameTypeForACountry(ushort countryID, ENUM_OBJECT_NAME buildType) {
+        return mObjectOperation.GetSameTypeForACountry(countryID, buildType);
     }
     public ushort[] GetAllCountryID()
     {
@@ -96,7 +96,15 @@ public class GameOperation : MonoBehaviour
     {
         return mObjectOperation.GetMemForMemID(countryID, memID);
     }
-        #endregion
+    public void SetActiveBuild(ushort countryID, ENUM_BUILDLAB_TYPE _TYPE, int CodeNum)
+    {
+        mObjectOperation.SetActiveBuild(countryID, _TYPE, CodeNum);
+    }
+    public void UpdateNativeBuildLabCount()
+    {
+        mObjectOperation.UpdateNativeBuildLabCount();
+    }
+#endregion
 
         #region InfoOPeration集合
     public InfoOperation GetInfoOperation

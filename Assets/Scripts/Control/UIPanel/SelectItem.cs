@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using GameAttrType;
+using GameAttrType;
 
 public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
 {
@@ -104,6 +105,7 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
         uiDirftInfo = GameOperation.gameOperation.GetInfoOperation.uIDirftInfo;
         isInit = true;
     }
+    //项目选择结束后的操作
     public void CancelSelfInvoke(bool isbulding)
     {
         if (isInit == false)Init();
@@ -111,9 +113,10 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
         if (isbulding == true)      //对象选择成功,让父面板显示之前隐藏的Bar中的所有项目,并更新“对象系统”
         {
             m_parentPanel.NotHideSelfAllSelectItem();
-            GameOperation.gameOperation.AddMemInCountry(1, mBaseMember);
-            cubeBuild.AddComponent<BuildOnClick>().SetMemeber = mBaseMember;
 
+            BaseMember baseMember = GetCurrObjectScript(mBaseMember.selfDataValue.m_data.m_emObjectName);
+            GameOperation.gameOperation.AddMemInCountry(1, baseMember);
+            cubeBuild.AddComponent<BuildOnClick>().SetMemeber = mBaseMember;
         }
         else{                      //对象选择失败,销毁数遍按下时生成的未激活对象模型
             Destroy(cubeBuild.gameObject);
@@ -123,7 +126,6 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
     public void HideSelfAllSelectItem_FP(){
         m_parentPanel.HideSelfAllSelectItem();
     }
-
     public void OnPointerUp(PointerEventData eventData)
     {
         GameOperation.gameOperation.GetInfoOperation.uIDirftInfo.CleanDirftPanelInfo();
@@ -135,6 +137,7 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
 
         GameControl.gameControl.AddPanel(UIPanelType.ItemInfos);
     }
+
     private void ItemPitchOnEvent() {
         if (selectCount > 0)
         {
@@ -148,8 +151,123 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
                     SelectNum.text = "";
                 maskProgressNow = maskProgressMax;
                 GameOperation.gameOperation.AddMemInCountry(1, mBaseMember);//TODO
-
             }
         }
+    }
+    private BaseMember GetCurrObjectScript(ENUM_OBJECT_NAME oBJECT_NAME) {
+        switch (oBJECT_NAME)
+        {
+            case ENUM_OBJECT_NAME.Z_NENGSHI:
+                break;
+            case ENUM_OBJECT_NAME.Z_JINSHU:
+                break;
+            case ENUM_OBJECT_NAME.Z_ZHINENG:
+                break;
+            case ENUM_OBJECT_NAME.Z_XINENG:
+                break;
+            case ENUM_OBJECT_NAME.F_BUBING:
+                return cubeBuild.AddComponent<SoldierMem1100>();
+
+            case ENUM_OBJECT_NAME.F_TEZHONG:
+                return cubeBuild.AddComponent<SoldierMem1101>();
+
+            case ENUM_OBJECT_NAME.F_FANGKONG:
+                break;
+            case ENUM_OBJECT_NAME.F_NATASHA:
+                break;
+            case ENUM_OBJECT_NAME.F_GONGCHENG:
+                break;
+            case ENUM_OBJECT_NAME.F_YILIAO:
+                break;
+            case ENUM_OBJECT_NAME.F_GOU:
+                break;
+            case ENUM_OBJECT_NAME.F_FANJIA:
+                break;
+            case ENUM_OBJECT_NAME.F_CIBAO:
+                break;
+            case ENUM_OBJECT_NAME.C_ZHENCHA:
+                break;
+            case ENUM_OBJECT_NAME.C_ZHUANGJIA:
+                break;
+            case ENUM_OBJECT_NAME.C_TANKE:
+                break;
+            case ENUM_OBJECT_NAME.C_TIANQI:
+                break;
+            case ENUM_OBJECT_NAME.C_FANGKONG:
+                break;
+            case ENUM_OBJECT_NAME.C_HUOJIAN:
+                break;
+            case ENUM_OBJECT_NAME.C_JIHUANG:
+                break;
+            case ENUM_OBJECT_NAME.C_HEDAN:
+                break;
+            case ENUM_OBJECT_NAME.A_ZHENCHA:
+                break;
+            case ENUM_OBJECT_NAME.A_ZHISHENG:
+                break;
+            case ENUM_OBJECT_NAME.A_ZHANDOU:
+                break;
+            case ENUM_OBJECT_NAME.A_YUNSHU:
+                break;
+            case ENUM_OBJECT_NAME.A_YUJING:
+                break;
+            case ENUM_OBJECT_NAME.W_KUAITING:
+                break;
+            case ENUM_OBJECT_NAME.W_ZAIJU:
+                break;
+            case ENUM_OBJECT_NAME.W_YUNSHU:
+                break;
+            case ENUM_OBJECT_NAME.W_ZHANJIAN:
+                break;
+            case ENUM_OBJECT_NAME.W_HANGMU:
+                break;
+            case ENUM_OBJECT_NAME.W_QIANTING:
+                break;
+            case ENUM_OBJECT_NAME.B_DEMOS:
+                return cubeBuild.AddComponent<Build1500>();
+
+            case ENUM_OBJECT_NAME.B_POWER:
+                break;
+            case ENUM_OBJECT_NAME.B_SOLDIER:
+                return cubeBuild.AddComponent<Build1502>();
+
+            case ENUM_OBJECT_NAME.B_ZHANZHENG:
+                return cubeBuild.AddComponent<Build1503>();
+            case ENUM_OBJECT_NAME.B_WATER:
+                return cubeBuild.AddComponent<Build1504>();
+
+            case ENUM_OBJECT_NAME.B_AIR:
+                return cubeBuild.AddComponent<Build1505>();
+
+            case ENUM_OBJECT_NAME.B_ZHIHUI:
+                break;
+            case ENUM_OBJECT_NAME.B_SCHOOL:
+                break;
+            case ENUM_OBJECT_NAME.B_KEXUE:
+                break;
+            case ENUM_OBJECT_NAME.B_ZHENFU:
+                break;
+            case ENUM_OBJECT_NAME.B_JINGWEI:
+                break;
+            case ENUM_OBJECT_NAME.B_MAOYI:
+                break;
+            case ENUM_OBJECT_NAME.B_YULE:
+                break;
+            case ENUM_OBJECT_NAME.B_TEZHONG:
+                break;
+            case ENUM_OBJECT_NAME.B_WEIQIANG:
+                break;
+            case ENUM_OBJECT_NAME.B_SHAOJIE:
+                break;
+            case ENUM_OBJECT_NAME.B_DIAOBAO:
+                break;
+            case ENUM_OBJECT_NAME.B_DIAOBAOG:
+                break;
+            case ENUM_OBJECT_NAME.B_TIBA:
+                break;
+            default:
+                return null;
+        }
+        return null;
     }
 }

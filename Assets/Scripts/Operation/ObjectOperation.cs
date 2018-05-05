@@ -12,7 +12,7 @@ public class ObjectOperation : BaseOperation
     private UInt32 objectID = 0;          //“对象省份证”|总数
     private UInt16 countryID = 0;      //“国家省份证”|总数
 
-    private Dictionary<ushort,CountryManager> countryDict;
+    private Dictionary<ushort,CountryManager> countryDict = new Dictionary<ushort, CountryManager>();
 
     public void AddCountryList(ushort team) {
 
@@ -20,7 +20,8 @@ public class ObjectOperation : BaseOperation
         countryDict.Add(countryID, new CountryManager(team, countryID));
     }
     public void AddMemInCountry(ushort countryID,BaseMember mem) {
-        
+
+        ++objectID;
         countryDict[countryID].AddMem(mem, objectID);
     }
     public void RemoveCountryList(ushort countryID) {
@@ -35,11 +36,14 @@ public class ObjectOperation : BaseOperation
     public override void Init()
     {
         foreach (CountryManager memCountry in countryDict.Values){
-
             memCountry.Init();
         }
     }
-    public override void Update() { }
+    public override void Update() {
+        foreach (CountryManager memCountry in countryDict.Values){
+            memCountry.Update();
+        }
+    }
     public override void Destroy() {  }
     
 
@@ -58,9 +62,9 @@ public class ObjectOperation : BaseOperation
             Debug.Log("总数keyID[" + keyID + "]");
         }
     }
-    public ushort GetBuildNumForACountry(ushort countryID, ENUM_OBJECT_NAME buildType) {
+    public ushort GetSameTypeForACountry(ushort countryID, ENUM_OBJECT_NAME buildType) {
 
-        return countryDict[countryID].GetSameBuildCount(buildType);
+        return countryDict[countryID].GetSameTypeCount(buildType);
     }
     public ushort[] GetAllCountryID()
     {
@@ -78,4 +82,17 @@ public class ObjectOperation : BaseOperation
     {
         return countryDict[countryID].GetMemForMemID(memID);
     }
+
+    #region BuildSystem方法集
+    public void SetActiveBuild(ushort countryID, ENUM_BUILDLAB_TYPE _TYPE, int CodeNum)
+    {
+        countryDict[countryID].SetActiveBuild(_TYPE, CodeNum);
+    }
+    #endregion
+#region CountryManager
+    public void UpdateNativeBuildLabCount()
+    {
+        countryDict[1].UpdateNativeBuildLabCount();
+    }
+#endregion
 }

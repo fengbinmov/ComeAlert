@@ -10,4 +10,8 @@ public class Build1501 : BuildMem
     {
         selfDataValue = new BuildData1501();
     }
+    public override BaseMember Clone()
+    {
+        return new Build1501();
+    }
 }

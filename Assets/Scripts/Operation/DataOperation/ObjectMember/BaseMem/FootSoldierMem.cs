@@ -116,10 +116,6 @@ public class FootSoldierMem : BaseMember
             GetComponent<MeshRenderer>().material.color = Color.white;
         }
     }
-    public virtual BaseMember Clone()
-    {
-        return new BaseMember();
-    }
     public void SetIDNum(UInt16 idNum)
     {
         selfDataValue.m_data.m_u4IDNum = idNum;

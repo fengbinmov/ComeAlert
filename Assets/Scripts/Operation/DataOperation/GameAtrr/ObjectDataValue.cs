@@ -9,6 +9,7 @@ public class ObjectDataValue
         public UInt16 m_u2ID;
         public UInt32 m_u4IDNum;
         public ENUM_OBJECT_TYPE m_emObjectType;
+        public ENUM_OBJECT_NAME m_emObjectName;
         public ENUM_OBJECT_STATE m_emObjectState;
         public string self;
         public string selfHeadP;

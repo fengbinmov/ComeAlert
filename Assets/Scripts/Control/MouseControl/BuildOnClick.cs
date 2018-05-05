@@ -12,6 +12,6 @@ public class BuildOnClick:MonoBehaviour
     }
     private void OnMouseUpAsButton()
     {
-        GameControl.gameControl.SendBuildInfoForUI(UIPanelType.SoldierType, ENUM_MSG_TYPE.OBJECT, mBaseMember);
+        GameControl.gameControl.SendBroadInfoForUI(UIPanelType.SoldierType, ENUM_MSG_TYPE.OBJECT, mBaseMember);
     }
 }

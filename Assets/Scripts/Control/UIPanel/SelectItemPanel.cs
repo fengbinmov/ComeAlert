@@ -15,6 +15,8 @@ public class SelectItemPanel : BasePanel{
     private GameObject currentSelectItemInfo;
     private ObjectDataValue currentSelectObjectData;
 
+    private Text currentCodeNum;
+
     public SelectItemPanel():base()
     {
         uIPanelType = UIPanelType.SelectItem;
@@ -28,7 +30,8 @@ public class SelectItemPanel : BasePanel{
         transform.Find("SelectItem/CloseButton").GetComponent<Button>().onClick.AddListener(OnClickCloseButton);
         currentSelectItemInfo = transform.Find("SelectItem/SelectInfo").gameObject;
         selectListLayout = transform.Find("SelectItem/SelectItemBar/HorizontalLayout").GetComponent<HorizontalLayoutGroup>();
-        
+
+        currentCodeNum = transform.Find("SelectItem/CodeNum/codeNum").GetComponent<Text>();
         ShowAnim();
     }
     public override void OnPause()
@@ -53,6 +56,11 @@ public class SelectItemPanel : BasePanel{
                 LoadSelectList(list);
                 break;
             case ENUM_MSG_TYPE.STRING:
+                string temp = info as string;
+
+                currentCodeNum.text = temp;
+                break;
+            case ENUM_MSG_TYPE.NUMBER:
                 break;
             case ENUM_MSG_TYPE.ARRAY:
                 break;
@@ -72,7 +80,7 @@ public class SelectItemPanel : BasePanel{
         transform.DOMoveY(transform.position.y- 100f, 0.1f).OnComplete(() => GameControl.gameControl.RemovePanel(UIPanelType.SelectItem));
     }
 
-    private void LoadSelectList(List<BaseMember> selectList)
+    public void LoadSelectList(List<BaseMember> selectList)
     {
 
         currentSelectItems = selectListLayout.GetComponentsInChildren<SelectItem>();

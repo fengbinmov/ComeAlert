@@ -64,7 +64,23 @@ public class CountryManager
     {
         mBuildSystem.SetActiveBuild(_TYPE, CodeNum);
     }
-#endregion
-
-
+    public int GetActiveBuildLabCode()
+    {
+        return mBuildSystem.GetActiveBuildLabCode();
     }
+    public ENUM_BUILDLAB_TYPE GetActiveBuildType()
+    {
+        return mBuildSystem.GetActiveBuildType();
+    }
+    public int GetBuildLabCode(BuildMem buildMem)
+    {
+        return mBuildSystem.GetBuildLabCode(buildMem);
+    }
+    public List<BaseMember> GetCanMakeObjectList(ENUM_BUILDLAB_TYPE bUILDLAB_TYPE)
+    {
+        return mBuildSystem.GetCanMakeObjectList(bUILDLAB_TYPE);
+    }
+    #endregion
+
+
+}

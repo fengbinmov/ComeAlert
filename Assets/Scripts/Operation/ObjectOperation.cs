@@ -83,16 +83,30 @@ public class ObjectOperation : BaseOperation
         return countryDict[countryID].GetMemForMemID(memID);
     }
 
-    #region BuildSystem方法集
-    public void SetActiveBuild(ushort countryID, ENUM_BUILDLAB_TYPE _TYPE, int CodeNum)
-    {
-        countryDict[countryID].SetActiveBuild(_TYPE, CodeNum);
-    }
-    #endregion
 #region CountryManager
     public void UpdateNativeBuildLabCount()
     {
         countryDict[1].UpdateNativeBuildLabCount();
     }
-#endregion
+    public void SetActiveBuild(ushort countryID, ENUM_BUILDLAB_TYPE _TYPE, int CodeNum)
+    {
+        countryDict[countryID].SetActiveBuild(_TYPE, CodeNum);
+    }
+    public int GetActiveBuildLabCode(ushort countryID)
+    {
+        return countryDict[countryID].GetActiveBuildLabCode();
+    }
+    public ENUM_BUILDLAB_TYPE GetActiveBuildType(ushort countryID)
+    {
+        return countryDict[countryID].GetActiveBuildType();
+    }
+    public int GetBuildLabCode(ushort countryID, BuildMem buildMem)
+    {
+        return countryDict[countryID].GetBuildLabCode(buildMem);
+    }
+    public List<BaseMember> GetCanMakeObjectList(ushort countryID, ENUM_BUILDLAB_TYPE bUILDLAB_TYPE)
+    {
+        return countryDict[countryID].GetCanMakeObjectList(bUILDLAB_TYPE);
+    }
+    #endregion
 }

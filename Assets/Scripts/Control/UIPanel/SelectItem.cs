@@ -116,7 +116,7 @@ public class SelectItem : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
 
             BaseMember baseMember = GetCurrObjectScript(mBaseMember.selfDataValue.m_data.m_emObjectName);
             GameOperation.gameOperation.AddMemInCountry(1, baseMember);
-            cubeBuild.AddComponent<BuildOnClick>().SetMemeber = mBaseMember;
+            cubeBuild.AddComponent<BuildOnClick>().SetMemeber = baseMember;
         }
         else{                      //对象选择失败,销毁数遍按下时生成的未激活对象模型
             Destroy(cubeBuild.gameObject);

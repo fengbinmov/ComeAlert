@@ -29,8 +29,9 @@ public class SoldierTypePanel : BasePanel
     private Text AirHasNum;
 
     //Demos、Soldier、Car、Water、Air   建筑数量
-    private int[] activeArr = { 0, 0, 0, 0, 0 };
+    private int[] activeBuildLabCount = { 0, 0, 0, 0, 0 };
     private int[] activeArrNow = { 0, 0, 0, 0, 0 };
+    private BuildMem activebuildMem = null;
 
     public SoldierTypePanel() : base()
     {
@@ -89,19 +90,16 @@ public class SoldierTypePanel : BasePanel
         }
     }
     private void MakeMessageOBJ<T>(T info) {
-        BaseMember baseMember = info as BaseMember;
-        List<BaseMember> list = new List<BaseMember>();
-        switch (baseMember.selfDataValue.m_data.m_u2ID)
+
+        activebuildMem = info as BuildMem;
+
+        switch (activebuildMem.selfDataValue.m_data.m_u2ID)
         {
             case 1500:
                 OnClickBuildDemos();
-                list.Add(new SoldierMem1100());
-                list.Add(new SoldierMem1100());
                 break;
             case 1502:
                 OnClickBuildSoldier();
-                list.Add(new SoldierMem1100());
-                list.Add(new SoldierMem1100());
                 break;
             case 1503:
                 OnClickBuildCar();
@@ -115,7 +113,6 @@ public class SoldierTypePanel : BasePanel
             default:
                 return;
         }
-        GameControl.gameControl.SendBroadInfoForUI(UIPanelType.SelectItem, ENUM_MSG_TYPE.CONTAINER, list);
     }
     #region 主选项按键事件
     private void OnClickBuildVolume()
@@ -131,33 +128,37 @@ public class SoldierTypePanel : BasePanel
     private void OnClickBuildDemos()
     {
         VolumeBtnObject.SetActive(true);
-        OnClickOpenBar();
         UpdateBuildNumLab(ENUM_BUILDLAB_TYPE.DEMOS);
-        //GameControl.gameControl.SendBuildInfoForUI<List<BaseMember>>(UIPanelType.SelectItem,ENUM_MSG_TYPE.CONTAINER,)
+        OnClickOpenBar();
+        GetCanMakeForSelectSend();
     }
     private void OnClickBuildSoldier()
     {
         VolumeBtnObject.SetActive(true);
-        OnClickOpenBar();
         UpdateBuildNumLab(ENUM_BUILDLAB_TYPE.SOLDIER);
+        OnClickOpenBar();
+        GetCanMakeForSelectSend();
     }
     private void OnClickBuildCar()
     {
         VolumeBtnObject.SetActive(true);
-        OnClickOpenBar();
         UpdateBuildNumLab(ENUM_BUILDLAB_TYPE.CAR);
+        OnClickOpenBar();
+        GetCanMakeForSelectSend();
     }
     private void OnClickBuildWater()
     {
         VolumeBtnObject.SetActive(true);
-        OnClickOpenBar();
         UpdateBuildNumLab(ENUM_BUILDLAB_TYPE.WATER);
+        OnClickOpenBar();
+        GetCanMakeForSelectSend();
     }
     private void OnClickBuildAir()
     {
         VolumeBtnObject.SetActive(true);
-        OnClickOpenBar();
         UpdateBuildNumLab(ENUM_BUILDLAB_TYPE.AIR);
+        OnClickOpenBar();
+        GetCanMakeForSelectSend();
     }
     private void OnClickOpenBar()
     {
@@ -167,6 +168,13 @@ public class SoldierTypePanel : BasePanel
             GameControl.gameControl.RemovePanel(UIPanelType.SelectItem);
         }
         GameControl.gameControl.AddPanel(UIPanelType.SelectItem);
+        
+    }
+    private void GetCanMakeForSelectSend() {
+
+        ENUM_BUILDLAB_TYPE bUILDLAB_TYPE = GameOperation.gameOperation.GetActiveBuildType(1);
+        List<BaseMember> canMakeList = GameOperation.gameOperation.GetCanMakeObjectList(1, bUILDLAB_TYPE);
+        GameControl.gameControl.SendBroadInfoForUI(UIPanelType.SelectItem, ENUM_MSG_TYPE.CONTAINER, canMakeList);
     }
     #endregion
 
@@ -175,13 +183,15 @@ public class SoldierTypePanel : BasePanel
     public void OnClickBuildSystem() {
         VolumeBtnObject.SetActive(false);
         OnClickOpenBar();
+
         List<BaseMember> objectItems = new List<BaseMember>();
         objectItems.Add(new Build1500());
         objectItems.Add(new Build1502());
         objectItems.Add(new Build1503());
         objectItems.Add(new Build1504());
         objectItems.Add(new Build1505());
-        GameControl.gameControl.SendBroadInfoForUI<List<BaseMember>>(UIPanelType.SelectItem, ENUM_MSG_TYPE.CONTAINER, objectItems);
+        GameControl.gameControl.SendBroadInfoForUI(UIPanelType.SelectItem, ENUM_MSG_TYPE.STRING, "HitBuildLab");
+        GameControl.gameControl.SendBroadInfoForUI(UIPanelType.SelectItem, ENUM_MSG_TYPE.CONTAINER, objectItems);
     }
     #endregion
 
@@ -216,10 +226,6 @@ public class SoldierTypePanel : BasePanel
             {
                 Time.timeScale = 1;
             }
-            //Debug.Log("切换场景");
-            //Debug.Log("ObjectCount:["+GameOperation.gameOperation.GetObjectCount().ToString()+"]");
-            //SceneManager.LoadScene(0);
-            //GameObject.Instantiate(Resources.Load("Prefabs/Build/CarBuild") as GameObject);
         }
     }
     private void Init() {
@@ -261,12 +267,12 @@ public class SoldierTypePanel : BasePanel
     }
     private void InitBuildNum<T>(T info) {
         
-        activeArr = info as int[];
+        activeBuildLabCount = info as int[];
 
         for (int i = 0; i < 5; i++) {
-            if (activeArr[i] > 0)
+            if (activeBuildLabCount[i] > 0)
             {
-                BuildTextList[i].text = activeArr[i].ToString();
+                BuildTextList[i].text = activeBuildLabCount[i].ToString();
                 BuildBtnList[i].interactable = true;
             }
             else {
@@ -277,12 +283,33 @@ public class SoldierTypePanel : BasePanel
     }
     private void UpdateBuildNumLab(ENUM_BUILDLAB_TYPE buildLab) {
 
-        int order = (int)buildLab - 1500;
-        if (activeArr[order] > 0)
-        {
-            activeArrNow[order] = (activeArrNow[order] % activeArr[order]) + 1;
-            GameOperation.gameOperation.SetActiveBuild(1, buildLab, activeArrNow[order] - 1);   //设置本地建筑系统的激活建筑为CodeNum号
-            GameControl.gameControl.SendBroadInfoForUI<string>(UIPanelType.SelectItem, ENUM_MSG_TYPE.STRING, activeArrNow[order].ToString());
+        if (activebuildMem == null){    //点击buildLab得到的响应
+            int order = (int)buildLab - 1500;
+            if (activeBuildLabCount[order] > 0)
+            {
+                int activeBuildLabNum = GameOperation.gameOperation.GetActiveBuildLabCode(1);
+                if (activeBuildLabNum == 999){
+
+                    activeArrNow[order] = 0;
+                    activeArrNow[order] = (activeArrNow[order] % activeBuildLabCount[order]);
+                    GameOperation.gameOperation.SetActiveBuild(1, buildLab, activeArrNow[order]);   //设置本地建筑系统的激活建筑为CodeNum号
+                    Debug.Log("activeBuildLabNum == 999"+ activeArrNow[order]);
+                }
+                else {
+                    activeArrNow[order] = activeBuildLabNum+1;
+                    activeArrNow[order] = (activeArrNow[order] % activeBuildLabCount[order]);
+                    GameOperation.gameOperation.SetActiveBuild(1, buildLab, activeArrNow[order]);   //设置本地建筑系统的激活建筑为CodeNum号
+                    Debug.Log("点击buildLab得到的响应"+ activeArrNow[order]);
+                }
+            }
         }
+        else {  //直接点击建筑而得到的响应
+            
+            int code = GameOperation.gameOperation.GetBuildLabCode(1, activebuildMem);
+            GameOperation.gameOperation.SetActiveBuild(1, buildLab, code);   //设置本地建筑系统的激活建筑为CodeNum号
+            activebuildMem = null;
+            Debug.Log("直接点击建筑而得到的响应"+ code);
+        }
+        
     }
 }

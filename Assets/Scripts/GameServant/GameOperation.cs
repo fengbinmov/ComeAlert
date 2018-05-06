@@ -104,9 +104,26 @@ public class GameOperation : MonoBehaviour
     {
         mObjectOperation.UpdateNativeBuildLabCount();
     }
-#endregion
+    
+    public int GetActiveBuildLabCode(ushort countryID)
+    {
+        return mObjectOperation.GetActiveBuildLabCode(countryID);
+    }
+    public ENUM_BUILDLAB_TYPE GetActiveBuildType(ushort countryID)
+    {
+        return mObjectOperation.GetActiveBuildType(countryID);
+    }
+    public int GetBuildLabCode(ushort countryID, BuildMem buildMem)
+    {
+        return mObjectOperation.GetBuildLabCode(countryID, buildMem);
+    }
+    public List<BaseMember> GetCanMakeObjectList(ushort countryID, ENUM_BUILDLAB_TYPE bUILDLAB_TYPE)
+    {
+        return mObjectOperation.GetCanMakeObjectList(countryID,bUILDLAB_TYPE);
+    }
+    #endregion
 
-        #region InfoOPeration集合
+    #region InfoOPeration集合
     public InfoOperation GetInfoOperation
     {
         get{

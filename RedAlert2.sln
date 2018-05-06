@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
+# Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedAlert2", "RedAlert2.csproj", "{C8AACDBD-87F7-F33A-4A17-C20CDA772AA4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedAlert2.Editor", "RedAlert2.Editor.csproj", "{D242B2EF-2ACE-3302-E5EE-5D701C43F3D3}"

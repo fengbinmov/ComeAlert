@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using GameAttrType;
 
 public class SelectItemPanel : BasePanel{
 
@@ -33,6 +34,10 @@ public class SelectItemPanel : BasePanel{
 
         currentCodeNum = transform.Find("SelectItem/CodeNum/codeNum").GetComponent<Text>();
         ShowAnim();
+
+        
+        InitActiveBuildLabCode();   //初始化Bar的ActiveBuildLabCode数字
+        //InitCanMakeObjectList();    //初始化Bar的可制造对象选项
     }
     public override void OnPause()
     {
@@ -56,9 +61,7 @@ public class SelectItemPanel : BasePanel{
                 LoadSelectList(list);
                 break;
             case ENUM_MSG_TYPE.STRING:
-                string temp = info as string;
-
-                currentCodeNum.text = temp;
+                MakeMessageString(info);
                 break;
             case ENUM_MSG_TYPE.NUMBER:
                 break;
@@ -127,6 +130,29 @@ public class SelectItemPanel : BasePanel{
     public ObjectDataValue CurrentSelectObjectData{
         set {
             currentSelectObjectData = value;
+        }
+    }
+    private void InitActiveBuildLabCode() {
+        int code = GameOperation.gameOperation.GetActiveBuildLabCode(1);
+        Debug.Log("InitActiveBuildLabCode"+code);
+        if (code == 999){
+            currentCodeNum.text = " ";
+        }
+        else {
+            string temp = (code + 1).ToString();
+            currentCodeNum.text = temp;
+        }
+    }
+    private void InitCanMakeObjectList() {
+
+        ENUM_BUILDLAB_TYPE bUILDLAB_TYPE = GameOperation.gameOperation.GetActiveBuildType(1);
+        List<BaseMember> canMakeList = GameOperation.gameOperation.GetCanMakeObjectList(1, bUILDLAB_TYPE);
+        LoadSelectList(canMakeList);
+    }
+    private void MakeMessageString<T>(T info) {
+        string str = info as string;
+        if (str.Equals("HitBuildLab")){
+            currentCodeNum.text = " ";
         }
     }
 

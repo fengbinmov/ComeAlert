@@ -281,6 +281,7 @@ public class SoldierTypePanel : BasePanel
             }
         }
     }
+    //更改建筑系统的 激活建筑
     private void UpdateBuildNumLab(ENUM_BUILDLAB_TYPE buildLab) {
 
         if (activebuildMem == null){    //点击buildLab得到的响应
@@ -292,23 +293,20 @@ public class SoldierTypePanel : BasePanel
 
                     activeArrNow[order] = 0;
                     activeArrNow[order] = (activeArrNow[order] % activeBuildLabCount[order]);
-                    GameOperation.gameOperation.SetActiveBuild(1, buildLab, activeArrNow[order]);   //设置本地建筑系统的激活建筑为CodeNum号
-                    Debug.Log("activeBuildLabNum == 999"+ activeArrNow[order]);
+                    GameOperation.gameOperation.SetActiveBuild(1, buildLab, activeArrNow[order]);
                 }
                 else {
                     activeArrNow[order] = activeBuildLabNum+1;
                     activeArrNow[order] = (activeArrNow[order] % activeBuildLabCount[order]);
-                    GameOperation.gameOperation.SetActiveBuild(1, buildLab, activeArrNow[order]);   //设置本地建筑系统的激活建筑为CodeNum号
-                    Debug.Log("点击buildLab得到的响应"+ activeArrNow[order]);
+                    GameOperation.gameOperation.SetActiveBuild(1, buildLab, activeArrNow[order]);
                 }
             }
         }
         else {  //直接点击建筑而得到的响应
             
             int code = GameOperation.gameOperation.GetBuildLabCode(1, activebuildMem);
-            GameOperation.gameOperation.SetActiveBuild(1, buildLab, code);   //设置本地建筑系统的激活建筑为CodeNum号
+            GameOperation.gameOperation.SetActiveBuild(1, buildLab, code);
             activebuildMem = null;
-            Debug.Log("直接点击建筑而得到的响应"+ code);
         }
         
     }

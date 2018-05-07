@@ -36,7 +36,7 @@ public class SelectItemPanel : BasePanel{
         ShowAnim();
 
         
-        InitActiveBuildLabCode();   //初始化Bar的ActiveBuildLabCode数字
+        InitActiveBuildLabCode();   //初始化Bar的ActiveBuildLabCode数字 从建筑系统获取值
         //InitCanMakeObjectList();    //初始化Bar的可制造对象选项
     }
     public override void OnPause()
@@ -57,8 +57,7 @@ public class SelectItemPanel : BasePanel{
             case ENUM_MSG_TYPE.OBJECT:
                 break;
             case ENUM_MSG_TYPE.CONTAINER:
-                List<BaseMember> list = info as List<BaseMember>;
-                LoadSelectList(list);
+                MakeMessageContainer(info);
                 break;
             case ENUM_MSG_TYPE.STRING:
                 MakeMessageString(info);
@@ -134,7 +133,6 @@ public class SelectItemPanel : BasePanel{
     }
     private void InitActiveBuildLabCode() {
         int code = GameOperation.gameOperation.GetActiveBuildLabCode(1);
-        Debug.Log("InitActiveBuildLabCode"+code);
         if (code == 999){
             currentCodeNum.text = " ";
         }
@@ -143,18 +141,22 @@ public class SelectItemPanel : BasePanel{
             currentCodeNum.text = temp;
         }
     }
-    private void InitCanMakeObjectList() {
-
-        ENUM_BUILDLAB_TYPE bUILDLAB_TYPE = GameOperation.gameOperation.GetActiveBuildType(1);
-        List<BaseMember> canMakeList = GameOperation.gameOperation.GetCanMakeObjectList(1, bUILDLAB_TYPE);
-        LoadSelectList(canMakeList);
-    }
     private void MakeMessageString<T>(T info) {
         string str = info as string;
         if (str.Equals("HitBuildLab")){
             currentCodeNum.text = " ";
         }
     }
+    private void MakeMessageContainer<T>(T info) {
+        List<BaseMember> list = info as List<BaseMember>;
+        LoadSelectList(list);
+    }
+    //private void InitCanMakeObjectList()
+    //{
+    //    ENUM_BUILDLAB_TYPE bUILDLAB_TYPE = GameOperation.gameOperation.GetActiveBuildType(1);
+    //    List<BaseMember> canMakeList = GameOperation.gameOperation.GetCanMakeObjectList(1, bUILDLAB_TYPE);
+    //    LoadSelectList(canMakeList);
+    //}
 
     private void OnGUI()
     {

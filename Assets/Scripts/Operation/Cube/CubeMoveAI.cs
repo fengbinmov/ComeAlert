@@ -28,7 +28,8 @@ public class CubeMoveAI : MonoBehaviour {
         //判断是否受到指挥官的命令      //TODO
         if (GameControl.gameControl.GetIndexOfCommand(transform) > -1)
         {
-            GetComponent<MeshRenderer>().material.color = Color.green;
+            //GetComponent<MeshRenderer>().material.color = Color.green;
+            ChangeMeshColor(Color.green);
             //收集[在指挥官的命令中 & 在可见范围内]的士兵和其周围的士兵数
             Collider[] collider = Physics.OverlapSphere(transform.position, cubeWatchRang);
             foreach (Collider c in collider)
@@ -67,11 +68,13 @@ public class CubeMoveAI : MonoBehaviour {
             {
                 CubeMove();
             }
-            GetComponent<MeshRenderer>().material.color = Color.white;
+            //GetComponent<MeshRenderer>().material.color = Color.white;
+            ChangeMeshColor(Color.white);
         }
         else
         {
-            GetComponent<MeshRenderer>().material.color = Color.white;
+            //GetComponent<MeshRenderer>().material.color = Color.white;
+            ChangeMeshColor(Color.white);
         }
 
     }
@@ -97,5 +100,14 @@ public class CubeMoveAI : MonoBehaviour {
     }
     private void NavLineCloseShow() {
         mLineRenderer.enabled = false;
+    }
+    private void ChangeMeshColor(Color color) {
+        if (GetComponent<MeshRenderer>() == null)
+        {
+            transform.Find("Soldier_LP").GetComponent<SkinnedMeshRenderer>().material.color = color;
+        }
+        else {
+            GetComponent<MeshRenderer>().material.color = color;
+        }
     }
 }
